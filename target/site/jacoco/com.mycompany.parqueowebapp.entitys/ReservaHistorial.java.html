@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ReservaHistorial.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">parqueoWebApp-1.0-SNAPSHOT</a> &gt; <a href="index.source.html" class="el_package">com.mycompany.parqueowebapp.entitys</a> &gt; <span class="el_source">ReservaHistorial.java</span></div><h1>ReservaHistorial.java</h1><pre class="source lang-java linenums">/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.mycompany.parqueowebapp.entitys;
+
+import jakarta.persistence.Basic;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import java.io.Serializable;
+import java.util.Date;
+
+/**
+ *
+ * @author mjlopez
+ */
+@Entity
+@Table(name = &quot;reserva_historial&quot;, catalog = &quot;parqueo&quot;, schema = &quot;public&quot;)
+@NamedQueries({
+    @NamedQuery(name = &quot;ReservaHistorial.findAll&quot;, query = &quot;SELECT r FROM ReservaHistorial r&quot;),
+    @NamedQuery(name = &quot;ReservaHistorial.findByIdReservaHistorial&quot;, query = &quot;SELECT r FROM ReservaHistorial r WHERE r.idReservaHistorial = :idReservaHistorial&quot;),
+    @NamedQuery(name = &quot;ReservaHistorial.findByFechaAlcanzado&quot;, query = &quot;SELECT r FROM ReservaHistorial r WHERE r.fechaAlcanzado = :fechaAlcanzado&quot;),
+    @NamedQuery(name = &quot;ReservaHistorial.findByActivo&quot;, query = &quot;SELECT r FROM ReservaHistorial r WHERE r.activo = :activo&quot;)})
+public class ReservaHistorial implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @Column(name = &quot;id_reserva_historial&quot;)
+    private Long idReservaHistorial;
+    @Column(name = &quot;fecha_alcanzado&quot;)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaAlcanzado;
+    @Column(name = &quot;activo&quot;)
+    private Boolean activo;
+    @JoinColumn(name = &quot;id_reserva&quot;, referencedColumnName = &quot;id_reserva&quot;)
+    @ManyToOne
+    private Reserva idReserva;
+    @JoinColumn(name = &quot;id_tipo_reserva_secuencia&quot;, referencedColumnName = &quot;id_tipo_reserva_secuencia&quot;)
+    @ManyToOne
+    private TipoReservaSecuencia idTipoReservaSecuencia;
+
+<span class="nc" id="L51">    public ReservaHistorial() {</span>
+<span class="nc" id="L52">    }</span>
+
+<span class="nc" id="L54">    public ReservaHistorial(Long idReservaHistorial) {</span>
+<span class="nc" id="L55">        this.idReservaHistorial = idReservaHistorial;</span>
+<span class="nc" id="L56">    }</span>
+
+    public Long getIdReservaHistorial() {
+<span class="nc" id="L59">        return idReservaHistorial;</span>
+    }
+
+    public void setIdReservaHistorial(Long idReservaHistorial) {
+<span class="nc" id="L63">        this.idReservaHistorial = idReservaHistorial;</span>
+<span class="nc" id="L64">    }</span>
+
+    public Date getFechaAlcanzado() {
+<span class="nc" id="L67">        return fechaAlcanzado;</span>
+    }
+
+    public void setFechaAlcanzado(Date fechaAlcanzado) {
+<span class="nc" id="L71">        this.fechaAlcanzado = fechaAlcanzado;</span>
+<span class="nc" id="L72">    }</span>
+
+    public Boolean getActivo() {
+<span class="nc" id="L75">        return activo;</span>
+    }
+
+    public void setActivo(Boolean activo) {
+<span class="nc" id="L79">        this.activo = activo;</span>
+<span class="nc" id="L80">    }</span>
+
+    public Reserva getIdReserva() {
+<span class="nc" id="L83">        return idReserva;</span>
+    }
+
+    public void setIdReserva(Reserva idReserva) {
+<span class="nc" id="L87">        this.idReserva = idReserva;</span>
+<span class="nc" id="L88">    }</span>
+
+    public TipoReservaSecuencia getIdTipoReservaSecuencia() {
+<span class="nc" id="L91">        return idTipoReservaSecuencia;</span>
+    }
+
+    public void setIdTipoReservaSecuencia(TipoReservaSecuencia idTipoReservaSecuencia) {
+<span class="nc" id="L95">        this.idTipoReservaSecuencia = idTipoReservaSecuencia;</span>
+<span class="nc" id="L96">    }</span>
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L100">        int hash = 0;</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">        hash += (idReservaHistorial != null ? idReservaHistorial.hashCode() : 0);</span>
+<span class="nc" id="L102">        return hash;</span>
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+<span class="nc bnc" id="L108" title="All 2 branches missed.">        if (!(object instanceof ReservaHistorial)) {</span>
+<span class="nc" id="L109">            return false;</span>
+        }
+<span class="nc" id="L111">        ReservaHistorial other = (ReservaHistorial) object;</span>
+<span class="nc bnc" id="L112" title="All 8 branches missed.">        if ((this.idReservaHistorial == null &amp;&amp; other.idReservaHistorial != null) || (this.idReservaHistorial != null &amp;&amp; !this.idReservaHistorial.equals(other.idReservaHistorial))) {</span>
+<span class="nc" id="L113">            return false;</span>
+        }
+<span class="nc" id="L115">        return true;</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="nc" id="L120">        return &quot;com.mycompany.entidades.entitys.ReservaHistorial[ idReservaHistorial=&quot; + idReservaHistorial + &quot; ]&quot;;</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

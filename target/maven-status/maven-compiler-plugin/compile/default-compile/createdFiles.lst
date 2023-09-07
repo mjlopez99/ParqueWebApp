@@ -1,0 +1,13 @@
+com\mycompany\parqueowebapp\entitys\TipoReserva.class
+com\mycompany\parqueowebapp\entitys\Area.class
+com\mycompany\parqueowebapp\entitys\EspacioCaracteristica.class
+com\mycompany\parqueowebapp\JakartaRestConfiguration.class
+com\mycompany\parqueowebapp\entitys\TipoReservaSecuencia.class
+com\mycompany\parqueowebapp\Boundary\servlet\TipoReservaServlet.class
+com\mycompany\parqueowebapp\entitys\Reserva.class
+com\mycompany\parqueowebapp\entitys\ReservaHistorial.class
+com\mycompany\parqueowebapp\entitys\TipoEspacio.class
+com\mycompany\parqueowebapp\control\abstractDataAccess.class
+com\mycompany\parqueowebapp\resources\JakartaEE10Resource.class
+com\mycompany\parqueowebapp\control\TipoReservaBean.class
+com\mycompany\parqueowebapp\entitys\Espacio.class

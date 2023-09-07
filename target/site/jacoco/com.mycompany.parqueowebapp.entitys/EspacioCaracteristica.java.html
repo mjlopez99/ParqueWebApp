@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EspacioCaracteristica.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">parqueoWebApp-1.0-SNAPSHOT</a> &gt; <a href="index.source.html" class="el_package">com.mycompany.parqueowebapp.entitys</a> &gt; <span class="el_source">EspacioCaracteristica.java</span></div><h1>EspacioCaracteristica.java</h1><pre class="source lang-java linenums">/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.mycompany.parqueowebapp.entitys;
+
+import jakarta.persistence.Basic;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
+import jakarta.persistence.Table;
+import java.io.Serializable;
+
+/**
+ *
+ * @author mjlopez
+ */
+@Entity
+@Table(name = &quot;espacio_caracteristica&quot;, catalog = &quot;parqueo&quot;, schema = &quot;public&quot;)
+@NamedQueries({
+    @NamedQuery(name = &quot;EspacioCaracteristica.findAll&quot;, query = &quot;SELECT e FROM EspacioCaracteristica e&quot;),
+    @NamedQuery(name = &quot;EspacioCaracteristica.findByIdEspacioCaracteristica&quot;, query = &quot;SELECT e FROM EspacioCaracteristica e WHERE e.idEspacioCaracteristica = :idEspacioCaracteristica&quot;),
+    @NamedQuery(name = &quot;EspacioCaracteristica.findByDescripcion&quot;, query = &quot;SELECT e FROM EspacioCaracteristica e WHERE e.descripcion = :descripcion&quot;),
+    @NamedQuery(name = &quot;EspacioCaracteristica.findByValor&quot;, query = &quot;SELECT e FROM EspacioCaracteristica e WHERE e.valor = :valor&quot;)})
+public class EspacioCaracteristica implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = &quot;id_espacio_caracteristica&quot;)
+    private Long idEspacioCaracteristica;
+    @Column(name = &quot;descripcion&quot;)
+    private String descripcion;
+    @Column(name = &quot;valor&quot;)
+    private String valor;
+    @JoinColumn(name = &quot;id_espacio&quot;, referencedColumnName = &quot;id_espacio&quot;)
+    @ManyToOne
+    private Espacio idEspacio;
+    @JoinColumn(name = &quot;id_tipo_espacio&quot;, referencedColumnName = &quot;id_tipo_espacio&quot;)
+    @ManyToOne
+    private TipoEspacio idTipoEspacio;
+
+<span class="nc" id="L50">    public EspacioCaracteristica() {</span>
+<span class="nc" id="L51">    }</span>
+
+<span class="nc" id="L53">    public EspacioCaracteristica(Long idEspacioCaracteristica) {</span>
+<span class="nc" id="L54">        this.idEspacioCaracteristica = idEspacioCaracteristica;</span>
+<span class="nc" id="L55">    }</span>
+
+    public Long getIdEspacioCaracteristica() {
+<span class="nc" id="L58">        return idEspacioCaracteristica;</span>
+    }
+
+    public void setIdEspacioCaracteristica(Long idEspacioCaracteristica) {
+<span class="nc" id="L62">        this.idEspacioCaracteristica = idEspacioCaracteristica;</span>
+<span class="nc" id="L63">    }</span>
+
+    public String getDescripcion() {
+<span class="nc" id="L66">        return descripcion;</span>
+    }
+
+    public void setDescripcion(String descripcion) {
+<span class="nc" id="L70">        this.descripcion = descripcion;</span>
+<span class="nc" id="L71">    }</span>
+
+    public String getValor() {
+<span class="nc" id="L74">        return valor;</span>
+    }
+
+    public void setValor(String valor) {
+<span class="nc" id="L78">        this.valor = valor;</span>
+<span class="nc" id="L79">    }</span>
+
+    public Espacio getIdEspacio() {
+<span class="nc" id="L82">        return idEspacio;</span>
+    }
+
+    public void setIdEspacio(Espacio idEspacio) {
+<span class="nc" id="L86">        this.idEspacio = idEspacio;</span>
+<span class="nc" id="L87">    }</span>
+
+    public TipoEspacio getIdTipoEspacio() {
+<span class="nc" id="L90">        return idTipoEspacio;</span>
+    }
+
+    public void setIdTipoEspacio(TipoEspacio idTipoEspacio) {
+<span class="nc" id="L94">        this.idTipoEspacio = idTipoEspacio;</span>
+<span class="nc" id="L95">    }</span>
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L99">        int hash = 0;</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">        hash += (idEspacioCaracteristica != null ? idEspacioCaracteristica.hashCode() : 0);</span>
+<span class="nc" id="L101">        return hash;</span>
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+<span class="nc bnc" id="L107" title="All 2 branches missed.">        if (!(object instanceof EspacioCaracteristica)) {</span>
+<span class="nc" id="L108">            return false;</span>
+        }
+<span class="nc" id="L110">        EspacioCaracteristica other = (EspacioCaracteristica) object;</span>
+<span class="nc bnc" id="L111" title="All 8 branches missed.">        if ((this.idEspacioCaracteristica == null &amp;&amp; other.idEspacioCaracteristica != null) || (this.idEspacioCaracteristica != null &amp;&amp; !this.idEspacioCaracteristica.equals(other.idEspacioCaracteristica))) {</span>
+<span class="nc" id="L112">            return false;</span>
+        }
+<span class="nc" id="L114">        return true;</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="nc" id="L119">        return &quot;com.mycompany.entidades.entitys.EspacioCaracteristica[ idEspacioCaracteristica=&quot; + idEspacioCaracteristica + &quot; ]&quot;;</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

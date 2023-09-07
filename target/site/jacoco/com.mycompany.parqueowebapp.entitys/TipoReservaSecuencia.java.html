@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TipoReservaSecuencia.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">parqueoWebApp-1.0-SNAPSHOT</a> &gt; <a href="index.source.html" class="el_package">com.mycompany.parqueowebapp.entitys</a> &gt; <span class="el_source">TipoReservaSecuencia.java</span></div><h1>TipoReservaSecuencia.java</h1><pre class="source lang-java linenums">/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.mycompany.parqueowebapp.entitys;
+
+import jakarta.persistence.Basic;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import java.io.Serializable;
+import java.util.List;
+
+/**
+ *
+ * @author mjlopez
+ */
+@Entity
+@Table(name = &quot;tipo_reserva_secuencia&quot;, catalog = &quot;parqueo&quot;, schema = &quot;public&quot;)
+@NamedQueries({
+    @NamedQuery(name = &quot;TipoReservaSecuencia.findAll&quot;, query = &quot;SELECT t FROM TipoReservaSecuencia t&quot;),
+    @NamedQuery(name = &quot;TipoReservaSecuencia.findByIdTipoReservaSecuencia&quot;, query = &quot;SELECT t FROM TipoReservaSecuencia t WHERE t.idTipoReservaSecuencia = :idTipoReservaSecuencia&quot;),
+    @NamedQuery(name = &quot;TipoReservaSecuencia.findByIndicaFin&quot;, query = &quot;SELECT t FROM TipoReservaSecuencia t WHERE t.indicaFin = :indicaFin&quot;),
+    @NamedQuery(name = &quot;TipoReservaSecuencia.findByNombre&quot;, query = &quot;SELECT t FROM TipoReservaSecuencia t WHERE t.nombre = :nombre&quot;)})
+public class TipoReservaSecuencia implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = &quot;id_tipo_reserva_secuencia&quot;)
+    private Long idTipoReservaSecuencia;
+    @Column(name = &quot;indica_fin&quot;)
+    private Boolean indicaFin;
+    @Column(name = &quot;nombre&quot;)
+    private String nombre;
+    @OneToMany(mappedBy = &quot;idTipoReservaSecuencia&quot;)
+    private List&lt;ReservaHistorial&gt; reservaHistorialList;
+    @JoinColumn(name = &quot;id_tipo_reserva&quot;, referencedColumnName = &quot;id_tipo_reserva&quot;)
+    @ManyToOne
+    private TipoReserva idTipoReserva;
+    @OneToMany(mappedBy = &quot;idTipoReservaSecuenciaPadre&quot;)
+    private List&lt;TipoReservaSecuencia&gt; tipoReservaSecuenciaList;
+    @JoinColumn(name = &quot;id_tipo_reserva_secuencia_padre&quot;, referencedColumnName = &quot;id_tipo_reserva_secuencia&quot;)
+    @ManyToOne
+    private TipoReservaSecuencia idTipoReservaSecuenciaPadre;
+
+<span class="nc" id="L56">    public TipoReservaSecuencia() {</span>
+<span class="nc" id="L57">    }</span>
+
+<span class="nc" id="L59">    public TipoReservaSecuencia(Long idTipoReservaSecuencia) {</span>
+<span class="nc" id="L60">        this.idTipoReservaSecuencia = idTipoReservaSecuencia;</span>
+<span class="nc" id="L61">    }</span>
+
+    public Long getIdTipoReservaSecuencia() {
+<span class="nc" id="L64">        return idTipoReservaSecuencia;</span>
+    }
+
+    public void setIdTipoReservaSecuencia(Long idTipoReservaSecuencia) {
+<span class="nc" id="L68">        this.idTipoReservaSecuencia = idTipoReservaSecuencia;</span>
+<span class="nc" id="L69">    }</span>
+
+    public Boolean getIndicaFin() {
+<span class="nc" id="L72">        return indicaFin;</span>
+    }
+
+    public void setIndicaFin(Boolean indicaFin) {
+<span class="nc" id="L76">        this.indicaFin = indicaFin;</span>
+<span class="nc" id="L77">    }</span>
+
+    public String getNombre() {
+<span class="nc" id="L80">        return nombre;</span>
+    }
+
+    public void setNombre(String nombre) {
+<span class="nc" id="L84">        this.nombre = nombre;</span>
+<span class="nc" id="L85">    }</span>
+
+    public List&lt;ReservaHistorial&gt; getReservaHistorialList() {
+<span class="nc" id="L88">        return reservaHistorialList;</span>
+    }
+
+    public void setReservaHistorialList(List&lt;ReservaHistorial&gt; reservaHistorialList) {
+<span class="nc" id="L92">        this.reservaHistorialList = reservaHistorialList;</span>
+<span class="nc" id="L93">    }</span>
+
+    public TipoReserva getIdTipoReserva() {
+<span class="nc" id="L96">        return idTipoReserva;</span>
+    }
+
+    public void setIdTipoReserva(TipoReserva idTipoReserva) {
+<span class="nc" id="L100">        this.idTipoReserva = idTipoReserva;</span>
+<span class="nc" id="L101">    }</span>
+
+    public List&lt;TipoReservaSecuencia&gt; getTipoReservaSecuenciaList() {
+<span class="nc" id="L104">        return tipoReservaSecuenciaList;</span>
+    }
+
+    public void setTipoReservaSecuenciaList(List&lt;TipoReservaSecuencia&gt; tipoReservaSecuenciaList) {
+<span class="nc" id="L108">        this.tipoReservaSecuenciaList = tipoReservaSecuenciaList;</span>
+<span class="nc" id="L109">    }</span>
+
+    public TipoReservaSecuencia getIdTipoReservaSecuenciaPadre() {
+<span class="nc" id="L112">        return idTipoReservaSecuenciaPadre;</span>
+    }
+
+    public void setIdTipoReservaSecuenciaPadre(TipoReservaSecuencia idTipoReservaSecuenciaPadre) {
+<span class="nc" id="L116">        this.idTipoReservaSecuenciaPadre = idTipoReservaSecuenciaPadre;</span>
+<span class="nc" id="L117">    }</span>
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L121">        int hash = 0;</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">        hash += (idTipoReservaSecuencia != null ? idTipoReservaSecuencia.hashCode() : 0);</span>
+<span class="nc" id="L123">        return hash;</span>
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+<span class="nc bnc" id="L129" title="All 2 branches missed.">        if (!(object instanceof TipoReservaSecuencia)) {</span>
+<span class="nc" id="L130">            return false;</span>
+        }
+<span class="nc" id="L132">        TipoReservaSecuencia other = (TipoReservaSecuencia) object;</span>
+<span class="nc bnc" id="L133" title="All 8 branches missed.">        if ((this.idTipoReservaSecuencia == null &amp;&amp; other.idTipoReservaSecuencia != null) || (this.idTipoReservaSecuencia != null &amp;&amp; !this.idTipoReservaSecuencia.equals(other.idTipoReservaSecuencia))) {</span>
+<span class="nc" id="L134">            return false;</span>
+        }
+<span class="nc" id="L136">        return true;</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="nc" id="L141">        return &quot;com.mycompany.entidades.entitys.TipoReservaSecuencia[ idTipoReservaSecuencia=&quot; + idTipoReservaSecuencia + &quot; ]&quot;;</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
