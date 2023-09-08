@@ -14,6 +14,8 @@ import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
 
@@ -24,7 +26,7 @@ import java.util.List;
 @Entity
 @Table(name = "tipo_reserva", catalog = "parqueo", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "TipoReserva.findAll", query = "SELECT t FROM TipoReserva t"),
+    @NamedQuery(name = "TipoReserva.findAll", query = "SELECT t FROM TipoReserva t ORDER BY t.nombre ASC"),
     @NamedQuery(name = "TipoReserva.findByIdTipoReserva", query = "SELECT t FROM TipoReserva t WHERE t.idTipoReserva = :idTipoReserva"),
     @NamedQuery(name = "TipoReserva.findByNombre", query = "SELECT t FROM TipoReserva t WHERE t.nombre = :nombre"),
     @NamedQuery(name = "TipoReserva.findByPublico", query = "SELECT t FROM TipoReserva t WHERE t.publico = :publico"),
@@ -37,6 +39,8 @@ public class TipoReserva implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_tipo_reserva")
     private Integer idTipoReserva;
+    @NotBlank(message = "nombre no puede estar vacio")
+    @Size(min = 3,max = 155,message = "el nombre debe poseer entre 3 y 155 caracteres")
     @Column(name = "nombre")
     private String nombre;
     @Column(name = "publico")

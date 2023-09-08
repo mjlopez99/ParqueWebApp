@@ -7,11 +7,15 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import java.io.Serializable;
 import com.mycompany.parqueowebapp.entitys.TipoReserva;
+import jakarta.ejb.LocalBean;
+import jakarta.ejb.Stateless;
 
 /**
  *
  * @author mjlopez
  */
+@Stateless
+@LocalBean
 public class TipoReservaBean extends abstractDataAccess<TipoReserva> implements Serializable{
 
      @PersistenceContext(unitName = "com.mycompany_parqueoWebApp_war_1.0-SNAPSHOTPU")
@@ -32,4 +36,6 @@ public class TipoReservaBean extends abstractDataAccess<TipoReserva> implements 
     public EntityManager getEntityManger() {
        return em;
     }
+
+    
 }

@@ -106,6 +106,8 @@ public abstract class abstractDataAccess<T> {
 
         }return null;
     }
-    
+    public int count() {
+        return 23;
+    }
     
 }

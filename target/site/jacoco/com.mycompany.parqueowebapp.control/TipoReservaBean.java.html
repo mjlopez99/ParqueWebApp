@@ -7,19 +7,23 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import java.io.Serializable;
 import com.mycompany.parqueowebapp.entitys.TipoReserva;
+import jakarta.ejb.LocalBean;
+import jakarta.ejb.Stateless;
 
 /**
  *
  * @author mjlopez
  */
+@Stateless
+@LocalBean
 public class TipoReservaBean extends abstractDataAccess&lt;TipoReserva&gt; implements Serializable{
 
      @PersistenceContext(unitName = &quot;com.mycompany_parqueoWebApp_war_1.0-SNAPSHOTPU&quot;)
         EntityManager em;
 
     public TipoReservaBean() {
-<span class="fc" id="L21">        super(TipoReserva.class);</span>
-<span class="fc" id="L22">    }</span>
+<span class="fc" id="L25">        super(TipoReserva.class);</span>
+<span class="fc" id="L26">    }</span>
 
     /**
      almacena un registro en db
@@ -30,7 +34,9 @@ public class TipoReservaBean extends abstractDataAccess&lt;TipoReserva&gt; imple
 
     @Override
     public EntityManager getEntityManger() {
-<span class="fc" id="L33">       return em;</span>
+<span class="fc" id="L37">       return em;</span>
     }
+
+    
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
