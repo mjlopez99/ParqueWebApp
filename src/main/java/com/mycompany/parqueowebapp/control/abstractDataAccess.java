@@ -9,6 +9,7 @@ import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
@@ -57,11 +58,15 @@ public abstract class abstractDataAccess<T> {
                 CriteriaBuilder cb = em.getCriteriaBuilder();
                 CriteriaQuery cq = cb.createQuery(tipoDatos);
                 Root<T> raiz = cq.from(tipoDatos);
+                cq.select(raiz);
+                cq.orderBy(cb.asc(raiz.get("idTipoReserva")));
+                
+                
                 TypedQuery q = em.createQuery(cq);
 
                 q.setFirstResult(first);
                 q.setMaxResults(page);
-                return q.getResultList();
+                return (q.getResultList());
 
             }
 
@@ -107,7 +112,24 @@ public abstract class abstractDataAccess<T> {
         }return null;
     }
     public int count() {
-        return 23;
+         EntityManager em = null;
+        try {
+                em = getEntityManger();
+            } catch (Exception e) {
+                Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
+            }
+            if (em != null) {
+                CriteriaBuilder cb = em.getCriteriaBuilder();
+                CriteriaQuery cq = cb.createQuery(tipoDatos);
+                Root<T> raiz = cq.from(tipoDatos);
+                cq.select(cb.count(raiz));
+                
+                
+                TypedQuery q = em.createQuery(cq);
+
+                return Integer.parseInt(q.getSingleResult().toString());
+            }
+        return 0;
     }
     
 }

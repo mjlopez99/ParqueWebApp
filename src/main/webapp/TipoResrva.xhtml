@@ -7,47 +7,23 @@
     <define name="tabla">
 
         <h:form id="frmTabla">
-            <p:dataTable value="#{frmTipoReserva.modelo}" var="r" lazy="true" paginator="true"
-                         rows="2" 
+            <p:dataTable value="#{frmTipoReserva.modelo}" var="r" 
+                         lazy="true" 
+                         paginator="true"
+                         rows="3" 
                          first="0"
-                         selectionMode="single" 
-                         selection="#{frmTipoReserva.listaRegistros}"
+                         selectionMode="single"
+                         selection="#{frmTipoReserva.registroSelecionado}"
+                         
                          >
+                <p:ajax  process="@this" update=":pnlDetalle" event="rowSelect"/>
+
                 <p:column title="ID"><h:outputText value="#{r.idTipoReserva}"></h:outputText></p:column>
                 <p:column title="NOMBRE"><h:outputText value="#{r.nombre}"></h:outputText></p:column>
-                <p:column title="ID"><h:outputText value="#{r.idTipoReserva}"></h:outputText></p:column>
+                <p:column title="Estado"><h:outputText value="#{r.publico?'ACTIVO':'INACTIVO'}"></h:outputText></p:column>
+                <p:column title="DESCRIPCION"><h:outputText value="#{r.descripcion}"></h:outputText></p:column>
             </p:dataTable>
-            <h:dataTable id="tblPrincipal" value="#{frmTipoReserva.listaRegistros}" var="r">
-                    <h:column>
-                        <f:facet name="header">
-                            ID
-                        </f:facet>
-                        <h:outputText value="#{r.idTipoReserva}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                        NOMBRE
-                    </f:facet>
-                        <h:outputText value="#{r.nombre}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            ACTIVO
-                        </f:facet>
-                        <h:outputText value="#{r.publico?'Activo':'Inactivo'}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            DESCRIPCION
-                        </f:facet>
-                        <h:outputText value="#{r.descripcion}"/>
-                    </h:column>
-                    <h:column>
-                        <h:commandButton value="SELECCIONAR" actionListener="#{frmTipoReserva.btnSeleccionarHandler}">
-                             <f:attribute name="Selecionado" value="#{r.idTipoReserva}"></f:attribute>
-                        </h:commandButton>
-                    </h:column>
-                </h:dataTable>
+            <p:column title="ID"><h:outputText value="#{frmTipoReserva.registroSelecionado==null}"></h:outputText></p:column>
             <h:commandButton value="NUEVO" actionListener="#{frmTipoReserva.btnNuevoHandler}">
                 <f:ajax execute="@this" render=":pnlDetalle" onevent="click"/>
             </h:commandButton>

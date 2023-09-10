@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FrmTipoReserva.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">parqueoWebApp-1.0-SNAPSHOT</a> &gt; <a href="index.source.html" class="el_package">com.mycompany.parqueowebapp.Boundary.jsf</a> &gt; <span class="el_source">FrmTipoReserva.java</span></div><h1>FrmTipoReserva.java</h1><pre class="source lang-java linenums">/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.mycompany.parqueowebapp.Boundary.jsf;
+
+import com.mycompany.parqueowebapp.control.TipoReservaBean;
+import com.mycompany.parqueowebapp.entitys.TipoReserva;
+import jakarta.annotation.PostConstruct;
+import jakarta.faces.event.ActionEvent;
+import jakarta.faces.view.ViewScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
+import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import javax.swing.JOptionPane;
+import org.primefaces.model.FilterMeta;
+import org.primefaces.model.LazyDataModel;
+import org.primefaces.model.SortMeta;
+
+/**
+ *
+ * @author mjlopez
+ */
+@Named
+@ViewScoped
+public class FrmTipoReserva implements Serializable {
+
+    @Inject
+    TipoReservaBean TrBean;//cosas injectadas no estan disponibles en contructor
+    List&lt;TipoReserva&gt; listaRegistros;
+    LazyDataModel&lt;TipoReserva&gt; modelo;
+<span class="nc" id="L37">    TipoReserva registroSelecionado = null;</span>
+
+<span class="nc" id="L39">    public FrmTipoReserva() {</span>
+<span class="nc" id="L40">    }</span>
+
+    @PostConstruct
+    public void inicializar() {
+<span class="nc" id="L44">        InicializarRegistros();</span>
+<span class="nc" id="L45">    }</span>
+
+    public void InicializarRegistros() {
+<span class="nc" id="L48">        this.listaRegistros = TrBean.findRange(0, 100000);</span>
+<span class="nc" id="L49">        this.modelo=new LazyDataModel&lt;TipoReserva&gt;() {</span>
+            @Override
+            public int count(Map&lt;String, FilterMeta&gt; map) {
+<span class="nc" id="L52">               return TrBean.count();</span>
+            }
+
+            @Override
+            public List&lt;TipoReserva&gt; load(int i, int i1, Map&lt;String, SortMeta&gt; map, Map&lt;String, FilterMeta&gt; map1) {
+<span class="nc" id="L57">              return TrBean.findRange(i, i1);</span>
+            }
+
+            @Override
+            public String getRowKey(TipoReserva object) {
+<span class="nc bnc" id="L62" title="All 4 branches missed.">                if (object!=null &amp;&amp; object.getIdTipoReserva()!=null) {</span>
+<span class="nc" id="L63">                    return object.getIdTipoReserva().toString();</span>
+                }
+<span class="nc" id="L65">                return null;</span>
+            }
+
+            @Override
+            public TipoReserva getRowData(String rowKey) {
+<span class="nc bnc" id="L70" title="All 2 branches missed.">                if (rowKey!=null) {</span>
+<span class="nc" id="L71">                    return this.getWrappedData().stream().filter(r-&gt;r.getIdTipoReserva().toString().equals(rowKey)).</span>
+<span class="nc" id="L72">                            collect(Collectors.toList()).get(0);</span>
+                    
+                }
+<span class="nc" id="L75">                return null;</span>
+            }
+            
+        };
+<span class="nc" id="L79">    }</span>
+
+    public void btnNuevoHandler(ActionEvent e) {
+<span class="nc" id="L82">        this.registroSelecionado = new TipoReserva();</span>
+        
+<span class="nc" id="L84">    }</span>
+
+    public void btnGuardarHandler(ActionEvent e) {
+<span class="nc" id="L87">        this.TrBean.create(registroSelecionado);</span>
+<span class="nc" id="L88">        this.listaRegistros=this.TrBean.findRange(0, 10000);</span>
+<span class="nc" id="L89">        this.registroSelecionado = null;</span>
+<span class="nc" id="L90">    }</span>
+
+    public void btnSeleccionarHandler(ActionEvent ex) {
+<span class="nc" id="L93">        Integer id = (Integer) ex.getComponent().getAttributes().get(&quot;Selecionado&quot;);</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">        if (id != null) {</span>
+<span class="nc" id="L95">            this.registroSelecionado = TrBean.findById(id);</span>
+        }
+
+<span class="nc" id="L98">    }</span>
+    public void btnCancelarHandler(ActionEvent ex) {
+<span class="nc" id="L100">        this.registroSelecionado=null;</span>
+<span class="nc" id="L101">    }</span>
+
+    public void btnModificarHandler(ActionEvent ex) {
+<span class="nc" id="L104">        TipoReserva modificado = this.TrBean.modify(registroSelecionado);</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">        if (modificado != null) {</span>
+            //notificar que se elimino3
+<span class="nc" id="L107">            this.listaRegistros=this.TrBean.findRange(0, 10000);</span>
+<span class="nc" id="L108">            this.registroSelecionado = null;</span>
+        }
+        //
+<span class="nc" id="L111">    }</span>
+
+    public TipoReservaBean getTrBean() {
+<span class="nc" id="L114">        return TrBean;</span>
+    }
+
+    public void setTrBean(TipoReservaBean TrBean) {
+<span class="nc" id="L118">        this.TrBean = TrBean;</span>
+<span class="nc" id="L119">    }</span>
+
+    public List&lt;TipoReserva&gt; getListaRegistros() {
+<span class="nc" id="L122">        return this.listaRegistros;</span>
+    }
+
+    public void setListaRegistros(List&lt;TipoReserva&gt; listaRegistros) {
+<span class="nc" id="L126">        this.listaRegistros = listaRegistros;</span>
+<span class="nc" id="L127">    }</span>
+
+    public TipoReserva getRegistroSelecionado() {
+<span class="nc" id="L130">        return registroSelecionado;</span>
+    }
+
+    public void setRegistroSelecionado(TipoReserva registroSelecionado) {
+<span class="nc" id="L134">        this.registroSelecionado = registroSelecionado;</span>
+<span class="nc" id="L135">    }</span>
+
+    public LazyDataModel&lt;TipoReserva&gt; getModelo() {
+<span class="nc" id="L138">        return this.modelo;</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

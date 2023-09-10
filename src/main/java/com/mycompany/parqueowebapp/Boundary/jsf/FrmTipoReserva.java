@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import javax.swing.JOptionPane;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortMeta;
@@ -38,12 +40,12 @@ public class FrmTipoReserva implements Serializable {
     }
 
     @PostConstruct
-    public void inicializarRegistros() {
+    public void inicializar() {
         InicializarRegistros();
     }
 
     public void InicializarRegistros() {
-        this.listaRegistros = TrBean.findRange(0, 10000);
+        this.listaRegistros = TrBean.findRange(0, 100000);
         this.modelo=new LazyDataModel<TipoReserva>() {
             @Override
             public int count(Map<String, FilterMeta> map) {
@@ -52,8 +54,27 @@ public class FrmTipoReserva implements Serializable {
 
             @Override
             public List<TipoReserva> load(int i, int i1, Map<String, SortMeta> map, Map<String, FilterMeta> map1) {
-              return TrBean.findRange(i1, i1);
+              return TrBean.findRange(i, i1);
             }
+
+            @Override
+            public String getRowKey(TipoReserva object) {
+                if (object!=null && object.getIdTipoReserva()!=null) {
+                    return object.getIdTipoReserva().toString();
+                }
+                return null;
+            }
+
+            @Override
+            public TipoReserva getRowData(String rowKey) {
+                if (rowKey!=null) {
+                    return this.getWrappedData().stream().filter(r->r.getIdTipoReserva().toString().equals(rowKey)).
+                            collect(Collectors.toList()).get(0);
+                    
+                }
+                return null;
+            }
+            
         };
     }
 
@@ -98,7 +119,7 @@ public class FrmTipoReserva implements Serializable {
     }
 
     public List<TipoReserva> getListaRegistros() {
-        return listaRegistros;
+        return this.listaRegistros;
     }
 
     public void setListaRegistros(List<TipoReserva> listaRegistros) {

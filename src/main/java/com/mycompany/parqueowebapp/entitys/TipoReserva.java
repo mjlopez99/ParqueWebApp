@@ -26,11 +26,12 @@ import java.util.List;
 @Entity
 @Table(name = "tipo_reserva", catalog = "parqueo", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "TipoReserva.findAll", query = "SELECT t FROM TipoReserva t ORDER BY t.nombre ASC"),
-    @NamedQuery(name = "TipoReserva.findByIdTipoReserva", query = "SELECT t FROM TipoReserva t WHERE t.idTipoReserva = :idTipoReserva"),
-    @NamedQuery(name = "TipoReserva.findByNombre", query = "SELECT t FROM TipoReserva t WHERE t.nombre = :nombre"),
-    @NamedQuery(name = "TipoReserva.findByPublico", query = "SELECT t FROM TipoReserva t WHERE t.publico = :publico"),
-    @NamedQuery(name = "TipoReserva.findByDescripcion", query = "SELECT t FROM TipoReserva t WHERE t.descripcion = :descripcion")})
+    @NamedQuery(name = "TipoReserva.findAll", query = "SELECT t FROM TipoReserva t ORDER BY t.idTipoReserva"),
+//    @NamedQuery(name = "TipoReserva.findByIdTipoReserva", query = "SELECT t FROM TipoReserva t WHERE t.idTipoReserva = :idTipoReserva"),
+//    @NamedQuery(name = "TipoReserva.findByNombre", query = "SELECT t FROM TipoReserva t WHERE t.nombre = :nombre"),
+//    @NamedQuery(name = "TipoReserva.findByPublico", query = "SELECT t FROM TipoReserva t WHERE t.publico = :publico"),
+//    @NamedQuery(name = "TipoReserva.findByDescripcion", query = "SELECT t FROM TipoReserva t WHERE t.descripcion = :descripcion")
+})
 public class TipoReserva implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -26,11 +26,12 @@ import java.util.List;
 @Entity
 @Table(name = &quot;tipo_reserva&quot;, catalog = &quot;parqueo&quot;, schema = &quot;public&quot;)
 @NamedQueries({
-    @NamedQuery(name = &quot;TipoReserva.findAll&quot;, query = &quot;SELECT t FROM TipoReserva t ORDER BY t.nombre ASC&quot;),
-    @NamedQuery(name = &quot;TipoReserva.findByIdTipoReserva&quot;, query = &quot;SELECT t FROM TipoReserva t WHERE t.idTipoReserva = :idTipoReserva&quot;),
-    @NamedQuery(name = &quot;TipoReserva.findByNombre&quot;, query = &quot;SELECT t FROM TipoReserva t WHERE t.nombre = :nombre&quot;),
-    @NamedQuery(name = &quot;TipoReserva.findByPublico&quot;, query = &quot;SELECT t FROM TipoReserva t WHERE t.publico = :publico&quot;),
-    @NamedQuery(name = &quot;TipoReserva.findByDescripcion&quot;, query = &quot;SELECT t FROM TipoReserva t WHERE t.descripcion = :descripcion&quot;)})
+    @NamedQuery(name = &quot;TipoReserva.findAll&quot;, query = &quot;SELECT t FROM TipoReserva t ORDER BY t.idTipoReserva&quot;),
+//    @NamedQuery(name = &quot;TipoReserva.findByIdTipoReserva&quot;, query = &quot;SELECT t FROM TipoReserva t WHERE t.idTipoReserva = :idTipoReserva&quot;),
+//    @NamedQuery(name = &quot;TipoReserva.findByNombre&quot;, query = &quot;SELECT t FROM TipoReserva t WHERE t.nombre = :nombre&quot;),
+//    @NamedQuery(name = &quot;TipoReserva.findByPublico&quot;, query = &quot;SELECT t FROM TipoReserva t WHERE t.publico = :publico&quot;),
+//    @NamedQuery(name = &quot;TipoReserva.findByDescripcion&quot;, query = &quot;SELECT t FROM TipoReserva t WHERE t.descripcion = :descripcion&quot;)
+})
 public class TipoReserva implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -52,84 +53,84 @@ public class TipoReserva implements Serializable {
     @OneToMany(mappedBy = &quot;idTipoReserva&quot;)
     private List&lt;Reserva&gt; reservaList;
 
-<span class="nc" id="L55">    public TipoReserva() {</span>
-<span class="nc" id="L56">    }</span>
+<span class="nc" id="L56">    public TipoReserva() {</span>
+<span class="nc" id="L57">    }</span>
 
-<span class="nc" id="L58">    public TipoReserva(Integer idTipoReserva) {</span>
-<span class="nc" id="L59">        this.idTipoReserva = idTipoReserva;</span>
-<span class="nc" id="L60">    }</span>
+<span class="nc" id="L59">    public TipoReserva(Integer idTipoReserva) {</span>
+<span class="nc" id="L60">        this.idTipoReserva = idTipoReserva;</span>
+<span class="nc" id="L61">    }</span>
 
     public Integer getIdTipoReserva() {
-<span class="nc" id="L63">        return idTipoReserva;</span>
+<span class="nc" id="L64">        return idTipoReserva;</span>
     }
 
     public void setIdTipoReserva(Integer idTipoReserva) {
-<span class="nc" id="L67">        this.idTipoReserva = idTipoReserva;</span>
-<span class="nc" id="L68">    }</span>
+<span class="nc" id="L68">        this.idTipoReserva = idTipoReserva;</span>
+<span class="nc" id="L69">    }</span>
 
     public String getNombre() {
-<span class="nc" id="L71">        return nombre;</span>
+<span class="nc" id="L72">        return nombre;</span>
     }
 
     public void setNombre(String nombre) {
-<span class="nc" id="L75">        this.nombre = nombre;</span>
-<span class="nc" id="L76">    }</span>
+<span class="nc" id="L76">        this.nombre = nombre;</span>
+<span class="nc" id="L77">    }</span>
 
     public Boolean getPublico() {
-<span class="nc" id="L79">        return publico;</span>
+<span class="nc" id="L80">        return publico;</span>
     }
 
     public void setPublico(Boolean publico) {
-<span class="nc" id="L83">        this.publico = publico;</span>
-<span class="nc" id="L84">    }</span>
+<span class="nc" id="L84">        this.publico = publico;</span>
+<span class="nc" id="L85">    }</span>
 
     public String getDescripcion() {
-<span class="nc" id="L87">        return descripcion;</span>
+<span class="nc" id="L88">        return descripcion;</span>
     }
 
     public void setDescripcion(String descripcion) {
-<span class="nc" id="L91">        this.descripcion = descripcion;</span>
-<span class="nc" id="L92">    }</span>
+<span class="nc" id="L92">        this.descripcion = descripcion;</span>
+<span class="nc" id="L93">    }</span>
 
     public List&lt;TipoReservaSecuencia&gt; getTipoReservaSecuenciaList() {
-<span class="nc" id="L95">        return tipoReservaSecuenciaList;</span>
+<span class="nc" id="L96">        return tipoReservaSecuenciaList;</span>
     }
 
     public void setTipoReservaSecuenciaList(List&lt;TipoReservaSecuencia&gt; tipoReservaSecuenciaList) {
-<span class="nc" id="L99">        this.tipoReservaSecuenciaList = tipoReservaSecuenciaList;</span>
-<span class="nc" id="L100">    }</span>
+<span class="nc" id="L100">        this.tipoReservaSecuenciaList = tipoReservaSecuenciaList;</span>
+<span class="nc" id="L101">    }</span>
 
     public List&lt;Reserva&gt; getReservaList() {
-<span class="nc" id="L103">        return reservaList;</span>
+<span class="nc" id="L104">        return reservaList;</span>
     }
 
     public void setReservaList(List&lt;Reserva&gt; reservaList) {
-<span class="nc" id="L107">        this.reservaList = reservaList;</span>
-<span class="nc" id="L108">    }</span>
+<span class="nc" id="L108">        this.reservaList = reservaList;</span>
+<span class="nc" id="L109">    }</span>
 
     @Override
     public int hashCode() {
-<span class="nc" id="L112">        int hash = 0;</span>
-<span class="nc bnc" id="L113" title="All 2 branches missed.">        hash += (idTipoReserva != null ? idTipoReserva.hashCode() : 0);</span>
-<span class="nc" id="L114">        return hash;</span>
+<span class="nc" id="L113">        int hash = 0;</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">        hash += (idTipoReserva != null ? idTipoReserva.hashCode() : 0);</span>
+<span class="nc" id="L115">        return hash;</span>
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-<span class="nc bnc" id="L120" title="All 2 branches missed.">        if (!(object instanceof TipoReserva)) {</span>
-<span class="nc" id="L121">            return false;</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">        if (!(object instanceof TipoReserva)) {</span>
+<span class="nc" id="L122">            return false;</span>
         }
-<span class="nc" id="L123">        TipoReserva other = (TipoReserva) object;</span>
-<span class="nc bnc" id="L124" title="All 8 branches missed.">        if ((this.idTipoReserva == null &amp;&amp; other.idTipoReserva != null) || (this.idTipoReserva != null &amp;&amp; !this.idTipoReserva.equals(other.idTipoReserva))) {</span>
-<span class="nc" id="L125">            return false;</span>
+<span class="nc" id="L124">        TipoReserva other = (TipoReserva) object;</span>
+<span class="nc bnc" id="L125" title="All 8 branches missed.">        if ((this.idTipoReserva == null &amp;&amp; other.idTipoReserva != null) || (this.idTipoReserva != null &amp;&amp; !this.idTipoReserva.equals(other.idTipoReserva))) {</span>
+<span class="nc" id="L126">            return false;</span>
         }
-<span class="nc" id="L127">        return true;</span>
+<span class="nc" id="L128">        return true;</span>
     }
 
     @Override
     public String toString() {
-<span class="nc" id="L132">        return &quot;com.mycompany.entidades.entitys.TipoReserva[ idTipoReserva=&quot; + idTipoReserva + &quot; ]&quot;;</span>
+<span class="nc" id="L133">        return &quot;com.mycompany.entidades.entitys.TipoReserva[ idTipoReserva=&quot; + idTipoReserva + &quot; ]&quot;;</span>
     }
     
 }

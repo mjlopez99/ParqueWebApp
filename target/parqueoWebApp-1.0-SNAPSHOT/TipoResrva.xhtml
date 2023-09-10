@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<composition xmlns="jakarta.faces.facelets"
+             template="./WEB-INF/templates/raiz.xhtml"
+             xmlns:h="jakarta.faces.html"
+             xmlns:f="jakarta.faces.core"
+             xmlns:p="http://primefaces.org/ui">
+    <define name="tabla">
+
+        <h:form id="frmTabla">
+            <p:dataTable value="#{frmTipoReserva.modelo}" var="r" 
+                         lazy="true" 
+                         paginator="true"
+                         rows="3" 
+                         first="0"
+                         selectionMode="single"
+                         selection="#{frmTipoReserva.registroSelecionado}"
+                         
+                         >
+                <p:ajax  process="@this" update=":pnlDetalle" event="rowSelect"/>
+
+                <p:column title="ID"><h:outputText value="#{r.idTipoReserva}"></h:outputText></p:column>
+                <p:column title="NOMBRE"><h:outputText value="#{r.nombre}"></h:outputText></p:column>
+                <p:column title="Estado"><h:outputText value="#{r.publico?'ACTIVO':'INACTIVO'}"></h:outputText></p:column>
+                <p:column title="DESCRIPCION"><h:outputText value="#{r.descripcion}"></h:outputText></p:column>
+            </p:dataTable>
+            <p:column title="ID"><h:outputText value="#{frmTipoReserva.registroSelecionado==null}"></h:outputText></p:column>
+            <h:commandButton value="NUEVO" actionListener="#{frmTipoReserva.btnNuevoHandler}">
+                <f:ajax execute="@this" render=":pnlDetalle" onevent="click"/>
+            </h:commandButton>
+            <h:commandButton value="Cancelar" actionListener="#{frmTipoReserva.btnCancelarHandler}" rendered="#{not empty frmTipoReserva.registroSelecionado}"/>
+        </h:form>
+    </define>
+    <define name="detalle">
+        <h:panelGroup id="pnlDetalle" rendered="#{not empty frmTipoReserva.registroSelecionado}">
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="ID" for="txtid"></h:outputLabel>
+                    <h:inputText id="txtid" value="#{frmTipoReserva.registroSelecionado.idTipoReserva}" readonly="true" disabled="true"></h:inputText>
+
+                    <h:outputLabel value="Nombre" for="txtNombre"></h:outputLabel>
+                    <h:inputText id="txtNombre" value="#{frmTipoReserva.registroSelecionado.nombre}" size="70" ></h:inputText>
+
+                    <h:outputLabel value="Publico" for="chkPublico"></h:outputLabel>
+                    <h:selectBooleanCheckbox id="chkPublico" value="#{frmTipoReserva.registroSelecionado.publico}"></h:selectBooleanCheckbox>
+
+                    <h:outputLabel value="Descripcion" for="txtDescripcion"></h:outputLabel>
+                    <h:inputTextarea id="txtDescripcion" value="#{frmTipoReserva.registroSelecionado.descripcion}" cols="70" rows="3"></h:inputTextarea>
+                </h:panelGrid>
+                <h:commandButton value="GUARDAR" actionListener="#{frmTipoReserva.btnGuardarHandler}"></h:commandButton>
+                <h:commandButton value="MODIFICAR" actionListener="#{frmTipoReserva.btnModificarHandler}"></h:commandButton>
+                <h:messages/>
+            </h:form>
+        </h:panelGroup>
+    </define>
+</composition>
