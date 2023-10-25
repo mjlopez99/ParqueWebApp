@@ -4,7 +4,7 @@
  */
 package com.mycompany.parqueowebapp.Boundary.servlet;
 
-import com.mycompany.parqueowebapp.control.TipoReservaBean;
+import com.mycompany.parqueowebapp.control.beanParaPruebas;
 import com.mycompany.parqueowebapp.entitys.TipoReserva;
 import jakarta.inject.Inject;
 import java.io.IOException;
@@ -25,7 +25,7 @@ import java.util.logging.Logger;
 public class TipoReservaServlet extends HttpServlet {
 
     @Inject
-    TipoReservaBean trBean;
+        beanParaPruebas trBean;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -67,7 +67,7 @@ public class TipoReservaServlet extends HttpServlet {
                     nuevo.setDescripcion(descripcion);
                     nuevo.setNombre(nombre);
                     nuevo.setPublico(publico);
-                    nuevo.setIdTipoReserva(10);
+                    nuevo.setIdTipoReserva(1);
                     try {
                         trBean.create(nuevo);
                         out.println("<p>Registro creado exitosamente </p>");

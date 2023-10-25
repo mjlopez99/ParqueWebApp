@@ -1,0 +1,68 @@
+
+<composition xmlns="http://xmlns.jcp.org/jsf/facelets"
+             template="./WEB-INF/templates/raiz.xhtml"
+             xmlns:h="http://xmlns.jcp.org/jsf/html"
+             xmlns:f="http://xmlns.jcp.org/jsf/core"
+             xmlns:p="http://primefaces.org/ui"
+             xmlns:btnPark="jakarta.faces.composite/btnPark"
+             xmlns:btnParkDown="jakarta.faces.composite/btnParkDown">
+    <define name="tabla">
+        <h:form id="frmTabla" class="tabla-principal">
+            <h:outputText>Area de parqueo</h:outputText>
+            <p:treeTable value="#{frmArea.root}" var="node" selectionMode="single" selection="#{frmArea.nodoSelecionado}">
+                <p:column headerText="parqueo">
+                    <h:outputText value="#{node.nombre}"/>
+                </p:column>
+                <p:ajax event="select" listener="#{frmArea.onNodeSelect}" update="pnlDetalle frmTabla"/>
+            </p:treeTable>
+
+            <btnPark:botonesTop bean="#{frmArea}"/>
+        </h:form>
+    </define>
+    <define name="detalle">
+        <h:panelGroup id="pnlDetalle">
+            <h:form rendered="#{not empty frmArea.nodoSelecionado}" id="frmDetalle">
+
+                <p:tabView id="tabViewAreas">
+                     <p:tab title="espacios" disabled="#{frmArea.estado!='MODIFICAR'}" closable="false">
+                        <h:form id="frmTblEspacio">
+                            <p:dataTable value="#{frmArea.frme.modelo}" var="re" 
+                                         lazy="true" 
+                                         paginator="true"
+                                         rows="5" 
+                                         first="0"
+                                         selectionMode="single"
+                                         selection="#{frmArea.frme.registroSelecionado}"
+                                         rendered="#{empty frmArea.frme.registroSelecionado}"
+                                         >
+                                <p:ajax  process="@this" event="rowSelect" listener="#{frmArea.selecionarRegistro}"></p:ajax>
+                                <p:outputLabel>'hola'</p:outputLabel>
+                                <p:column title="ID"><h:outputText value="#{re.idEspacio}"></h:outputText></p:column>
+                                <p:column title="NOMBRE"><h:outputText value="#{re.nombre}"></h:outputText></p:column>
+                                <p:column title="ESTADO"><h:outputText value="#{re.activo?'ACTIVO':'INACTIVO'}"></h:outputText></p:column>
+                                <p:column title="OBSERVACION"><h:outputText value="#{re.observaciones}"></h:outputText></p:column>
+                            </p:dataTable>
+                        </h:form>
+                    </p:tab>
+                    <p:tab title="generalidades">
+
+                        <p:panelGrid columns="2" id="informacio-area">
+                            <p:outputLabel value="id:" styleClass="letraNegra" />
+                            <p:inputText  value="#{frmArea.nodoSelecionado.data.idArea}" styleClass="letraNegra" readonly="True"/>
+
+                            <p:outputLabel value="NOMBRE:" styleClass="letraNegra" />
+                            <p:inputText  value="#{frmArea.nodoSelecionado.data.nombre}" styleClass="letraNegra" />
+
+                            <p:outputLabel value="Nombre:" styleClass="letraNegra" />
+                            <p:inputText  value="#{frmArea.nodoSelecionado.data.descripcion}" styleClass="letraNegra" />
+                        </p:panelGrid>
+                    </p:tab>
+                   
+                </p:tabView>
+                <btnParkDown:botonDown bean="#{frmArea}"/>
+
+                <p:messages for="frmDetalle" />
+            </h:form>
+        </h:panelGroup>
+    </define>
+</composition>

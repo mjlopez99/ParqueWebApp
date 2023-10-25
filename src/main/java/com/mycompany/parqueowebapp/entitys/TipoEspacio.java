@@ -4,6 +4,7 @@
  */
 package com.mycompany.parqueowebapp.entitys;
 
+import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,7 +21,7 @@ import java.util.List;
  * @author mjlopez
  */
 @Entity
-@Table(name = "tipo_espacio", catalog = "parqueo", schema = "public")
+@Table(name = "tipo_espacio", schema = "public")
 @NamedQueries({
     @NamedQuery(name = "TipoEspacio.findAll", query = "SELECT t FROM TipoEspacio t"),
     @NamedQuery(name = "TipoEspacio.findByIdTipoEspacio", query = "SELECT t FROM TipoEspacio t WHERE t.idTipoEspacio = :idTipoEspacio"),
@@ -59,7 +60,9 @@ public class TipoEspacio implements Serializable {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
+    @JsonbTransient
+//    @JsonbTransient se utiliza en el contexto de la especificación de Java API for JSON Binding (JSON-B) para indicar 
+//            que un campo o método debe ser ignorado durante la serialización y deserialización a/desde JSON. 
     public List<EspacioCaracteristica> getEspacioCaracteristicaList() {
         return espacioCaracteristicaList;
     }

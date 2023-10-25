@@ -13,9 +13,22 @@
     </properties>
     
     <dependencies>
+        <!--pruebas de unidad-->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
+            <version>5.6.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.6.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
             <version>5.6.0</version>
             <scope>test</scope>
         </dependency>
@@ -25,6 +38,7 @@
             <version>${jakartaee}</version>
             <scope>provided</scope>
         </dependency>
+        <!--mockito-->
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>

@@ -23,7 +23,7 @@ import java.util.Date;
  * @author mjlopez
  */
 @Entity
-@Table(name = "reserva_historial", catalog = "parqueo", schema = "public")
+@Table(name = "reserva_historial", schema = "public")
 @NamedQueries({
     @NamedQuery(name = "ReservaHistorial.findAll", query = "SELECT r FROM ReservaHistorial r"),
     @NamedQuery(name = "ReservaHistorial.findByIdReservaHistorial", query = "SELECT r FROM ReservaHistorial r WHERE r.idReservaHistorial = :idReservaHistorial"),

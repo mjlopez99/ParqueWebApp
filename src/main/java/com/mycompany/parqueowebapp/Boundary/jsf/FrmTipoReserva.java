@@ -5,22 +5,14 @@
 package com.mycompany.parqueowebapp.Boundary.jsf;
 
 import com.mycompany.parqueowebapp.control.TipoReservaBean;
+import com.mycompany.parqueowebapp.control.abstractDataAccess;
 import com.mycompany.parqueowebapp.entitys.TipoReserva;
-import jakarta.annotation.PostConstruct;
-import jakarta.faces.event.ActionEvent;
+import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import java.io.Serializable;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
-import javax.swing.JOptionPane;
-import org.primefaces.model.FilterMeta;
-import org.primefaces.model.LazyDataModel;
-import org.primefaces.model.SortMeta;
 
 /**
  *
@@ -28,114 +20,42 @@ import org.primefaces.model.SortMeta;
  */
 @Named
 @ViewScoped
-public class FrmTipoReserva implements Serializable {
+public class FrmTipoReserva extends AbstractFrm<TipoReserva> implements Serializable {
 
     @Inject
-    TipoReservaBean TrBean;//cosas injectadas no estan disponibles en contructor
-    List<TipoReserva> listaRegistros;
-    LazyDataModel<TipoReserva> modelo;
-    TipoReserva registroSelecionado = null;
+    TipoReservaBean trBean;
+    @Inject
+    FacesContext Fc;
 
-    public FrmTipoReserva() {
+    @Override
+    public abstractDataAccess<TipoReserva> getDataAccess() {
+        return this.trBean;
     }
 
-    @PostConstruct
-    public void inicializar() {
-        InicializarRegistros();
-    }
+    @Override
+    public String getIdObject(TipoReserva object) {
 
-    public void InicializarRegistros() {
-        this.listaRegistros = TrBean.findRange(0, 100000);
-        this.modelo=new LazyDataModel<TipoReserva>() {
-            @Override
-            public int count(Map<String, FilterMeta> map) {
-               return TrBean.count();
-            }
-
-            @Override
-            public List<TipoReserva> load(int i, int i1, Map<String, SortMeta> map, Map<String, FilterMeta> map1) {
-              return TrBean.findRange(i, i1);
-            }
-
-            @Override
-            public String getRowKey(TipoReserva object) {
-                if (object!=null && object.getIdTipoReserva()!=null) {
-                    return object.getIdTipoReserva().toString();
-                }
-                return null;
-            }
-
-            @Override
-            public TipoReserva getRowData(String rowKey) {
-                if (rowKey!=null) {
-                    return this.getWrappedData().stream().filter(r->r.getIdTipoReserva().toString().equals(rowKey)).
-                            collect(Collectors.toList()).get(0);
-                    
-                }
-                return null;
-            }
-            
-        };
-    }
-
-    public void btnNuevoHandler(ActionEvent e) {
-        this.registroSelecionado = new TipoReserva();
-        
-    }
-
-    public void btnGuardarHandler(ActionEvent e) {
-        this.TrBean.create(registroSelecionado);
-        this.listaRegistros=this.TrBean.findRange(0, 10000);
-        this.registroSelecionado = null;
-    }
-
-    public void btnSeleccionarHandler(ActionEvent ex) {
-        Integer id = (Integer) ex.getComponent().getAttributes().get("Selecionado");
-        if (id != null) {
-            this.registroSelecionado = TrBean.findById(id);
+        if (object != null && object.getIdTipoReserva() != null) {
+            return object.getIdTipoReserva().toString();
         }
-
-    }
-    public void btnCancelarHandler(ActionEvent ex) {
-        this.registroSelecionado=null;
+        return null;
     }
 
-    public void btnModificarHandler(ActionEvent ex) {
-        TipoReserva modificado = this.TrBean.modify(registroSelecionado);
-        if (modificado != null) {
-            //notificar que se elimino3
-            this.listaRegistros=this.TrBean.findRange(0, 10000);
-            this.registroSelecionado = null;
+    @Override
+    public TipoReserva getObjectId(String id) {
+        if (id != null && this.modelo != null && this.modelo.getWrappedData() != null) {
+            return this.modelo.getWrappedData().stream().filter(r -> r.getIdTipoReserva().toString().equals(id)).collect(Collectors.toList()).get(0);
         }
-        //
+        return null;
     }
 
-    public TipoReservaBean getTrBean() {
-        return TrBean;
+    @Override
+    public void instanciarRegistro() {
+        this.registroSelecionado=new TipoReserva();
     }
 
-    public void setTrBean(TipoReservaBean TrBean) {
-        this.TrBean = TrBean;
+    @Override
+    public FacesContext getFC() {
+        return this.Fc;
     }
-
-    public List<TipoReserva> getListaRegistros() {
-        return this.listaRegistros;
-    }
-
-    public void setListaRegistros(List<TipoReserva> listaRegistros) {
-        this.listaRegistros = listaRegistros;
-    }
-
-    public TipoReserva getRegistroSelecionado() {
-        return registroSelecionado;
-    }
-
-    public void setRegistroSelecionado(TipoReserva registroSelecionado) {
-        this.registroSelecionado = registroSelecionado;
-    }
-
-    public LazyDataModel<TipoReserva> getModelo() {
-        return this.modelo;
-    }
-    
 }

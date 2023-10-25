@@ -27,7 +27,7 @@ import java.util.List;
  * @author mjlopez
  */
 @Entity
-@Table(name = "reserva", catalog = "parqueo", schema = "public")
+@Table(name = "reserva", schema = "public")
 @NamedQueries({
     @NamedQuery(name = "Reserva.findAll", query = "SELECT r FROM Reserva r"),
     @NamedQuery(name = "Reserva.findByIdReserva", query = "SELECT r FROM Reserva r WHERE r.idReserva = :idReserva"),

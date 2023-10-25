@@ -6,10 +6,98 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     Created on : 8 sep. 2023, 09:50:00
     Author     : mjlopez
 */
+/*//varibles*/
 
+:root{
+    --color-primario:#0e4c75;
+    --color-secundario:#3c92cb;
+    --tamanio-titulo:44px;
+    --tamanio-texto:18px;
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 body{
-    background-color: black;
+    background-color: var(--color-primario);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 80px;
 }
 td{
+    color: black;
+}
+h1{
     color: white;
+    font-size: var(--tamanio-titulo);
+
+}
+.notificaciones{
+    display: none;
+}
+
+body .ui-panelgrid .ui-panelgrid-cell{
+    /*background-color: var(--color-primario);*/
+}
+.letraNegra{
+    color: black;
+}
+.selector--dioma{
+    width: 100px;
+    height: 24px;
+    border-radius: 8px;
+}
+.selector--dioma:hover{
+    transition: ease-in-out 500ms all;
+    transform: scale(1.05);
+}
+#frmTabla{
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+}
+#frmTabla .ui-datatable .ui-paginator.ui-paginator-top, .ui-paginator.ui-paginator-bottom {
+    background-color: var(--color-secundario);
+    color: black;
+
+}
+#frmTabla .ui-datatable  .ui-paginator  a{
+    color: black;
+}
+#frmTabla .btns{
+    margin: 24px 24px 24px 0;
+    max-width: 100px;
+    padding: 4px 4px
+}
+#frmTabla .btns,#frmDetalle .btns{
+    margin: 24px 24px 24px 0;
+    max-width: 100px;
+    padding: 4px 4px
+}
+#frmTabla .btns--container,#frmDetalle .btns--container{
+    display: flex;
+    justify-content: center;
+
+}
+.btns:hover{
+   transition: ease-in-out 500ms all;
+    transform: scale(1.05);
+}
+#frmDetalle span{
+    color: white;
+    font-size: var(--tamanio-texto);
+    margin-right: 16px;
+}
+#pnlDetalle{
+    width: 90%;
+    color: black;
+}
+#pnlDetalle .letraNegra span{
+    color: black;
+}
+#pnlDetalle #informacio-area .ui-panelgrid-cell ui-g-12 ui-md-6{
+    background-color: black;
 }

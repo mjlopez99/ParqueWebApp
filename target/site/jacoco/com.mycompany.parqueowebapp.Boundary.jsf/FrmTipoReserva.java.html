@@ -5,22 +5,14 @@
 package com.mycompany.parqueowebapp.Boundary.jsf;
 
 import com.mycompany.parqueowebapp.control.TipoReservaBean;
+import com.mycompany.parqueowebapp.control.abstractDataAccess;
 import com.mycompany.parqueowebapp.entitys.TipoReserva;
-import jakarta.annotation.PostConstruct;
-import jakarta.faces.event.ActionEvent;
+import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import java.io.Serializable;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
-import javax.swing.JOptionPane;
-import org.primefaces.model.FilterMeta;
-import org.primefaces.model.LazyDataModel;
-import org.primefaces.model.SortMeta;
 
 /**
  *
@@ -28,115 +20,43 @@ import org.primefaces.model.SortMeta;
  */
 @Named
 @ViewScoped
-public class FrmTipoReserva implements Serializable {
+<span class="nc" id="L23">public class FrmTipoReserva extends AbstractFrm&lt;TipoReserva&gt; implements Serializable {</span>
 
     @Inject
-    TipoReservaBean TrBean;//cosas injectadas no estan disponibles en contructor
-    List&lt;TipoReserva&gt; listaRegistros;
-    LazyDataModel&lt;TipoReserva&gt; modelo;
-<span class="nc" id="L37">    TipoReserva registroSelecionado = null;</span>
+    TipoReservaBean trBean;
+    @Inject
+    FacesContext Fc;
 
-<span class="nc" id="L39">    public FrmTipoReserva() {</span>
-<span class="nc" id="L40">    }</span>
+    @Override
+    public abstractDataAccess&lt;TipoReserva&gt; getDataAccess() {
+<span class="nc" id="L32">        return this.trBean;</span>
+    }
 
-    @PostConstruct
-    public void inicializar() {
-<span class="nc" id="L44">        InicializarRegistros();</span>
-<span class="nc" id="L45">    }</span>
+    @Override
+    public String getIdObject(TipoReserva object) {
 
-    public void InicializarRegistros() {
-<span class="nc" id="L48">        this.listaRegistros = TrBean.findRange(0, 100000);</span>
-<span class="nc" id="L49">        this.modelo=new LazyDataModel&lt;TipoReserva&gt;() {</span>
-            @Override
-            public int count(Map&lt;String, FilterMeta&gt; map) {
-<span class="nc" id="L52">               return TrBean.count();</span>
-            }
-
-            @Override
-            public List&lt;TipoReserva&gt; load(int i, int i1, Map&lt;String, SortMeta&gt; map, Map&lt;String, FilterMeta&gt; map1) {
-<span class="nc" id="L57">              return TrBean.findRange(i, i1);</span>
-            }
-
-            @Override
-            public String getRowKey(TipoReserva object) {
-<span class="nc bnc" id="L62" title="All 4 branches missed.">                if (object!=null &amp;&amp; object.getIdTipoReserva()!=null) {</span>
-<span class="nc" id="L63">                    return object.getIdTipoReserva().toString();</span>
-                }
-<span class="nc" id="L65">                return null;</span>
-            }
-
-            @Override
-            public TipoReserva getRowData(String rowKey) {
-<span class="nc bnc" id="L70" title="All 2 branches missed.">                if (rowKey!=null) {</span>
-<span class="nc" id="L71">                    return this.getWrappedData().stream().filter(r-&gt;r.getIdTipoReserva().toString().equals(rowKey)).</span>
-<span class="nc" id="L72">                            collect(Collectors.toList()).get(0);</span>
-                    
-                }
-<span class="nc" id="L75">                return null;</span>
-            }
-            
-        };
-<span class="nc" id="L79">    }</span>
-
-    public void btnNuevoHandler(ActionEvent e) {
-<span class="nc" id="L82">        this.registroSelecionado = new TipoReserva();</span>
-        
-<span class="nc" id="L84">    }</span>
-
-    public void btnGuardarHandler(ActionEvent e) {
-<span class="nc" id="L87">        this.TrBean.create(registroSelecionado);</span>
-<span class="nc" id="L88">        this.listaRegistros=this.TrBean.findRange(0, 10000);</span>
-<span class="nc" id="L89">        this.registroSelecionado = null;</span>
-<span class="nc" id="L90">    }</span>
-
-    public void btnSeleccionarHandler(ActionEvent ex) {
-<span class="nc" id="L93">        Integer id = (Integer) ex.getComponent().getAttributes().get(&quot;Selecionado&quot;);</span>
-<span class="nc bnc" id="L94" title="All 2 branches missed.">        if (id != null) {</span>
-<span class="nc" id="L95">            this.registroSelecionado = TrBean.findById(id);</span>
+<span class="nc bnc" id="L38" title="All 4 branches missed.">        if (object != null &amp;&amp; object.getIdTipoReserva() != null) {</span>
+<span class="nc" id="L39">            return object.getIdTipoReserva().toString();</span>
         }
+<span class="nc" id="L41">        return null;</span>
+    }
 
-<span class="nc" id="L98">    }</span>
-    public void btnCancelarHandler(ActionEvent ex) {
-<span class="nc" id="L100">        this.registroSelecionado=null;</span>
-<span class="nc" id="L101">    }</span>
-
-    public void btnModificarHandler(ActionEvent ex) {
-<span class="nc" id="L104">        TipoReserva modificado = this.TrBean.modify(registroSelecionado);</span>
-<span class="nc bnc" id="L105" title="All 2 branches missed.">        if (modificado != null) {</span>
-            //notificar que se elimino3
-<span class="nc" id="L107">            this.listaRegistros=this.TrBean.findRange(0, 10000);</span>
-<span class="nc" id="L108">            this.registroSelecionado = null;</span>
+    @Override
+    public TipoReserva getObjectId(String id) {
+<span class="nc bnc" id="L46" title="All 6 branches missed.">        if (id != null &amp;&amp; this.modelo != null &amp;&amp; this.modelo.getWrappedData() != null) {</span>
+<span class="nc" id="L47">            return this.modelo.getWrappedData().stream().filter(r -&gt; r.getIdTipoReserva().toString().equals(id)).collect(Collectors.toList()).get(0);</span>
         }
-        //
-<span class="nc" id="L111">    }</span>
-
-    public TipoReservaBean getTrBean() {
-<span class="nc" id="L114">        return TrBean;</span>
+<span class="nc" id="L49">        return null;</span>
     }
 
-    public void setTrBean(TipoReservaBean TrBean) {
-<span class="nc" id="L118">        this.TrBean = TrBean;</span>
-<span class="nc" id="L119">    }</span>
+    @Override
+    public void instanciarRegistro() {
+<span class="nc" id="L54">        this.registroSelecionado=new TipoReserva();</span>
+<span class="nc" id="L55">    }</span>
 
-    public List&lt;TipoReserva&gt; getListaRegistros() {
-<span class="nc" id="L122">        return this.listaRegistros;</span>
+    @Override
+    public FacesContext getFC() {
+<span class="nc" id="L59">        return this.Fc;</span>
     }
-
-    public void setListaRegistros(List&lt;TipoReserva&gt; listaRegistros) {
-<span class="nc" id="L126">        this.listaRegistros = listaRegistros;</span>
-<span class="nc" id="L127">    }</span>
-
-    public TipoReserva getRegistroSelecionado() {
-<span class="nc" id="L130">        return registroSelecionado;</span>
-    }
-
-    public void setRegistroSelecionado(TipoReserva registroSelecionado) {
-<span class="nc" id="L134">        this.registroSelecionado = registroSelecionado;</span>
-<span class="nc" id="L135">    }</span>
-
-    public LazyDataModel&lt;TipoReserva&gt; getModelo() {
-<span class="nc" id="L138">        return this.modelo;</span>
-    }
-    
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -2,12 +2,36 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="jakarta.faces.html"
-      xmlns:ui="jakarta.faces.facelets">
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="jakarta.faces.core">
     <h:head>
         <title> parqueo Ues</title>
+        <h:outputStylesheet library="styles" name="main.css"/>
+
     </h:head>
+
     <h:body>
-        <ui:insert name="tabla">
+        <p:panel class="notificaciones">
+            <p:growl/>
+            <p:autoUpdate/>
+        </p:panel>
+        <h1 >Parque ues Mario</h1>
+        <p:panelGrid >
+            <h:form id="frmSelecionarIdioma" class="selector--dioma">
+                <h:selectOneMenu value="#{sessionUsuario.idiomaSelecionado}" class="selector--dioma"
+                                 valueChangeListener="#{sessionUsuario.cambiatIdioma}">
+                
+                    <f:selectItems value="#{sessionUsuario.idiomas}"
+                                   var="idio"
+                                   itemLabel="#{idio}" itemValue="#{idio}"
+                                   class="idioma--selecionado" 
+                                   />
+                    <f:ajax render="@all"/>
+                </h:selectOneMenu>
+            </h:form>
+        </p:panelGrid>
+        <ui:insert name="tabla" class="">
             debe ir una tabla
         </ui:insert>
         <ui:insert name="detalle">

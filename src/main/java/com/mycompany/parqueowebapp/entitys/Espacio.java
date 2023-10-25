@@ -28,6 +28,8 @@ import java.util.List;
 @NamedQueries({
     @NamedQuery(name = "Espacio.findAll", query = "SELECT e FROM Espacio e"),
     @NamedQuery(name = "Espacio.findByIdEspacio", query = "SELECT e FROM Espacio e WHERE e.idEspacio = :idEspacio"),
+    @NamedQuery(name = "Espacio.findByIdArea", query = "SELECT e FROM Espacio e WHERE e.idArea.idArea = :idArea ORDER BY e.nombre ASC"),
+    @NamedQuery(name = "Espacio.countByIdArea", query = "SELECT COUNT(e.idEspacio) FROM Espacio e WHERE e.idArea.idArea = :idArea"),
     @NamedQuery(name = "Espacio.findByNombre", query = "SELECT e FROM Espacio e WHERE e.nombre = :nombre"),
     @NamedQuery(name = "Espacio.findByObservaciones", query = "SELECT e FROM Espacio e WHERE e.observaciones = :observaciones"),
     @NamedQuery(name = "Espacio.findByActivo", query = "SELECT e FROM Espacio e WHERE e.activo = :activo")})

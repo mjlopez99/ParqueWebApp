@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+              xmlns:p="http://primefaces.org/ui"
+              xmlns:ui="jakarta.faces.facelets">
+
+    <!-- INTERFACE es decir parametros que se esperan-->
+    <cc:interface>
+        <cc:attribute 
+            name="bean"
+            type="com.mycompany.parqueowebapp.Boundary.jsf.AbstractFrm"
+            required="true"
+            />
+        <cc:attribute 
+            name="refrescar"
+            type="java.lang.String"
+            required="false"
+            default=":pnlDetalle @form"
+            />
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <div class="btns--container">
+            <p:commandButton value="#{trad.frm_NUEVO}" actionListener="#{cc.attrs.bean.btnNuevoHandler}" update="#{cc.attrs.refrescar}" class="btn--agregar btns"/>
+            <p:commandButton value="#{trad.frm_CANCELAR}" actionListener="#{cc.attrs.bean.btnCancelarHandler}" 
+                             update="#{cc.attrs.refrescar}"
+                             rendered="#{not empty cc.attrs.bean.registroSelecionado}"
+                             class="btn--quitar btns"/>
+        </div>
+    </cc:implementation>
+</ui:component>

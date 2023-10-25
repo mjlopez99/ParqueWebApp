@@ -15,26 +15,37 @@ import jakarta.ejb.Stateless;
  * @author mjlopez
  */
 @Stateless
+//indica que la clase es un bean sin estado, lo que significa que no mantiene información de estado entre llamadas o  bean es independiente de las anteriores y siguientes
+//y puede ser instanciado por el contenedor EJB según sea necesario. 
 @LocalBean
+//se utiliza para especificar que no se proporciona una interfaz local específica para el bean.Esto significa que los métodos de este EJB pueden ser invocados por clientes
+//locales sin necesidad de una interfaz explícita.
 public class TipoReservaBean extends abstractDataAccess&lt;TipoReserva&gt; implements Serializable{
 
+    // &quot;serializable&quot; se refiere a la capacidad de un objeto o una clase de ser convertido en una secuencia de bytes, y viceversa, para que pueda ser almacenado en un archivo,
+//    transmitido a través de una red o guardado en memoria de manera persistente. 
      @PersistenceContext(unitName = &quot;com.mycompany_parqueoWebApp_war_1.0-SNAPSHOTPU&quot;)
         EntityManager em;
 
     public TipoReservaBean() {
-<span class="fc" id="L25">        super(TipoReserva.class);</span>
-<span class="fc" id="L26">    }</span>
+<span class="nc" id="L31">        super(TipoReserva.class);</span>
+<span class="nc" id="L32">    }</span>
 
     /**
      almacena un registro en db
-     @param registro entidad a guarfdar
+     * @return 
      * @throws IllegalStateException si ocurre un  error en repositoria
      * @throws  IllegalArgumentException si el paametro es nulo
      */
 
     @Override
     public EntityManager getEntityManger() {
-<span class="fc" id="L37">       return em;</span>
+<span class="nc" id="L43">       return em;</span>
+    }
+
+    @Override
+    public String getOrdenAsc() {
+<span class="nc" id="L48">       return &quot;idTipoReserva&quot;;</span>
     }
 
     

@@ -7,9 +7,9 @@ package com.mycompany.parqueowebapp.control;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaDelete;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
@@ -18,119 +18,145 @@ import java.util.logging.Logger;
 /**
  *
  * @author mjlopez
+ * @param &lt;T&gt;
  */
 public abstract class abstractDataAccess&lt;T&gt; {
+//Una clase genérica, también conocida como clase parametrizada, es una clase en la programación que puede funcionar con tipos de datos diferentes. 
+//    Permite que se especifique el tipo de datos que una clase va a manipular o contener en tiempo de compilación, en lugar de en tiempo de ejecución
 
     final Class tipoDatos;
 
-<span class="fc" id="L26">    public abstractDataAccess(Class t) {</span>
-<span class="fc" id="L27">        this.tipoDatos = t;</span>
-<span class="fc" id="L28">    }</span>
+<span class="nc" id="L29">    public abstractDataAccess(Class t) {</span>
+<span class="nc" id="L30">        this.tipoDatos = t;</span>
+<span class="nc" id="L31">    }</span>
 
     public abstract EntityManager getEntityManger();
 
+    public abstract String getOrdenAsc();
+
     public void create(T registtro) {
-<span class="nc bnc" id="L33" title="All 2 branches missed.">        if (registtro != null) {</span>
+<span class="nc bnc" id="L38" title="All 2 branches missed.">        if (registtro != null) {</span>
             try {
-<span class="nc" id="L35">                EntityManager em = getEntityManger();</span>
-<span class="nc bnc" id="L36" title="All 2 branches missed.">                if (em != null) {</span>
-<span class="nc" id="L37">                    em.persist(registtro);</span>
-<span class="nc" id="L38">                    return;</span>
+<span class="nc" id="L40">                EntityManager em = getEntityManger();</span>
+<span class="nc bnc" id="L41" title="All 2 branches missed.">                if (em != null) {</span>
+<span class="nc" id="L42">                    em.persist(registtro);</span>
+<span class="nc" id="L43">                    return;</span>
                 }
-<span class="nc" id="L40">            } catch (Exception e) {</span>
-<span class="nc" id="L41">                Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);</span>
-<span class="nc" id="L42">            }</span>
-<span class="nc" id="L43">            throw new IllegalStateException();</span>
+<span class="nc" id="L45">            } catch (Exception e) {</span>
+<span class="nc" id="L46">                System.out.println(e);</span>
+<span class="nc" id="L47">            }</span>
+<span class="nc" id="L48">            throw new IllegalStateException();</span>
         }
-<span class="nc" id="L45">        throw new IllegalArgumentException();</span>
+<span class="nc" id="L50">        throw new IllegalArgumentException();</span>
     }
 
     public List&lt;T&gt; findRange(int first, int page) {
-<span class="nc" id="L49">        EntityManager em = null;</span>
+<span class="nc" id="L54">        EntityManager em = null;</span>
 
-<span class="nc bnc" id="L51" title="All 4 branches missed.">        if (first &gt;= 0 &amp;&amp; page &gt; 0) {</span>
+<span class="nc bnc" id="L56" title="All 4 branches missed.">        if (first &gt;= 0 &amp;&amp; page &gt; 0) {</span>
             try {
-<span class="nc" id="L53">                em = getEntityManger();</span>
-<span class="nc" id="L54">            } catch (Exception e) {</span>
-<span class="nc" id="L55">                Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);</span>
-<span class="nc" id="L56">            }</span>
-<span class="nc bnc" id="L57" title="All 2 branches missed.">            if (em != null) {</span>
-<span class="nc" id="L58">                CriteriaBuilder cb = em.getCriteriaBuilder();</span>
-<span class="nc" id="L59">                CriteriaQuery cq = cb.createQuery(tipoDatos);</span>
-<span class="nc" id="L60">                Root&lt;T&gt; raiz = cq.from(tipoDatos);</span>
-<span class="nc" id="L61">                cq.select(raiz);</span>
-<span class="nc" id="L62">                cq.orderBy(cb.asc(raiz.get(&quot;idTipoReserva&quot;)));</span>
-                
-                
-<span class="nc" id="L65">                TypedQuery q = em.createQuery(cq);</span>
+<span class="nc" id="L58">                em = getEntityManger();</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">                if (em != null) {</span>
 
-<span class="nc" id="L67">                q.setFirstResult(first);</span>
-<span class="nc" id="L68">                q.setMaxResults(page);</span>
-<span class="nc" id="L69">                return (q.getResultList());</span>
+                    //construir consultas de criterios (criteria queries). Este es un componente clave de JPA para construir consultas dinámicas.
+<span class="nc" id="L62">                    CriteriaBuilder cb = em.getCriteriaBuilder();</span>
+                    // estructura de la consulta que se va a construir. A partir de este punto,
+<span class="nc" id="L64">                    CriteriaQuery cq = cb.createQuery(tipoDatos);</span>
+//              Root representa la entidad raíz de la consulta, que es tipoDatos. Esto se utiliza para definir desde qué entidad se realizará la consulta.
+<span class="nc" id="L66">                    Root&lt;T&gt; raiz = cq.from(tipoDatos);</span>
+<span class="nc" id="L67">                    cq.select(raiz);</span>
+                    //ordenar 
+                    //cq.orderBy(cb.asc(raiz.get(getOrdenAsc())));
 
-            }
+<span class="nc" id="L71">                    TypedQuery q = em.createQuery(cq);</span>
+<span class="nc" id="L72">                    q.setFirstResult(first);</span>
+<span class="nc" id="L73">                    q.setMaxResults(page);</span>
+<span class="nc" id="L74">                    return (q.getResultList());</span>
+
+                }
+<span class="nc" id="L77">            } catch (Exception e) {</span>
+<span class="nc" id="L78">                System.out.println(&quot;error: &quot; + e.getMessage());</span>
+<span class="nc" id="L79">            }</span>
+<span class="nc" id="L80">            throw new IllegalStateException();</span>
 
         }
-<span class="nc" id="L74">        return Collections.EMPTY_LIST;</span>
+
+<span class="nc" id="L84">        return Collections.EMPTY_LIST;</span>
     }
+
     public T findById(Object id) {
-<span class="nc" id="L77">        EntityManager em = null;</span>
-<span class="nc bnc" id="L78" title="All 2 branches missed.">        if (id!=null) {</span>
+<span class="nc" id="L88">        EntityManager em = null;</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">        if (id != null) {</span>
             try {
-<span class="nc" id="L80">                em = getEntityManger();</span>
-<span class="nc" id="L81">            } catch (Exception e) {</span>
-<span class="nc" id="L82">                Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);</span>
-<span class="nc" id="L83">            }</span>
-<span class="nc bnc" id="L84" title="All 2 branches missed.">            if (em != null) {</span>
-                try {
-<span class="nc" id="L86">                    return (T)em.find(tipoDatos, id);</span>
-<span class="nc" id="L87">                } catch (Exception e) {</span>
-<span class="nc" id="L88">                    Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);</span>
+<span class="nc" id="L91">                em = getEntityManger();</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">                if (em != null) {</span>
+<span class="nc" id="L93">                    return (T) em.find(tipoDatos, id);</span>
                 }
+<span class="nc" id="L95">            } catch (Exception e) {</span>
+<span class="nc" id="L96">                System.out.println(&quot;error: &quot; + e.getMessage());</span>
+<span class="nc" id="L97">            }</span>
+<span class="nc" id="L98">            return null;</span>
 
-<span class="nc" id="L91">            }throw  new IllegalStateException();</span>
-
-<span class="nc" id="L93">        }throw new IllegalArgumentException();</span>
+        }
+<span class="nc" id="L101">        return null;</span>
     }
+
     public T modify(T registro) {
-<span class="nc" id="L96">        EntityManager em = null;</span>
+<span class="nc" id="L105">        EntityManager em = null;</span>
         try {
-<span class="nc" id="L98">                em = getEntityManger();</span>
-<span class="nc" id="L99">            } catch (Exception e) {</span>
-<span class="nc" id="L100">                Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);</span>
-<span class="nc" id="L101">            }</span>
-<span class="nc bnc" id="L102" title="All 2 branches missed.">        if (registro!=null) {</span>
-<span class="nc bnc" id="L103" title="All 2 branches missed.">            if (em != null) {</span>
-                try {
-<span class="nc" id="L105">                    return em.merge(registro);</span>
-<span class="nc" id="L106">                } catch (Exception e) {</span>
-<span class="nc" id="L107">                    Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);</span>
+<span class="nc" id="L107">            em = getEntityManger();</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">            if (registro != null) {</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">                if (em != null) {</span>
+<span class="nc" id="L110">                    return em.merge(registro);</span>
                 }
-
-<span class="nc" id="L110">            }throw  new IllegalStateException();</span>
-
-<span class="nc" id="L112">        }return null;</span>
-    }
-    public int count() {
-<span class="nc" id="L115">         EntityManager em = null;</span>
-        try {
-<span class="nc" id="L117">                em = getEntityManger();</span>
-<span class="nc" id="L118">            } catch (Exception e) {</span>
-<span class="nc" id="L119">                Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);</span>
-<span class="nc" id="L120">            }</span>
-<span class="nc bnc" id="L121" title="All 2 branches missed.">            if (em != null) {</span>
-<span class="nc" id="L122">                CriteriaBuilder cb = em.getCriteriaBuilder();</span>
-<span class="nc" id="L123">                CriteriaQuery cq = cb.createQuery(tipoDatos);</span>
-<span class="nc" id="L124">                Root&lt;T&gt; raiz = cq.from(tipoDatos);</span>
-<span class="nc" id="L125">                cq.select(cb.count(raiz));</span>
-                
-                
-<span class="nc" id="L128">                TypedQuery q = em.createQuery(cq);</span>
-
-<span class="nc" id="L130">                return Integer.parseInt(q.getSingleResult().toString());</span>
             }
-<span class="nc" id="L132">        return 0;</span>
+<span class="nc" id="L113">            return null;</span>
+<span class="nc" id="L114">        } catch (Exception e) {</span>
+<span class="nc" id="L115">            System.out.println(&quot;error: &quot; + e.getMessage());</span>
+        }
+<span class="nc" id="L117">        return null;</span>
     }
-    
+
+    public int count() {
+<span class="nc" id="L121">        EntityManager em = null;</span>
+        try {
+<span class="nc" id="L123">            em = getEntityManger();</span>
+<span class="nc" id="L124">        } catch (Exception e) {</span>
+<span class="nc" id="L125">            Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);</span>
+<span class="nc" id="L126">        }</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">        if (em != null) {</span>
+<span class="nc" id="L128">            CriteriaBuilder cb = em.getCriteriaBuilder();</span>
+<span class="nc" id="L129">            CriteriaQuery cq = cb.createQuery(tipoDatos);</span>
+<span class="nc" id="L130">            Root&lt;T&gt; raiz = cq.from(tipoDatos);</span>
+<span class="nc" id="L131">            cq.select(cb.count(raiz));</span>
+
+<span class="nc" id="L133">            TypedQuery q = em.createQuery(cq);</span>
+
+<span class="nc" id="L135">            return Integer.parseInt(q.getSingleResult().toString());</span>
+        }
+<span class="nc" id="L137">        return 0;</span>
+    }
+
+    public void delete(T registro) {
+<span class="nc bnc" id="L141" title="All 2 branches missed.">        if (registro != null) {</span>
+<span class="nc" id="L142">            EntityManager em = null;</span>
+            try {
+<span class="nc" id="L144">                em = getEntityManger();</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">                if (em != null) {</span>
+<span class="nc" id="L146">                    CriteriaBuilder cb = em.getCriteriaBuilder();</span>
+<span class="nc" id="L147">                    CriteriaDelete&lt;T&gt; dq = cb.createCriteriaDelete(tipoDatos);</span>
+<span class="nc" id="L148">                    Root&lt;T&gt; raiz = dq.from(tipoDatos);</span>
+<span class="nc" id="L149">                    dq.where(cb.equal(raiz, registro));</span>
+<span class="nc" id="L150">                    em.createQuery(dq).executeUpdate();</span>
+<span class="nc" id="L151">                    return;</span>
+                }
+<span class="nc" id="L153">            } catch (Exception e) {</span>
+<span class="nc" id="L154">                System.out.println(&quot;error: &quot; + e.getMessage());</span>
+<span class="nc" id="L155">            }</span>
+<span class="nc" id="L156">            throw new IllegalStateException();</span>
+        }
+<span class="nc" id="L158">        throw new IllegalArgumentException();</span>
+    }
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

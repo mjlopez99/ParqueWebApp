@@ -4,6 +4,7 @@
  */
 package com.mycompany.parqueowebapp.entitys;
 
+import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,7 +21,7 @@ import java.util.List;
  * @author mjlopez
  */
 @Entity
-@Table(name = &quot;tipo_espacio&quot;, catalog = &quot;parqueo&quot;, schema = &quot;public&quot;)
+@Table(name = &quot;tipo_espacio&quot;, schema = &quot;public&quot;)
 @NamedQueries({
     @NamedQuery(name = &quot;TipoEspacio.findAll&quot;, query = &quot;SELECT t FROM TipoEspacio t&quot;),
     @NamedQuery(name = &quot;TipoEspacio.findByIdTipoEspacio&quot;, query = &quot;SELECT t FROM TipoEspacio t WHERE t.idTipoEspacio = :idTipoEspacio&quot;),
@@ -37,60 +38,62 @@ public class TipoEspacio implements Serializable {
     @OneToMany(mappedBy = &quot;idTipoEspacio&quot;)
     private List&lt;EspacioCaracteristica&gt; espacioCaracteristicaList;
 
-<span class="nc" id="L40">    public TipoEspacio() {</span>
-<span class="nc" id="L41">    }</span>
+<span class="nc" id="L41">    public TipoEspacio() {</span>
+<span class="nc" id="L42">    }</span>
 
-<span class="nc" id="L43">    public TipoEspacio(Integer idTipoEspacio) {</span>
-<span class="nc" id="L44">        this.idTipoEspacio = idTipoEspacio;</span>
-<span class="nc" id="L45">    }</span>
+<span class="nc" id="L44">    public TipoEspacio(Integer idTipoEspacio) {</span>
+<span class="nc" id="L45">        this.idTipoEspacio = idTipoEspacio;</span>
+<span class="nc" id="L46">    }</span>
 
     public Integer getIdTipoEspacio() {
-<span class="nc" id="L48">        return idTipoEspacio;</span>
+<span class="nc" id="L49">        return idTipoEspacio;</span>
     }
 
     public void setIdTipoEspacio(Integer idTipoEspacio) {
-<span class="nc" id="L52">        this.idTipoEspacio = idTipoEspacio;</span>
-<span class="nc" id="L53">    }</span>
+<span class="nc" id="L53">        this.idTipoEspacio = idTipoEspacio;</span>
+<span class="nc" id="L54">    }</span>
 
     public String getNombre() {
-<span class="nc" id="L56">        return nombre;</span>
+<span class="nc" id="L57">        return nombre;</span>
     }
 
     public void setNombre(String nombre) {
-<span class="nc" id="L60">        this.nombre = nombre;</span>
-<span class="nc" id="L61">    }</span>
-
+<span class="nc" id="L61">        this.nombre = nombre;</span>
+<span class="nc" id="L62">    }</span>
+    @JsonbTransient
+//    @JsonbTransient se utiliza en el contexto de la especificación de Java API for JSON Binding (JSON-B) para indicar 
+//            que un campo o método debe ser ignorado durante la serialización y deserialización a/desde JSON. 
     public List&lt;EspacioCaracteristica&gt; getEspacioCaracteristicaList() {
-<span class="nc" id="L64">        return espacioCaracteristicaList;</span>
+<span class="nc" id="L67">        return espacioCaracteristicaList;</span>
     }
 
     public void setEspacioCaracteristicaList(List&lt;EspacioCaracteristica&gt; espacioCaracteristicaList) {
-<span class="nc" id="L68">        this.espacioCaracteristicaList = espacioCaracteristicaList;</span>
-<span class="nc" id="L69">    }</span>
+<span class="nc" id="L71">        this.espacioCaracteristicaList = espacioCaracteristicaList;</span>
+<span class="nc" id="L72">    }</span>
 
     @Override
     public int hashCode() {
-<span class="nc" id="L73">        int hash = 0;</span>
-<span class="nc bnc" id="L74" title="All 2 branches missed.">        hash += (idTipoEspacio != null ? idTipoEspacio.hashCode() : 0);</span>
-<span class="nc" id="L75">        return hash;</span>
+<span class="nc" id="L76">        int hash = 0;</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">        hash += (idTipoEspacio != null ? idTipoEspacio.hashCode() : 0);</span>
+<span class="nc" id="L78">        return hash;</span>
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-<span class="nc bnc" id="L81" title="All 2 branches missed.">        if (!(object instanceof TipoEspacio)) {</span>
-<span class="nc" id="L82">            return false;</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">        if (!(object instanceof TipoEspacio)) {</span>
+<span class="nc" id="L85">            return false;</span>
         }
-<span class="nc" id="L84">        TipoEspacio other = (TipoEspacio) object;</span>
-<span class="nc bnc" id="L85" title="All 8 branches missed.">        if ((this.idTipoEspacio == null &amp;&amp; other.idTipoEspacio != null) || (this.idTipoEspacio != null &amp;&amp; !this.idTipoEspacio.equals(other.idTipoEspacio))) {</span>
-<span class="nc" id="L86">            return false;</span>
+<span class="nc" id="L87">        TipoEspacio other = (TipoEspacio) object;</span>
+<span class="nc bnc" id="L88" title="All 8 branches missed.">        if ((this.idTipoEspacio == null &amp;&amp; other.idTipoEspacio != null) || (this.idTipoEspacio != null &amp;&amp; !this.idTipoEspacio.equals(other.idTipoEspacio))) {</span>
+<span class="nc" id="L89">            return false;</span>
         }
-<span class="nc" id="L88">        return true;</span>
+<span class="nc" id="L91">        return true;</span>
     }
 
     @Override
     public String toString() {
-<span class="nc" id="L93">        return &quot;com.mycompany.entidades.entitys.TipoEspacio[ idTipoEspacio=&quot; + idTipoEspacio + &quot; ]&quot;;</span>
+<span class="nc" id="L96">        return &quot;com.mycompany.entidades.entitys.TipoEspacio[ idTipoEspacio=&quot; + idTipoEspacio + &quot; ]&quot;;</span>
     }
     
 }

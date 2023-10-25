@@ -28,6 +28,8 @@ import java.util.List;
 @NamedQueries({
     @NamedQuery(name = &quot;Espacio.findAll&quot;, query = &quot;SELECT e FROM Espacio e&quot;),
     @NamedQuery(name = &quot;Espacio.findByIdEspacio&quot;, query = &quot;SELECT e FROM Espacio e WHERE e.idEspacio = :idEspacio&quot;),
+    @NamedQuery(name = &quot;Espacio.findByIdArea&quot;, query = &quot;SELECT e FROM Espacio e WHERE e.idArea.idArea = :idArea ORDER BY e.nombre ASC&quot;),
+    @NamedQuery(name = &quot;Espacio.countByIdArea&quot;, query = &quot;SELECT COUNT(e.idEspacio) FROM Espacio e WHERE e.idArea.idArea = :idArea&quot;),
     @NamedQuery(name = &quot;Espacio.findByNombre&quot;, query = &quot;SELECT e FROM Espacio e WHERE e.nombre = :nombre&quot;),
     @NamedQuery(name = &quot;Espacio.findByObservaciones&quot;, query = &quot;SELECT e FROM Espacio e WHERE e.observaciones = :observaciones&quot;),
     @NamedQuery(name = &quot;Espacio.findByActivo&quot;, query = &quot;SELECT e FROM Espacio e WHERE e.activo = :activo&quot;)})
@@ -53,92 +55,92 @@ public class Espacio implements Serializable {
     @OneToMany(mappedBy = &quot;idEspacio&quot;)
     private List&lt;EspacioCaracteristica&gt; espacioCaracteristicaList;
 
-<span class="nc" id="L56">    public Espacio() {</span>
-<span class="nc" id="L57">    }</span>
+<span class="nc" id="L58">    public Espacio() {</span>
+<span class="nc" id="L59">    }</span>
 
-<span class="nc" id="L59">    public Espacio(Long idEspacio) {</span>
-<span class="nc" id="L60">        this.idEspacio = idEspacio;</span>
-<span class="nc" id="L61">    }</span>
+<span class="nc" id="L61">    public Espacio(Long idEspacio) {</span>
+<span class="nc" id="L62">        this.idEspacio = idEspacio;</span>
+<span class="nc" id="L63">    }</span>
 
     public Long getIdEspacio() {
-<span class="nc" id="L64">        return idEspacio;</span>
+<span class="nc" id="L66">        return idEspacio;</span>
     }
 
     public void setIdEspacio(Long idEspacio) {
-<span class="nc" id="L68">        this.idEspacio = idEspacio;</span>
-<span class="nc" id="L69">    }</span>
+<span class="nc" id="L70">        this.idEspacio = idEspacio;</span>
+<span class="nc" id="L71">    }</span>
 
     public String getNombre() {
-<span class="nc" id="L72">        return nombre;</span>
+<span class="nc" id="L74">        return nombre;</span>
     }
 
     public void setNombre(String nombre) {
-<span class="nc" id="L76">        this.nombre = nombre;</span>
-<span class="nc" id="L77">    }</span>
+<span class="nc" id="L78">        this.nombre = nombre;</span>
+<span class="nc" id="L79">    }</span>
 
     public String getObservaciones() {
-<span class="nc" id="L80">        return observaciones;</span>
+<span class="nc" id="L82">        return observaciones;</span>
     }
 
     public void setObservaciones(String observaciones) {
-<span class="nc" id="L84">        this.observaciones = observaciones;</span>
-<span class="nc" id="L85">    }</span>
+<span class="nc" id="L86">        this.observaciones = observaciones;</span>
+<span class="nc" id="L87">    }</span>
 
     public Boolean getActivo() {
-<span class="nc" id="L88">        return activo;</span>
+<span class="nc" id="L90">        return activo;</span>
     }
 
     public void setActivo(Boolean activo) {
-<span class="nc" id="L92">        this.activo = activo;</span>
-<span class="nc" id="L93">    }</span>
+<span class="nc" id="L94">        this.activo = activo;</span>
+<span class="nc" id="L95">    }</span>
 
     public Area getIdArea() {
-<span class="nc" id="L96">        return idArea;</span>
+<span class="nc" id="L98">        return idArea;</span>
     }
 
     public void setIdArea(Area idArea) {
-<span class="nc" id="L100">        this.idArea = idArea;</span>
-<span class="nc" id="L101">    }</span>
+<span class="nc" id="L102">        this.idArea = idArea;</span>
+<span class="nc" id="L103">    }</span>
 
     public List&lt;Reserva&gt; getReservaList() {
-<span class="nc" id="L104">        return reservaList;</span>
+<span class="nc" id="L106">        return reservaList;</span>
     }
 
     public void setReservaList(List&lt;Reserva&gt; reservaList) {
-<span class="nc" id="L108">        this.reservaList = reservaList;</span>
-<span class="nc" id="L109">    }</span>
+<span class="nc" id="L110">        this.reservaList = reservaList;</span>
+<span class="nc" id="L111">    }</span>
 
     public List&lt;EspacioCaracteristica&gt; getEspacioCaracteristicaList() {
-<span class="nc" id="L112">        return espacioCaracteristicaList;</span>
+<span class="nc" id="L114">        return espacioCaracteristicaList;</span>
     }
 
     public void setEspacioCaracteristicaList(List&lt;EspacioCaracteristica&gt; espacioCaracteristicaList) {
-<span class="nc" id="L116">        this.espacioCaracteristicaList = espacioCaracteristicaList;</span>
-<span class="nc" id="L117">    }</span>
+<span class="nc" id="L118">        this.espacioCaracteristicaList = espacioCaracteristicaList;</span>
+<span class="nc" id="L119">    }</span>
 
     @Override
     public int hashCode() {
-<span class="nc" id="L121">        int hash = 0;</span>
-<span class="nc bnc" id="L122" title="All 2 branches missed.">        hash += (idEspacio != null ? idEspacio.hashCode() : 0);</span>
-<span class="nc" id="L123">        return hash;</span>
+<span class="nc" id="L123">        int hash = 0;</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">        hash += (idEspacio != null ? idEspacio.hashCode() : 0);</span>
+<span class="nc" id="L125">        return hash;</span>
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-<span class="nc bnc" id="L129" title="All 2 branches missed.">        if (!(object instanceof Espacio)) {</span>
-<span class="nc" id="L130">            return false;</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">        if (!(object instanceof Espacio)) {</span>
+<span class="nc" id="L132">            return false;</span>
         }
-<span class="nc" id="L132">        Espacio other = (Espacio) object;</span>
-<span class="nc bnc" id="L133" title="All 8 branches missed.">        if ((this.idEspacio == null &amp;&amp; other.idEspacio != null) || (this.idEspacio != null &amp;&amp; !this.idEspacio.equals(other.idEspacio))) {</span>
-<span class="nc" id="L134">            return false;</span>
+<span class="nc" id="L134">        Espacio other = (Espacio) object;</span>
+<span class="nc bnc" id="L135" title="All 8 branches missed.">        if ((this.idEspacio == null &amp;&amp; other.idEspacio != null) || (this.idEspacio != null &amp;&amp; !this.idEspacio.equals(other.idEspacio))) {</span>
+<span class="nc" id="L136">            return false;</span>
         }
-<span class="nc" id="L136">        return true;</span>
+<span class="nc" id="L138">        return true;</span>
     }
 
     @Override
     public String toString() {
-<span class="nc" id="L141">        return &quot;com.mycompany.entidades.entitys.Espacio[ idEspacio=&quot; + idEspacio + &quot; ]&quot;;</span>
+<span class="nc" id="L143">        return &quot;com.mycompany.entidades.entitys.Espacio[ idEspacio=&quot; + idEspacio + &quot; ]&quot;;</span>
     }
     
 }

@@ -24,7 +24,7 @@ import java.util.List;
  * @author mjlopez
  */
 @Entity
-@Table(name = &quot;area&quot;, catalog = &quot;parqueo&quot;, schema = &quot;public&quot;)
+@Table(name = &quot;area&quot;, schema = &quot;public&quot;)
 @NamedQueries({
     @NamedQuery(name = &quot;Area.findAll&quot;, query = &quot;SELECT a FROM Area a&quot;),
     @NamedQuery(name = &quot;Area.findByIdArea&quot;, query = &quot;SELECT a FROM Area a WHERE a.idArea = :idArea&quot;),
@@ -42,6 +42,7 @@ public class Area implements Serializable {
     private String nombre;
     @Column(name = &quot;descripcion&quot;)
     private String descripcion;
+    
     @OneToMany(mappedBy = &quot;idAreaPadre&quot;)
     private List&lt;Area&gt; areaList;
     @JoinColumn(name = &quot;id_area_padre&quot;, referencedColumnName = &quot;id_area&quot;)
@@ -50,84 +51,84 @@ public class Area implements Serializable {
     @OneToMany(mappedBy = &quot;idArea&quot;)
     private List&lt;Espacio&gt; espacioList;
 
-<span class="nc" id="L53">    public Area() {</span>
-<span class="nc" id="L54">    }</span>
+<span class="nc" id="L54">    public Area() {</span>
+<span class="nc" id="L55">    }</span>
 
-<span class="nc" id="L56">    public Area(Integer idArea) {</span>
-<span class="nc" id="L57">        this.idArea = idArea;</span>
-<span class="nc" id="L58">    }</span>
+<span class="nc" id="L57">    public Area(Integer idArea) {</span>
+<span class="nc" id="L58">        this.idArea = idArea;</span>
+<span class="nc" id="L59">    }</span>
 
     public Integer getIdArea() {
-<span class="nc" id="L61">        return idArea;</span>
+<span class="nc" id="L62">        return idArea;</span>
     }
-
+//
     public void setIdArea(Integer idArea) {
-<span class="nc" id="L65">        this.idArea = idArea;</span>
-<span class="nc" id="L66">    }</span>
+<span class="nc" id="L66">        this.idArea = idArea;</span>
+<span class="nc" id="L67">    }</span>
 
     public String getNombre() {
-<span class="nc" id="L69">        return nombre;</span>
+<span class="nc" id="L70">        return nombre;</span>
     }
 
     public void setNombre(String nombre) {
-<span class="nc" id="L73">        this.nombre = nombre;</span>
-<span class="nc" id="L74">    }</span>
+<span class="nc" id="L74">        this.nombre = nombre;</span>
+<span class="nc" id="L75">    }</span>
 
     public String getDescripcion() {
-<span class="nc" id="L77">        return descripcion;</span>
+<span class="nc" id="L78">        return descripcion;</span>
     }
 
     public void setDescripcion(String descripcion) {
-<span class="nc" id="L81">        this.descripcion = descripcion;</span>
-<span class="nc" id="L82">    }</span>
+<span class="nc" id="L82">        this.descripcion = descripcion;</span>
+<span class="nc" id="L83">    }</span>
 
     public List&lt;Area&gt; getAreaList() {
-<span class="nc" id="L85">        return areaList;</span>
+<span class="nc" id="L86">        return areaList;</span>
     }
 
     public void setAreaList(List&lt;Area&gt; areaList) {
-<span class="nc" id="L89">        this.areaList = areaList;</span>
-<span class="nc" id="L90">    }</span>
+<span class="nc" id="L90">        this.areaList = areaList;</span>
+<span class="nc" id="L91">    }</span>
 
     public Area getIdAreaPadre() {
-<span class="nc" id="L93">        return idAreaPadre;</span>
+<span class="nc" id="L94">        return idAreaPadre;</span>
     }
 
     public void setIdAreaPadre(Area idAreaPadre) {
-<span class="nc" id="L97">        this.idAreaPadre = idAreaPadre;</span>
-<span class="nc" id="L98">    }</span>
+<span class="nc" id="L98">        this.idAreaPadre = idAreaPadre;</span>
+<span class="nc" id="L99">    }</span>
 
     public List&lt;Espacio&gt; getEspacioList() {
-<span class="nc" id="L101">        return espacioList;</span>
+<span class="nc" id="L102">        return espacioList;</span>
     }
 
     public void setEspacioList(List&lt;Espacio&gt; espacioList) {
-<span class="nc" id="L105">        this.espacioList = espacioList;</span>
-<span class="nc" id="L106">    }</span>
+<span class="nc" id="L106">        this.espacioList = espacioList;</span>
+<span class="nc" id="L107">    }</span>
 
     @Override
     public int hashCode() {
-<span class="nc" id="L110">        int hash = 0;</span>
-<span class="nc bnc" id="L111" title="All 2 branches missed.">        hash += (idArea != null ? idArea.hashCode() : 0);</span>
-<span class="nc" id="L112">        return hash;</span>
+<span class="nc" id="L111">        int hash = 0;</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">        hash += (idArea != null ? idArea.hashCode() : 0);</span>
+<span class="nc" id="L113">        return hash;</span>
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-<span class="nc bnc" id="L118" title="All 2 branches missed.">        if (!(object instanceof Area)) {</span>
-<span class="nc" id="L119">            return false;</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">        if (!(object instanceof Area)) {</span>
+<span class="nc" id="L120">            return false;</span>
         }
-<span class="nc" id="L121">        Area other = (Area) object;</span>
-<span class="nc bnc" id="L122" title="All 8 branches missed.">        if ((this.idArea == null &amp;&amp; other.idArea != null) || (this.idArea != null &amp;&amp; !this.idArea.equals(other.idArea))) {</span>
-<span class="nc" id="L123">            return false;</span>
+<span class="nc" id="L122">        Area other = (Area) object;</span>
+<span class="nc bnc" id="L123" title="All 8 branches missed.">        if ((this.idArea == null &amp;&amp; other.idArea != null) || (this.idArea != null &amp;&amp; !this.idArea.equals(other.idArea))) {</span>
+<span class="nc" id="L124">            return false;</span>
         }
-<span class="nc" id="L125">        return true;</span>
+<span class="nc" id="L126">        return true;</span>
     }
 
     @Override
     public String toString() {
-<span class="nc" id="L130">        return &quot;com.mycompany.entidades.entitys.Area[ idArea=&quot; + idArea + &quot; ]&quot;;</span>
+<span class="nc" id="L131">        return &quot;com.mycompany.entidades.entitys.Area[ idArea=&quot; + idArea + &quot; ]&quot;;</span>
     }
     
 }

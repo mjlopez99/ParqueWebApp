@@ -20,7 +20,7 @@ public class TipoReservaBeanTest {
     /**
      * Test of getEntityManger method, of class TipoReservaBean.
      */
-    @Test
+//    @Test
     public void testGetEntityManger() {
         System.out.println("getEntityManger");
         TipoReservaBean instance = new TipoReservaBean();

@@ -22,7 +22,7 @@ import java.io.Serializable;
  * @author mjlopez
  */
 @Entity
-@Table(name = "espacio_caracteristica", catalog = "parqueo", schema = "public")
+@Table(name = "espacio_caracteristica",schema = "public")
 @NamedQueries({
     @NamedQuery(name = "EspacioCaracteristica.findAll", query = "SELECT e FROM EspacioCaracteristica e"),
     @NamedQuery(name = "EspacioCaracteristica.findByIdEspacioCaracteristica", query = "SELECT e FROM EspacioCaracteristica e WHERE e.idEspacioCaracteristica = :idEspacioCaracteristica"),
