@@ -16,6 +16,7 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
 
 /**
@@ -40,7 +41,7 @@ public class FrmEspacio extends AbstractFrm<Espacio> implements Serializable {
     @Override
     public String getIdObject(Espacio object) {
         if (object != null && object.getIdEspacio() != null) {
-            return object.getIdArea().toString();
+            return object.getIdEspacio().toString();
         }
         return null;
     }
@@ -61,7 +62,7 @@ public class FrmEspacio extends AbstractFrm<Espacio> implements Serializable {
             this.registroSelecionado.setIdArea(new Area(idArea));
         }
         this.registroSelecionado.setActivo(Boolean.TRUE);
-        
+
     }
 
     @Override
@@ -82,9 +83,10 @@ public class FrmEspacio extends AbstractFrm<Espacio> implements Serializable {
     public LazyDataModel<Espacio> getModelo() {
         return super.getModelo();
     }
+
     @Override
-    public List<Espacio> cargarDatos(int first,int page) {
-        if (this.idArea!=null) {
+    public List<Espacio> cargarDatos(int first, int page) {
+        if (this.idArea != null) {
             return this.eb.findByIdArea(idArea, first, page);
         }
 
@@ -106,23 +108,39 @@ public class FrmEspacio extends AbstractFrm<Espacio> implements Serializable {
     public void setFc(FacesContext fc) {
         this.fc = fc;
     }
+
     @Override
-    public int contar(){
-        if (idArea!=null) {
+    public int contar() {
+        if (idArea != null) {
             return this.eb.countByIdArea(idArea);
         }
         return 0;
     }
-    public List<Espacio> obtenereEspacioPorAreas(Object IdArea){
-        if (IdArea!=null) {
+
+    public List<Espacio> obtenereEspacioPorAreas(Object IdArea) {
+        if (IdArea != null) {
             return eb.findByIdArea(idArea, 0, 10);
         }
-        
-    return Collections.EMPTY_LIST;
+
+        return Collections.EMPTY_LIST;
     }
+
     @Override
     public void selecionarRegistro() {
         System.out.println("selecionado amigo");
     }
-    
+    // En FrmEspacio
+
+    // En FrmEspacio
+    public void onEspacioSelect(SelectEvent event) {
+        System.out.println("Método onEspacioSelect llamado.");
+        Espacio espacioSeleccionado = (Espacio) event.getObject();
+        System.out.println("Espacio seleccionado: " + espacioSeleccionado);
+
+        // Agregar más logs para verificar el flujo del método
+        System.out.println("Después de obtener el espacio seleccionado.");
+
+        // Realizar la lógica deseada con el espacio seleccionado
+    }
+
 }

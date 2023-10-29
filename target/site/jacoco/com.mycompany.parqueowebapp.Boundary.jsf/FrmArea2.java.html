@@ -93,101 +93,103 @@ import org.primefaces.model.TreeNode;
 <span class="nc" id="L93">    }</span>
 
     public void onNodeSelect(NodeSelectEvent event) {
-<span class="nc" id="L96">        TreeNode&lt;Area&gt; ns = event.getTreeNode();</span>
-<span class="nc" id="L97">        setNodoSelecionado(ns);</span>
-<span class="nc" id="L98">        setRegistroSelecionado(ns.getData());</span>
-<span class="nc" id="L99">        this.selecionarRegistro();</span>
+<span class="nc" id="L96">    TreeNode&lt;Area&gt; ns = event.getTreeNode();</span>
+<span class="nc" id="L97">    setNodoSelecionado(ns);</span>
+<span class="nc" id="L98">    setRegistroSelecionado(ns.getData());</span>
+<span class="nc" id="L99">    this.selecionarRegistro();</span>
 
-<span class="nc bnc" id="L101" title="All 6 branches missed.">        if (frme != null &amp;&amp; this.registroSelecionado != null &amp;&amp; this.registroSelecionado.getIdArea() != null) {</span>
-<span class="nc" id="L102">            this.frme.setIdArea(this.registroSelecionado.getIdArea());</span>
-<span class="nc" id="L103">            this.frme.inicializar();</span>
-        }
+<span class="nc bnc" id="L101" title="All 6 branches missed.">    if (frme != null &amp;&amp; this.registroSelecionado != null &amp;&amp; this.registroSelecionado.getIdArea() != null) {</span>
+<span class="nc" id="L102">        this.frme.setIdArea(this.registroSelecionado.getIdArea());</span>
+<span class="nc" id="L103">        this.frme.inicializar();</span>
+
 <span class="nc" id="L105">        ListaEspacios = this.frme.obtenereEspacioPorAreas(registroSelecionado.getIdArea());</span>
-<span class="nc" id="L106">    }</span>
+    }
+<span class="nc" id="L107">}</span>
+
 
     public LazyDataModel&lt;Espacio&gt; getModelo2() {
-<span class="nc" id="L109">        return modelo2;</span>
+<span class="nc" id="L111">        return modelo2;</span>
     }
 
     private void agregarSubareas(Area areaPadre, TreeNode padreNode) {
-<span class="nc" id="L113">        List&lt;Area&gt; subareas = ab.obtenerSubAreas(areaPadre);</span>
+<span class="nc" id="L115">        List&lt;Area&gt; subareas = ab.obtenerSubAreas(areaPadre);</span>
 
-<span class="nc bnc" id="L115" title="All 2 branches missed.">        for (Area subarea : subareas) {</span>
-<span class="nc" id="L116">            TreeNode subareaNode = new DefaultTreeNode(subarea, padreNode);</span>
-<span class="nc" id="L117">            agregarSubareas(subarea, subareaNode);  // Llamada recursiva para manejar subáreas anidadas</span>
-<span class="nc" id="L118">        }</span>
-<span class="nc" id="L119">    }</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">        for (Area subarea : subareas) {</span>
+<span class="nc" id="L118">            TreeNode subareaNode = new DefaultTreeNode(subarea, padreNode);</span>
+<span class="nc" id="L119">            agregarSubareas(subarea, subareaNode);  // Llamada recursiva para manejar subáreas anidadas</span>
+<span class="nc" id="L120">        }</span>
+<span class="nc" id="L121">    }</span>
 
     // Otros métodos y acciones según tus requisitos
     public TreeNode&lt;Area&gt; getRoot() {
-<span class="nc" id="L123">        return root;</span>
+<span class="nc" id="L125">        return root;</span>
     }
 
     public void colapsarTodosLosNodos() {
-<span class="nc" id="L127">        colapsarRecursivamente(root);</span>
-<span class="nc" id="L128">    }</span>
+<span class="nc" id="L129">        colapsarRecursivamente(root);</span>
+<span class="nc" id="L130">    }</span>
 
     private void colapsarRecursivamente(TreeNode&lt;Area&gt; nodo) {
-<span class="nc bnc" id="L131" title="All 2 branches missed.">        for (TreeNode&lt;Area&gt; hijo : nodo.getChildren()) {</span>
-<span class="nc" id="L132">            colapsarRecursivamente(hijo);</span>
-<span class="nc" id="L133">        }</span>
-<span class="nc" id="L134">        nodo.setExpanded(false);</span>
-<span class="nc" id="L135">    }</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">        for (TreeNode&lt;Area&gt; hijo : nodo.getChildren()) {</span>
+<span class="nc" id="L134">            colapsarRecursivamente(hijo);</span>
+<span class="nc" id="L135">        }</span>
+<span class="nc" id="L136">        nodo.setExpanded(false);</span>
+<span class="nc" id="L137">    }</span>
 
     @Override
     public void btnCancelarHandler(ActionEvent ex) {
-<span class="nc" id="L139">        super.btnCancelarHandler(ex);</span>
-<span class="nc" id="L140">        setNodoSelecionado(null);</span>
-<span class="nc" id="L141">        colapsarTodosLosNodos();</span>
-<span class="nc" id="L142">    }</span>
+<span class="nc" id="L141">        super.btnCancelarHandler(ex);</span>
+<span class="nc" id="L142">        setNodoSelecionado(null);</span>
+<span class="nc" id="L143">        colapsarTodosLosNodos();</span>
+<span class="nc" id="L144">    }</span>
 
     @Override
     public abstractDataAccess&lt;Area&gt; getDataAccess() {
-<span class="nc" id="L146">        return this.ab;</span>
+<span class="nc" id="L148">        return this.ab;</span>
     }
 
     @Override
     public String getIdObject(Area object) {
-<span class="nc bnc" id="L151" title="All 4 branches missed.">        if (object != null &amp;&amp; object.getIdArea() != null) {</span>
-<span class="nc" id="L152">            return object.getIdArea().toString();</span>
+<span class="nc bnc" id="L153" title="All 4 branches missed.">        if (object != null &amp;&amp; object.getIdArea() != null) {</span>
+<span class="nc" id="L154">            return object.getIdArea().toString();</span>
         }
-<span class="nc" id="L154">        return null;</span>
+<span class="nc" id="L156">        return null;</span>
     }
 
     @Override
     public Area getObjectId(String id) {
-<span class="nc bnc" id="L159" title="All 6 branches missed.">        if (id != null &amp;&amp; this.modelo != null &amp;&amp; this.modelo.getWrappedData() != null) {</span>
-<span class="nc" id="L160">            return this.modelo.getWrappedData().stream().filter(r -&gt; r.getIdArea().toString().equals(id)).collect(Collectors.toList()).get(0);</span>
+<span class="nc bnc" id="L161" title="All 6 branches missed.">        if (id != null &amp;&amp; this.modelo != null &amp;&amp; this.modelo.getWrappedData() != null) {</span>
+<span class="nc" id="L162">            return this.modelo.getWrappedData().stream().filter(r -&gt; r.getIdArea().toString().equals(id)).collect(Collectors.toList()).get(0);</span>
         }
-<span class="nc" id="L162">        return null;</span>
+<span class="nc" id="L164">        return null;</span>
     }
 
     @Override
     public void instanciarRegistro() {
-<span class="nc" id="L167">        this.registroSelecionado = new Area();</span>
-<span class="nc" id="L168">    }</span>
+<span class="nc" id="L169">        this.registroSelecionado = new Area();</span>
+<span class="nc" id="L170">    }</span>
 
     @Override
     public FacesContext getFC() {
-<span class="nc" id="L172">        return this.Fc;</span>
+<span class="nc" id="L174">        return this.Fc;</span>
     }
 
     public FrmEspacio getFrme() {
-<span class="nc" id="L176">        return frme;</span>
+<span class="nc" id="L178">        return frme;</span>
     }
 
     @Override
     public LazyDataModel&lt;Area&gt; getModelo() {
-<span class="nc" id="L181">        return super.getModelo(); //</span>
+<span class="nc" id="L183">        return super.getModelo(); //</span>
     }
 
     public EspacioBean getEb() {
-<span class="nc" id="L185">        return Eb;</span>
+<span class="nc" id="L187">        return Eb;</span>
     }
     public void res(SelectEvent event) {
-<span class="nc" id="L188">    System.out.println(&quot;Método res invocado.&quot;);</span>
+<span class="nc" id="L190">    System.out.println(&quot;Método res invocado.&quot;);</span>
     // Resto de la lógica
-<span class="nc" id="L190">}</span>
+<span class="nc" id="L192">}</span>
 
     
 }

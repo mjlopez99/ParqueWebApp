@@ -49,7 +49,9 @@
                                          selection="#{frmArea2.espacioRegistrado}"
                                          rendered="#{empty frmArea2.espacioRegistrado}"
                                          >
-                                <p:ajax process="@this" event="rowSelect" listener="#{frmArea2.res}" />
+                                
+                                <p:ajax event="rowSelect" listener="#{frmArea2.frme.onEspacioSelect}"/>
+                                                                                                                
 
                                 <p:column title="ID"><h:outputText value="#{re.idEspacio}"></h:outputText></p:column>
                                 <p:column title="NOMBRE"><h:outputText value="#{re.nombre}"></h:outputText></p:column>
@@ -57,14 +59,7 @@
                                 <p:column title="OBSERVACION"><h:outputText value="#{re.observaciones}"></h:outputText></p:column>
                             </p:dataTable>
                         </h:form>
-                        <h:panelGroup id="pnlDetalleEspacio">
-                            <h:panelGrid id="frmDetalleEspacio">
-                                detalle
-                                <p:outputLabel value="#{frmArea2.espacioRegistrado}"></p:outputLabel>
-                            </h:panelGrid>
-
-
-                        </h:panelGroup>
+                        
                     </p:tab>
 
                 </p:tabView>
@@ -72,7 +67,13 @@
 
                 <p:messages for="frmDetalle" />
             </h:form>
+            <h:panelGroup id="pnlDetalleEspacio">
+                            <h:panelGrid id="frmDetalleEspacio">
+                                <p:outputLabel value="#{frmArea2.frme.registroSelecionado eq null}" style="color: black;" />
 
+                            </h:panelGrid>
+
+                        </h:panelGroup>
         </h:panelGroup>
     </define>
 </composition>

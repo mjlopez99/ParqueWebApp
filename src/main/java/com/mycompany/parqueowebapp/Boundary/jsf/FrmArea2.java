@@ -93,17 +93,19 @@ public class FrmArea2 extends AbstractFrm<Area> implements Serializable {
     }
 
     public void onNodeSelect(NodeSelectEvent event) {
-        TreeNode<Area> ns = event.getTreeNode();
-        setNodoSelecionado(ns);
-        setRegistroSelecionado(ns.getData());
-        this.selecionarRegistro();
+    TreeNode<Area> ns = event.getTreeNode();
+    setNodoSelecionado(ns);
+    setRegistroSelecionado(ns.getData());
+    this.selecionarRegistro();
 
-        if (frme != null && this.registroSelecionado != null && this.registroSelecionado.getIdArea() != null) {
-            this.frme.setIdArea(this.registroSelecionado.getIdArea());
-            this.frme.inicializar();
-        }
+    if (frme != null && this.registroSelecionado != null && this.registroSelecionado.getIdArea() != null) {
+        this.frme.setIdArea(this.registroSelecionado.getIdArea());
+        this.frme.inicializar();
+
         ListaEspacios = this.frme.obtenereEspacioPorAreas(registroSelecionado.getIdArea());
     }
+}
+
 
     public LazyDataModel<Espacio> getModelo2() {
         return modelo2;
