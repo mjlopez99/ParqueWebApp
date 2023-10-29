@@ -137,10 +137,6 @@ public class FrmEspacio extends AbstractFrm<Espacio> implements Serializable {
         Espacio espacioSeleccionado = (Espacio) event.getObject();
         System.out.println("Espacio seleccionado: " + espacioSeleccionado);
 
-        // Agregar más logs para verificar el flujo del método
-        System.out.println("Después de obtener el espacio seleccionado.");
-
-        // Realizar la lógica deseada con el espacio seleccionado
     }
 
 }
