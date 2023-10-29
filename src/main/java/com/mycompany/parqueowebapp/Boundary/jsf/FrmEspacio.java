@@ -40,7 +40,7 @@ public class FrmEspacio extends AbstractFrm<Espacio> implements Serializable {
     @Override
     public String getIdObject(Espacio object) {
         if (object != null && object.getIdEspacio() != null) {
-            return object.getIdEspacio().toString();
+            return object.getIdArea().toString();
         }
         return null;
     }
@@ -55,11 +55,13 @@ public class FrmEspacio extends AbstractFrm<Espacio> implements Serializable {
 
     @Override
     public void instanciarRegistro() {
+        System.out.println("yamen");
         this.registroSelecionado = new Espacio();
-        if (this.idArea != null) {
+        if (this.getIdArea() != null) {
             this.registroSelecionado.setIdArea(new Area(idArea));
         }
         this.registroSelecionado.setActivo(Boolean.TRUE);
+        
     }
 
     @Override
@@ -82,12 +84,27 @@ public class FrmEspacio extends AbstractFrm<Espacio> implements Serializable {
     }
     @Override
     public List<Espacio> cargarDatos(int first,int page) {
-        
         if (this.idArea!=null) {
             return this.eb.findByIdArea(idArea, first, page);
         }
 
         return Collections.EMPTY_LIST;
+    }
+
+    public EspacioBean getEb() {
+        return eb;
+    }
+
+    public void setEb(EspacioBean eb) {
+        this.eb = eb;
+    }
+
+    public FacesContext getFc() {
+        return fc;
+    }
+
+    public void setFc(FacesContext fc) {
+        this.fc = fc;
     }
     @Override
     public int contar(){
@@ -96,5 +113,16 @@ public class FrmEspacio extends AbstractFrm<Espacio> implements Serializable {
         }
         return 0;
     }
-
+    public List<Espacio> obtenereEspacioPorAreas(Object IdArea){
+        if (IdArea!=null) {
+            return eb.findByIdArea(idArea, 0, 10);
+        }
+        
+    return Collections.EMPTY_LIST;
+    }
+    @Override
+    public void selecionarRegistro() {
+        System.out.println("selecionado amigo");
+    }
+    
 }

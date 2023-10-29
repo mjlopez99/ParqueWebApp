@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>beanParaPruebas.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">parqueoWebApp-1.0-SNAPSHOT</a> &gt; <a href="index.source.html" class="el_package">com.mycompany.parqueowebapp.control</a> &gt; <span class="el_source">beanParaPruebas.java</span></div><h1>beanParaPruebas.java</h1><pre class="source lang-java linenums">/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.mycompany.parqueowebapp.control;
+
+import com.mycompany.parqueowebapp.entitys.TipoReserva;
+import jakarta.ejb.LocalBean;
+import jakarta.ejb.Stateless;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
+import java.io.Serializable;
+import java.util.Collections;
+import java.util.List;
+
+/**
+ *
+ * @author mjlopez
+ */
+@LocalBean
+@Stateless
+<span class="nc" id="L23">public class beanParaPruebas implements Serializable {</span>
+
+    @PersistenceContext(unitName = &quot;com.mycompany_parqueoWebApp_war_1.0-SNAPSHOTPU&quot;)
+    EntityManager em;
+
+    public void create(TipoReserva registtro) {
+<span class="nc bnc" id="L29" title="All 2 branches missed.">        if (registtro != null) {</span>
+            try {
+<span class="nc bnc" id="L31" title="All 2 branches missed.">                if (em != null) {</span>
+<span class="nc" id="L32">                    em.persist(registtro);</span>
+<span class="nc" id="L33">                    return;</span>
+                }
+<span class="nc" id="L35">            } catch (Exception e) {</span>
+<span class="nc" id="L36">                System.out.println(e);</span>
+<span class="nc" id="L37">            }</span>
+<span class="nc" id="L38">            throw new IllegalStateException();</span>
+        }
+<span class="nc" id="L40">        throw new IllegalArgumentException();</span>
+    }
+
+    public List&lt;TipoReserva&gt; findRange(int first, int page) {
+
+<span class="nc bnc" id="L45" title="All 4 branches missed.">        if (first &gt;= 0 &amp;&amp; page &gt; 0) {</span>
+            try {
+<span class="nc bnc" id="L47" title="All 2 branches missed.">                if (em != null) {</span>
+<span class="nc" id="L48">                    Query q = em.createNamedQuery(&quot;TipoReserva.findAll&quot;);</span>
+<span class="nc" id="L49">                    q.setFirstResult(first);</span>
+<span class="nc" id="L50">                    q.setMaxResults(page);</span>
+<span class="nc" id="L51">                    return (q.getResultList());</span>
+                }
+<span class="nc" id="L53">            } catch (Exception e) {</span>
+<span class="nc" id="L54">                System.out.println(&quot;error: &quot; + e.getMessage());</span>
+<span class="nc" id="L55">            }</span>
+<span class="nc" id="L56">            throw new IllegalStateException();</span>
+
+        }
+
+<span class="nc" id="L60">        return Collections.EMPTY_LIST;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -67,7 +67,6 @@ public class EspacioBean extends abstractDataAccess<Espacio> implements Serializ
             if (em!=null) {
                 Query q = em.createNamedQuery("Espacio.countByIdArea");
                 q.setParameter("idArea", idArea);
-                System.out.println("respuesta");
                 return ((Long) q.getSingleResult()).intValue();
             }else{
                 System.out.println("no hay nada");
@@ -76,9 +75,7 @@ public class EspacioBean extends abstractDataAccess<Espacio> implements Serializ
         return 0;
     }
     public  void leerdatos(List<Espacio> e){
-        System.out.println("datos:");
-        e.forEach(System.out::println);
-    
+       
     }
     
     

@@ -1,0 +1,44 @@
+<composition xmlns="http://xmlns.jcp.org/jsf/facelets"
+             template="./WEB-INF/templates/raiz.xhtml"
+             xmlns:h="http://xmlns.jcp.org/jsf/html"
+             xmlns:f="http://xmlns.jcp.org/jsf/core"
+             xmlns:p="http://primefaces.org/ui"
+             xmlns:btnPark="jakarta.faces.composite/btnPark"
+             xmlns:btnParkDown="jakarta.faces.composite/btnParkDown">
+    <define name="tabla">
+
+        <h:form id="frmTabla" class="tabla-principal">
+            <p:dataTable value="#{frmTipoEspacio.modelo}" var="r" 
+                         lazy="true" 
+                         paginator="true"
+                         rows="3" 
+                         first="0"
+                         selectionMode="single"
+                         selection="#{frmTipoEspacio.registroSelecionado}"
+                         rendered="#{empty frmTipoEspacio.registroSelecionado}"
+                         class="tabla--registros"
+                         >
+                <p:ajax  process="@this" update=":pnlDetalle @form" event="rowSelect" listener="#{frmTipoEspacio.selecionarRegistro}"/>
+                <p:column title="ID"><h:outputText value="#{r.idTipoEspacio}"></h:outputText></p:column>
+                <p:column title="NOMBRE"><h:outputText value="#{r.nombre}"></h:outputText></p:column>
+            </p:dataTable>
+
+            <btnPark:botonesTop bean="#{frmTipoEspacio}"/>
+        </h:form>
+    </define>
+    <define name="detalle">
+        <h:panelGroup id="pnlDetalle">
+            <h:form rendered="#{not empty frmTipoEspacio.registroSelecionado}" id="frmDetalle">
+                <h:panelGrid columns="2">
+                    <p:outputLabel value="ID" for="txtid"></p:outputLabel>
+                    <p:inputText id="txtid" value="#{frmTipoEspacio.registroSelecionado.idTipoEspacio}"></p:inputText>
+
+                    <p:outputLabel value="Nombre" for="txtNombre"></p:outputLabel>
+                    <p:inputText id="txtNombre" value="#{frmTipoEspacio.registroSelecionado.nombre}" size="70" ></p:inputText>
+                </h:panelGrid>
+                <btnParkDown:botonDown bean="#{frmTipoEspacio}"/>
+                <p:messages/>
+            </h:form>
+        </h:panelGroup>
+    </define>
+</composition>

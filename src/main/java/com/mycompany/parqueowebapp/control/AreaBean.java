@@ -5,10 +5,10 @@ import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
-import org.primefaces.model.DefaultTreeNode;
-import org.primefaces.model.TreeNode;
 
 @Stateless
 @LocalBean
@@ -31,13 +31,38 @@ public class AreaBean extends abstractDataAccess<Area> implements Serializable {
         return "idArea";
     }
 
-    public List<Area> obtenerAreasPrincipales() {
-        return em.createQuery("SELECT a FROM Area a WHERE a.idAreaPadre IS NULL", Area.class).getResultList();
+     public List<Area> findByIdPadre(final Integer idPadre, int primero, int tamanio) {
+        if (idPadre != null && primero >= 0 && tamanio > 0) {
+            if (em != null) {
+                Query q = em.createNamedQuery("Area.findByIdArea");
+                q.setParameter("idArea", idPadre);
+                q.setFirstResult(primero);
+                q.setMaxResults(tamanio);
+                return q.getResultList();
+
+            }  
+
+        }
+        return Collections.EMPTY_LIST;
     }
 
-    public List<Area> obtenerSubAreas(Area areaPadre) {
-        return em.createQuery("SELECT a FROM Area a WHERE a.idAreaPadre = :idArea", Area.class)
-                .setParameter("idArea", areaPadre)
-                .getResultList();
+    public int contarByIdPadre(final Integer idPadre) {
+        if (idPadre != null && em != null) {
+            Query q = em.createNamedQuery("Area.coundByIdPadre");
+            q.setParameter("idAreaPadre", idPadre);
+            return ((Long) q.getSingleResult()).intValue();
+        }
+        return 0;
     }
+
+    public List<Area> findRaices(int primero, int tamanio) {
+        if (em != null) {
+            Query q = em.createNamedQuery("Area.findRaices");
+            q.setFirstResult(primero);
+            q.setMaxResults(tamanio);
+            return q.getResultList();
+        }
+        return Collections.EMPTY_LIST;
+    }
+
 }

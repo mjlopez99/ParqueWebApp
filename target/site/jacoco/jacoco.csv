@@ -1,19 +1,23 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
 parqueoWebApp-1.0-SNAPSHOT,com.mycompany.parqueowebapp.Boundary.jsf,EstadosCRUD,21,0,0,0,4,0,1,0,1,0
+parqueoWebApp-1.0-SNAPSHOT,com.mycompany.parqueowebapp.Boundary.jsf,FrmArea2,238,0,24,0,60,0,36,0,24,0
 parqueoWebApp-1.0-SNAPSHOT,com.mycompany.parqueowebapp.Boundary.jsf,AbstractFrm.new LazyDataModel() {...},78,0,6,0,24,0,8,0,5,0
 parqueoWebApp-1.0-SNAPSHOT,com.mycompany.parqueowebapp.Boundary.jsf,SessionUsuario,75,0,4,0,19,0,10,0,8,0
-parqueoWebApp-1.0-SNAPSHOT,com.mycompany.parqueowebapp.Boundary.jsf,FrmArea,219,0,22,0,51,0,30,0,19,0
+parqueoWebApp-1.0-SNAPSHOT,com.mycompany.parqueowebapp.Boundary.jsf,FrmArea,192,0,20,0,45,0,28,0,18,0
 parqueoWebApp-1.0-SNAPSHOT,com.mycompany.parqueowebapp.Boundary.jsf,AbstractFrm,213,0,4,0,72,0,18,0,16,0
 parqueoWebApp-1.0-SNAPSHOT,com.mycompany.parqueowebapp.Boundary.jsf,FrmTipoReserva,57,0,10,0,11,0,12,0,7,0
 parqueoWebApp-1.0-SNAPSHOT,com.mycompany.parqueowebapp.Boundary.jsf,ActivadorJSF,3,0,0,0,1,0,1,0,1,0
-parqueoWebApp-1.0-SNAPSHOT,com.mycompany.parqueowebapp.Boundary.jsf,FrmEspacio,114,0,16,0,26,0,20,0,12,0
+parqueoWebApp-1.0-SNAPSHOT,com.mycompany.parqueowebapp.Boundary.jsf,FrmParaPruebas,126,0,14,0,31,0,16,0,9,0
+parqueoWebApp-1.0-SNAPSHOT,com.mycompany.parqueowebapp.Boundary.jsf,FrmEspacio,141,0,18,0,36,0,27,0,18,0
 parqueoWebApp-1.0-SNAPSHOT,com.mycompany.parqueowebapp.resources,JakartaEE10Resource,7,0,0,0,4,0,2,0,2,0
 parqueoWebApp-1.0-SNAPSHOT,com.mycompany.parqueowebapp.Boundary.Rest,tipoWEspacioAsincRest,15,0,0,0,2,0,3,0,3,0
 parqueoWebApp-1.0-SNAPSHOT,com.mycompany.parqueowebapp.Boundary.Rest,TipoEspacioResource,87,0,10,0,27,0,9,0,4,0
 parqueoWebApp-1.0-SNAPSHOT,com.mycompany.parqueowebapp.control,TipoEspacioBean,27,0,0,0,9,0,4,0,4,0
-parqueoWebApp-1.0-SNAPSHOT,com.mycompany.parqueowebapp.control,EspacioBean,98,0,10,0,30,0,11,0,6,0
+parqueoWebApp-1.0-SNAPSHOT,com.mycompany.parqueowebapp.control,EspacioBean,85,0,10,0,27,0,11,0,6,0
+parqueoWebApp-1.0-SNAPSHOT,com.mycompany.parqueowebapp.control,ClaseParaPruebas,9,0,0,0,4,0,3,0,3,0
+parqueoWebApp-1.0-SNAPSHOT,com.mycompany.parqueowebapp.control,AreaBean2,36,0,0,0,14,0,5,0,5,0
 parqueoWebApp-1.0-SNAPSHOT,com.mycompany.parqueowebapp.control,TipoReservaBean,9,0,0,0,4,0,3,0,3,0
-parqueoWebApp-1.0-SNAPSHOT,com.mycompany.parqueowebapp.control,AreaBean,26,0,0,0,8,0,5,0,5,0
+parqueoWebApp-1.0-SNAPSHOT,com.mycompany.parqueowebapp.control,AreaBean,84,0,14,0,23,0,13,0,6,0
 parqueoWebApp-1.0-SNAPSHOT,com.mycompany.parqueowebapp.control,abstractDataAccess,233,0,24,0,77,0,19,0,7,0
 parqueoWebApp-1.0-SNAPSHOT,com.mycompany.parqueowebapp.control,beanParaPruebas,62,0,10,0,21,0,8,0,3,0
 parqueoWebApp-1.0-SNAPSHOT,com.mycompany.parqueowebapp.Boundary.servlet,TipoReservaServlet,130,0,14,0,40,0,12,0,5,0
@@ -21,7 +25,7 @@ parqueoWebApp-1.0-SNAPSHOT,com.mycompany.parqueowebapp.entitys,TipoReservaSecuen
 parqueoWebApp-1.0-SNAPSHOT,com.mycompany.parqueowebapp.entitys,Area,97,0,12,0,33,0,23,0,17,0
 parqueoWebApp-1.0-SNAPSHOT,com.mycompany.parqueowebapp.entitys,TipoEspacio,76,0,12,0,24,0,17,0,11,0
 parqueoWebApp-1.0-SNAPSHOT,com.mycompany.parqueowebapp.entitys,Reserva,104,0,12,0,36,0,25,0,19,0
-parqueoWebApp-1.0-SNAPSHOT,com.mycompany.parqueowebapp.entitys,Espacio,104,0,12,0,36,0,25,0,19,0
+parqueoWebApp-1.0-SNAPSHOT,com.mycompany.parqueowebapp.entitys,Espacio,102,0,12,0,36,0,25,0,19,0
 parqueoWebApp-1.0-SNAPSHOT,com.mycompany.parqueowebapp.entitys,TipoReserva,97,0,12,0,33,0,23,0,17,0
 parqueoWebApp-1.0-SNAPSHOT,com.mycompany.parqueowebapp.entitys,EspacioCaracteristica,90,0,12,0,30,0,21,0,15,0
 parqueoWebApp-1.0-SNAPSHOT,com.mycompany.parqueowebapp.entitys,ReservaHistorial,90,0,12,0,30,0,21,0,15,0

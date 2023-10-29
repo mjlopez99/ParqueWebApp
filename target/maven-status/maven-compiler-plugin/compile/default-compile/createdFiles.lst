@@ -1,3 +1,4 @@
+com\mycompany\parqueowebapp\Boundary\jsf\FrmArea2.class
 com\mycompany\parqueowebapp\entitys\Area.class
 com\mycompany\parqueowebapp\entitys\EspacioCaracteristica.class
 com\mycompany\parqueowebapp\JakartaRestConfiguration.class
@@ -8,11 +9,14 @@ com\mycompany\parqueowebapp\resources\JakartaEE10Resource.class
 com\mycompany\parqueowebapp\Boundary\jsf\ActivadorJSF.class
 com\mycompany\parqueowebapp\control\beanParaPruebas.class
 com\mycompany\parqueowebapp\Boundary\jsf\FrmTipoReserva.class
+com\mycompany\parqueowebapp\control\AreaBean2.class
 com\mycompany\parqueowebapp\entitys\TipoReserva.class
+com\mycompany\parqueowebapp\Boundary\jsf\FrmParaPruebas.class
 com\mycompany\parqueowebapp\control\TipoEspacioBean.class
 com\mycompany\parqueowebapp\Boundary\jsf\FrmEspacio.class
 com\mycompany\parqueowebapp\Boundary\jsf\AbstractFrm$1.class
 com\mycompany\parqueowebapp\Boundary\servlet\TipoReservaServlet.class
+com\mycompany\parqueowebapp\control\ClaseParaPruebas.class
 com\mycompany\parqueowebapp\entitys\Reserva.class
 com\mycompany\parqueowebapp\Boundary\jsf\FrmArea.class
 com\mycompany\parqueowebapp\entitys\ReservaHistorial.class

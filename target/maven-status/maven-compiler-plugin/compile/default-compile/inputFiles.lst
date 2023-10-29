@@ -1,5 +1,7 @@
 C:\Progra\parqueoWebApp\src\main\java\com\mycompany\parqueowebapp\entitys\Reserva.java
+C:\Progra\parqueoWebApp\src\main\java\com\mycompany\parqueowebapp\control\ClaseParaPruebas.java
 C:\Progra\parqueoWebApp\src\main\java\com\mycompany\parqueowebapp\Boundary\Rest\TipoEspacioResource.java
+C:\Progra\parqueoWebApp\src\main\java\com\mycompany\parqueowebapp\control\AreaBean2.java
 C:\Progra\parqueoWebApp\src\main\java\com\mycompany\parqueowebapp\control\EspacioBean.java
 C:\Progra\parqueoWebApp\src\main\java\com\mycompany\parqueowebapp\Boundary\jsf\EstadosCRUD.java
 C:\Progra\parqueoWebApp\src\main\java\com\mycompany\parqueowebapp\entitys\TipoReservaSecuencia.java
@@ -10,6 +12,7 @@ C:\Progra\parqueoWebApp\src\main\java\com\mycompany\parqueowebapp\Boundary\servl
 C:\Progra\parqueoWebApp\src\main\java\com\mycompany\parqueowebapp\entitys\ReservaHistorial.java
 C:\Progra\parqueoWebApp\src\main\java\com\mycompany\parqueowebapp\entitys\Espacio.java
 C:\Progra\parqueoWebApp\src\main\java\com\mycompany\parqueowebapp\Boundary\jsf\FrmEspacio.java
+C:\Progra\parqueoWebApp\src\main\java\com\mycompany\parqueowebapp\Boundary\jsf\FrmParaPruebas.java
 C:\Progra\parqueoWebApp\src\main\java\com\mycompany\parqueowebapp\Boundary\jsf\SessionUsuario.java
 C:\Progra\parqueoWebApp\src\main\java\com\mycompany\parqueowebapp\control\AreaBean.java
 C:\Progra\parqueoWebApp\src\main\java\com\mycompany\parqueowebapp\control\TipoReservaBean.java
@@ -23,4 +26,5 @@ C:\Progra\parqueoWebApp\src\main\java\com\mycompany\parqueowebapp\control\abstra
 C:\Progra\parqueoWebApp\src\main\java\com\mycompany\parqueowebapp\entitys\Area.java
 C:\Progra\parqueoWebApp\src\main\java\com\mycompany\parqueowebapp\entitys\TipoReserva.java
 C:\Progra\parqueoWebApp\src\main\java\com\mycompany\parqueowebapp\Boundary\Rest\tipoWEspacioAsincRest.java
+C:\Progra\parqueoWebApp\src\main\java\com\mycompany\parqueowebapp\Boundary\jsf\FrmArea2.java
 C:\Progra\parqueoWebApp\src\main\java\com\mycompany\parqueowebapp\Boundary\jsf\AbstractFrm.java

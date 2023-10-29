@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EspacioBean.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">parqueoWebApp-1.0-SNAPSHOT</a> &gt; <a href="index.source.html" class="el_package">com.mycompany.parqueowebapp.control</a> &gt; <span class="el_source">EspacioBean.java</span></div><h1>EspacioBean.java</h1><pre class="source lang-java linenums">/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.mycompany.parqueowebapp.control;
+
+import com.mycompany.parqueowebapp.entitys.Espacio;
+import jakarta.ejb.LocalBean;
+import jakarta.ejb.Stateless;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
+import java.io.Serializable;
+import java.util.Collections;
+import java.util.List;
+
+/**
+ *
+ * @author mjlopez
+ */
+@Stateless
+@LocalBean
+public class EspacioBean extends abstractDataAccess&lt;Espacio&gt; implements Serializable{
+    @PersistenceContext(unitName = &quot;com.mycompany_parqueoWebApp_war_1.0-SNAPSHOTPU&quot;)
+    EntityManager em;
+    public EspacioBean() {
+<span class="nc" id="L27">        super(Espacio.class);</span>
+<span class="nc" id="L28">    }</span>
+
+    @Override
+    public EntityManager getEntityManger() {
+<span class="nc" id="L32">         return em;</span>
+    }
+
+    @Override
+    public String getOrdenAsc() {
+<span class="nc" id="L37">         return &quot;idEspacio&quot;;</span>
+    }
+
+    public List&lt;Espacio&gt; findByIdArea(final Integer idArea,int first,int page) {
+        
+<span class="nc bnc" id="L42" title="All 4 branches missed.">        if (first &gt;= 0 &amp;&amp; page &gt; 0) {</span>
+            try {
+<span class="nc" id="L44">                em = getEntityManger();</span>
+<span class="nc bnc" id="L45" title="All 2 branches missed.">                if (em != null) {</span>
+<span class="nc" id="L46">                    Query q = em.createNamedQuery(&quot;Espacio.findByIdArea&quot;);</span>
+<span class="nc" id="L47">                   q.setParameter(&quot;idArea&quot;, idArea);</span>
+                   
+<span class="nc" id="L49">                    q.setFirstResult(first);</span>
+<span class="nc" id="L50">                    q.setMaxResults(page);</span>
+<span class="nc" id="L51">                    List&lt;Espacio&gt; e=q.getResultList();</span>
+<span class="nc" id="L52">                    leerdatos(e);</span>
+<span class="nc" id="L53">                    return e;</span>
+
+                }
+<span class="nc" id="L56">            } catch (Exception e) {</span>
+<span class="nc" id="L57">                System.out.println(&quot;error: &quot; + e.getMessage());</span>
+<span class="nc" id="L58">            }</span>
+<span class="nc" id="L59">            throw new IllegalStateException();</span>
+
+        }
+
+<span class="nc" id="L63">        return Collections.EMPTY_LIST;</span>
+    }
+    public int countByIdArea(final Integer idArea){
+<span class="nc bnc" id="L66" title="All 2 branches missed.">        if (idArea!=null) {</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">            if (em!=null) {</span>
+<span class="nc" id="L68">                Query q = em.createNamedQuery(&quot;Espacio.countByIdArea&quot;);</span>
+<span class="nc" id="L69">                q.setParameter(&quot;idArea&quot;, idArea);</span>
+<span class="nc" id="L70">                return ((Long) q.getSingleResult()).intValue();</span>
+            }else{
+<span class="nc" id="L72">                System.out.println(&quot;no hay nada&quot;);</span>
+            }
+        }
+<span class="nc" id="L75">        return 0;</span>
+    }
+    public  void leerdatos(List&lt;Espacio&gt; e){
+       
+<span class="nc" id="L79">    }</span>
+    
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

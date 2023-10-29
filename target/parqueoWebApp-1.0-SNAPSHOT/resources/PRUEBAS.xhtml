@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <p:dataTable value="#{frmArea.pruebas}" var="re" 
+                     lazy="true" 
+                     paginator="true"
+                     rows="5" 
+                     first="0"
+                     selectionMode="single"
+                     selection="#{frmArea.frme.registroSelecionado}"
+                     rendered="#{empty frmArea.frme.registroSelecionado}"
+                     
+            <p:outputLabel>'hola'</p:outputLabel>
+            <p:column title="ID"><h:outputText value="#{re.idArea}"></h:outputText></p:column>
+            <p:column title="NOMBRE"><h:outputText value="#{re.nombre}"></h:outputText></p:column>
+        </p:dataTable>
+    </h:body>
+</html>

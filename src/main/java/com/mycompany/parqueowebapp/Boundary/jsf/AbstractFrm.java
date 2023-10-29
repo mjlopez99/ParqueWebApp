@@ -214,5 +214,4 @@ public abstract class AbstractFrm<T> implements Serializable {
     public void setEstado(EstadosCRUD estado) {
         this.estado = estado;
     }
-
 }

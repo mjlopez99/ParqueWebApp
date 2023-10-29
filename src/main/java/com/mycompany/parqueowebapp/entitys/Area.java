@@ -28,8 +28,9 @@ import java.util.List;
 @NamedQueries({
     @NamedQuery(name = "Area.findAll", query = "SELECT a FROM Area a"),
     @NamedQuery(name = "Area.findByIdArea", query = "SELECT a FROM Area a WHERE a.idArea = :idArea"),
+    @NamedQuery(name = "Area.findRaices", query = "SELECT a FROM Area a WHERE a.idAreaPadre IS NULL"),
     @NamedQuery(name = "Area.findByNombre", query = "SELECT a FROM Area a WHERE a.nombre = :nombre"),
-    @NamedQuery(name = "Area.findByDescripcion", query = "SELECT a FROM Area a WHERE a.descripcion = :descripcion")})
+    @NamedQuery(name = "Area.coundByIdPadre", query = "SELECT COUNT(a) FROM Area a WHERE a.idAreaPadre = :idAreaPadre")})
 public class Area implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -42,7 +43,7 @@ public class Area implements Serializable {
     private String nombre;
     @Column(name = "descripcion")
     private String descripcion;
-    
+
     @OneToMany(mappedBy = "idAreaPadre")
     private List<Area> areaList;
     @JoinColumn(name = "id_area_padre", referencedColumnName = "id_area")
@@ -61,7 +62,6 @@ public class Area implements Serializable {
     public Integer getIdArea() {
         return idArea;
     }
-//
     public void setIdArea(Integer idArea) {
         this.idArea = idArea;
     }
@@ -130,5 +130,5 @@ public class Area implements Serializable {
     public String toString() {
         return "com.mycompany.entidades.entitys.Area[ idArea=" + idArea + " ]";
     }
-    
+
 }

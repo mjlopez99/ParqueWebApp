@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractFrm.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">parqueoWebApp-1.0-SNAPSHOT</a> &gt; <a href="index.source.html" class="el_package">com.mycompany.parqueowebapp.Boundary.jsf</a> &gt; <span class="el_source">AbstractFrm.java</span></div><h1>AbstractFrm.java</h1><pre class="source lang-java linenums">/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.mycompany.parqueowebapp.Boundary.jsf;
+
+import com.mycompany.parqueowebapp.control.abstractDataAccess;
+import jakarta.annotation.PostConstruct;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.event.ActionEvent;
+import java.io.Serializable;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.primefaces.model.FilterMeta;
+import org.primefaces.model.LazyDataModel;
+import org.primefaces.model.SortMeta;
+
+/**
+ *
+ * @author mjlopez
+ * @param &lt;T&gt;
+ */
+<span class="nc" id="L27">public abstract class AbstractFrm&lt;T&gt; implements Serializable {</span>
+
+    public abstract abstractDataAccess&lt;T&gt; getDataAccess();
+
+    public abstract String getIdObject(T object);
+
+    public abstract T getObjectId(String id);
+
+    public abstract void instanciarRegistro();
+
+    LazyDataModel&lt;T&gt; modelo;
+<span class="nc" id="L38">    EstadosCRUD estado = EstadosCRUD.NINGUNO;</span>
+<span class="nc" id="L39">    T registroSelecionado = null;</span>
+
+    public abstract FacesContext getFC();
+
+    @PostConstruct
+    public void inicializar() {
+<span class="nc" id="L45">        InicializarRegistros();</span>
+<span class="nc" id="L46">    }</span>
+
+    private void InicializarRegistros() {
+<span class="nc" id="L49">        this.modelo = new LazyDataModel&lt;T&gt;() {</span>
+            @Override
+            public int count(Map&lt;String, FilterMeta&gt; map) {
+<span class="nc" id="L52">                abstractDataAccess&lt;T&gt; clBean = null;</span>
+<span class="nc" id="L53">                int Resultado = 0;</span>
+                try {
+<span class="nc" id="L55">                    clBean = getDataAccess();</span>
+<span class="nc" id="L56">                    Resultado = clBean.count();</span>
+<span class="nc" id="L57">                    return Resultado;</span>
+<span class="nc" id="L58">                } catch (Exception e) {</span>
+<span class="nc" id="L59">                    Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);</span>
+                }
+<span class="nc" id="L61">                return Resultado;</span>
+            }
+
+            @Override
+            public List&lt;T&gt; load(int inicio, int pagina, Map&lt;String, SortMeta&gt; map, Map&lt;String, FilterMeta&gt; map1) {
+<span class="nc" id="L66">                abstractDataAccess&lt;T&gt; clBean = null;</span>
+<span class="nc" id="L67">                List&lt;T&gt; listaResultados = null;</span>
+                try {
+<span class="nc" id="L69">                    clBean = getDataAccess();</span>
+<span class="nc" id="L70">                    listaResultados = clBean.findRange(inicio, pagina);</span>
+<span class="nc" id="L71">                } catch (Exception e) {</span>
+<span class="nc" id="L72">                    Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);</span>
+                } finally {
+<span class="nc bnc" id="L74" title="All 2 branches missed.">                    if (listaResultados == null) {</span>
+<span class="nc" id="L75">                        listaResultados = Collections.emptyList();</span>
+                    }
+                }
+<span class="nc" id="L78">                return listaResultados;</span>
+            }
+
+            @Override
+            public String getRowKey(T object) {
+<span class="nc bnc" id="L83" title="All 2 branches missed.">                if (object != null) {</span>
+<span class="nc" id="L84">                    return getIdObject(object);</span>
+                }
+<span class="nc" id="L86">                return null;</span>
+            }
+
+            @Override
+            public T getRowData(String rowKey) {
+<span class="nc bnc" id="L91" title="All 2 branches missed.">                if (rowKey != null) {</span>
+<span class="nc" id="L92">                    return getObjectId(rowKey);</span>
+
+                }
+<span class="nc" id="L95">                return null;</span>
+            }
+
+        };
+
+<span class="nc" id="L100">    }</span>
+
+    public void btnNuevoHandler(ActionEvent e) {
+<span class="nc" id="L103">        this.estado = EstadosCRUD.NUEVO;</span>
+<span class="nc" id="L104">        this.instanciarRegistro();</span>
+
+<span class="nc" id="L106">    }</span>
+
+    public void selecionarRegistro() {
+<span class="nc" id="L109">        this.estado = EstadosCRUD.MODIFICAR;</span>
+<span class="nc" id="L110">    }</span>
+
+    public void btnGuardarHandler(ActionEvent e) {
+<span class="nc" id="L113">        FacesMessage mensaje = null;</span>
+        try {
+<span class="nc" id="L115">            abstractDataAccess&lt;T&gt; clBean = null;</span>
+<span class="nc" id="L116">            clBean = getDataAccess();</span>
+<span class="nc" id="L117">            clBean.create(registroSelecionado);</span>
+<span class="nc" id="L118">            this.estado = EstadosCRUD.NINGUNO;</span>
+<span class="nc" id="L119">            mensaje = new FacesMessage(FacesMessage.SEVERITY_INFO, &quot;registro guardado exitosamentes&quot;,</span>
+                    &quot;se creo el registro&quot;);
+<span class="nc" id="L121">            getFC().addMessage(null, mensaje);</span>
+
+<span class="nc" id="L123">            return;</span>
+<span class="nc" id="L124">        } catch (Exception ex) {</span>
+<span class="nc" id="L125">            Logger.getLogger(getClass().getName()).log(Level.SEVERE, ex.getMessage(), ex);</span>
+        }
+<span class="nc" id="L127">        mensaje = new FacesMessage(FacesMessage.SEVERITY_INFO, &quot;registro no se pudo guardar&quot;,</span>
+                &quot;no se creo el registro&quot;);
+<span class="nc" id="L129">        getFC().addMessage(null, mensaje);</span>
+<span class="nc" id="L130">        this.registroSelecionado = null;</span>
+<span class="nc" id="L131">    }</span>
+
+    public void btnCancelarHandler(ActionEvent ex) {
+<span class="nc" id="L134">        this.registroSelecionado = null;</span>
+<span class="nc" id="L135">        this.estado = EstadosCRUD.NINGUNO;</span>
+<span class="nc" id="L136">    }</span>
+
+    public void btnModificarHandler(ActionEvent ex) {
+<span class="nc" id="L139">        T modificado = null;</span>
+
+        try {
+<span class="nc" id="L142">            abstractDataAccess&lt;T&gt; clBean = null;</span>
+<span class="nc" id="L143">            clBean = getDataAccess();</span>
+<span class="nc" id="L144">            modificado = clBean.modify(registroSelecionado);</span>
+<span class="nc" id="L145">        } catch (Exception e) {</span>
+<span class="nc" id="L146">            Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);</span>
+<span class="nc" id="L147">        }</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">        if (modificado != null) {</span>
+            //notificar que se elimino3
+<span class="nc" id="L150">            this.estado = EstadosCRUD.NINGUNO;</span>
+<span class="nc" id="L151">            this.registroSelecionado = null;</span>
+<span class="nc" id="L152">            return;</span>
+        }
+        //
+<span class="nc" id="L155">    }</span>
+
+    public void btneEliminarHandler(ActionEvent ex) {
+        try {
+<span class="nc" id="L159">            abstractDataAccess&lt;T&gt; clBean = null;</span>
+<span class="nc" id="L160">            clBean = getDataAccess();</span>
+<span class="nc" id="L161">            clBean.delete(registroSelecionado);</span>
+<span class="nc" id="L162">            this.estado = EstadosCRUD.NINGUNO;</span>
+<span class="nc" id="L163">            this.registroSelecionado = null;</span>
+<span class="nc" id="L164">            return;</span>
+<span class="nc" id="L165">        } catch (Exception e) {</span>
+<span class="nc" id="L166">            Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);</span>
+        }
+<span class="nc" id="L168">    }</span>
+
+    public List&lt;T&gt; cargarDatos(int primero, int tamanio) {
+<span class="nc" id="L171">        List&lt;T&gt; resultado = null;</span>
+
+        try {
+<span class="nc" id="L174">            abstractDataAccess&lt;T&gt; clBean = getDataAccess();</span>
+<span class="nc" id="L175">            resultado = clBean.findRange(primero, tamanio);</span>
+<span class="nc" id="L176">        } catch (Exception e) {</span>
+<span class="nc" id="L177">            Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);</span>
+        } finally {
+<span class="nc bnc" id="L179" title="All 2 branches missed.">            if (resultado == null) {</span>
+<span class="nc" id="L180">                resultado = Collections.EMPTY_LIST;</span>
+            }
+        }
+<span class="nc" id="L183">        return resultado;</span>
+    }
+
+    public int contar() {
+<span class="nc" id="L187">        int resultado = 0;</span>
+
+        try {
+<span class="nc" id="L190">            abstractDataAccess&lt;T&gt; clBean = getDataAccess();</span>
+<span class="nc" id="L191">            resultado = clBean.count();</span>
+<span class="nc" id="L192">        } catch (Exception e) {</span>
+<span class="nc" id="L193">            Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);</span>
+<span class="nc" id="L194">        }</span>
+<span class="nc" id="L195">        return resultado;</span>
+    }
+
+    public T getRegistroSelecionado() {
+<span class="nc" id="L199">        return registroSelecionado;</span>
+    }
+
+    public void setRegistroSelecionado(T registroSelecionado) {
+<span class="nc" id="L203">        this.registroSelecionado = registroSelecionado;</span>
+<span class="nc" id="L204">    }</span>
+
+    public LazyDataModel&lt;T&gt; getModelo() {
+<span class="nc" id="L207">        return this.modelo;</span>
+    }
+
+    public EstadosCRUD getEstado() {
+<span class="nc" id="L211">        return estado;</span>
+    }
+
+    public void setEstado(EstadosCRUD estado) {
+<span class="nc" id="L215">        this.estado = estado;</span>
+<span class="nc" id="L216">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

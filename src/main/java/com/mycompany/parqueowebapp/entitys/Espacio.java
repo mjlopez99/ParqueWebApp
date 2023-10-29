@@ -140,7 +140,7 @@ public class Espacio implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mycompany.entidades.entitys.Espacio[ idEspacio=" + idEspacio + " ]";
+        return "";
     }
     
 }

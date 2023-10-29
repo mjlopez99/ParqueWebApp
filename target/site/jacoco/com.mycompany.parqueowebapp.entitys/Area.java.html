@@ -28,8 +28,9 @@ import java.util.List;
 @NamedQueries({
     @NamedQuery(name = &quot;Area.findAll&quot;, query = &quot;SELECT a FROM Area a&quot;),
     @NamedQuery(name = &quot;Area.findByIdArea&quot;, query = &quot;SELECT a FROM Area a WHERE a.idArea = :idArea&quot;),
+    @NamedQuery(name = &quot;Area.findRaices&quot;, query = &quot;SELECT a FROM Area a WHERE a.idAreaPadre IS NULL&quot;),
     @NamedQuery(name = &quot;Area.findByNombre&quot;, query = &quot;SELECT a FROM Area a WHERE a.nombre = :nombre&quot;),
-    @NamedQuery(name = &quot;Area.findByDescripcion&quot;, query = &quot;SELECT a FROM Area a WHERE a.descripcion = :descripcion&quot;)})
+    @NamedQuery(name = &quot;Area.coundByIdPadre&quot;, query = &quot;SELECT COUNT(a) FROM Area a WHERE a.idAreaPadre = :idAreaPadre&quot;)})
 public class Area implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -42,7 +43,7 @@ public class Area implements Serializable {
     private String nombre;
     @Column(name = &quot;descripcion&quot;)
     private String descripcion;
-    
+
     @OneToMany(mappedBy = &quot;idAreaPadre&quot;)
     private List&lt;Area&gt; areaList;
     @JoinColumn(name = &quot;id_area_padre&quot;, referencedColumnName = &quot;id_area&quot;)
@@ -51,17 +52,16 @@ public class Area implements Serializable {
     @OneToMany(mappedBy = &quot;idArea&quot;)
     private List&lt;Espacio&gt; espacioList;
 
-<span class="nc" id="L54">    public Area() {</span>
-<span class="nc" id="L55">    }</span>
+<span class="nc" id="L55">    public Area() {</span>
+<span class="nc" id="L56">    }</span>
 
-<span class="nc" id="L57">    public Area(Integer idArea) {</span>
-<span class="nc" id="L58">        this.idArea = idArea;</span>
-<span class="nc" id="L59">    }</span>
+<span class="nc" id="L58">    public Area(Integer idArea) {</span>
+<span class="nc" id="L59">        this.idArea = idArea;</span>
+<span class="nc" id="L60">    }</span>
 
     public Integer getIdArea() {
-<span class="nc" id="L62">        return idArea;</span>
+<span class="nc" id="L63">        return idArea;</span>
     }
-//
     public void setIdArea(Integer idArea) {
 <span class="nc" id="L66">        this.idArea = idArea;</span>
 <span class="nc" id="L67">    }</span>
@@ -130,6 +130,6 @@ public class Area implements Serializable {
     public String toString() {
 <span class="nc" id="L131">        return &quot;com.mycompany.entidades.entitys.Area[ idArea=&quot; + idArea + &quot; ]&quot;;</span>
     }
-    
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

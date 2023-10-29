@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FrmArea.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">parqueoWebApp-1.0-SNAPSHOT</a> &gt; <a href="index.source.html" class="el_package">com.mycompany.parqueowebapp.Boundary.jsf</a> &gt; <span class="el_source">FrmArea.java</span></div><h1>FrmArea.java</h1><pre class="source lang-java linenums">/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.mycompany.parqueowebapp.Boundary.jsf;
+
+import com.mycompany.parqueowebapp.control.AreaBean;
+import com.mycompany.parqueowebapp.control.abstractDataAccess;
+import com.mycompany.parqueowebapp.entitys.Area;
+import jakarta.annotation.PostConstruct;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.view.ViewScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
+import java.io.Serializable;
+import java.util.List;
+import java.util.stream.Collectors;
+import org.primefaces.event.NodeSelectEvent;
+import org.primefaces.model.DefaultTreeNode;
+import org.primefaces.model.TreeNode;
+
+/**
+ *
+ * @author mjlopez
+ */
+@Named
+@ViewScoped
+
+<span class="nc" id="L29">public class FrmArea extends AbstractFrm&lt;Area&gt; implements Serializable {</span>
+
+    @Inject
+    FrmEspacio frmEspacio;
+    @Inject
+    AreaBean aBean;
+    @Inject
+    FacesContext Fc;
+
+    TreeNode raiz;
+    TreeNode nodoSeleccionado;
+
+    public TreeNode getNodoSelecionado() {
+<span class="nc" id="L42">        return nodoSeleccionado;</span>
+    }
+
+    public void setNodoSelecionado(TreeNode&lt;Area&gt; nodoSelecionado) {
+<span class="nc" id="L46">        this.nodoSeleccionado = nodoSelecionado;</span>
+<span class="nc" id="L47">    }</span>
+    @PostConstruct
+    @Override
+    public void inicializar() {
+<span class="nc" id="L51">        super.inicializar();</span>
+<span class="nc" id="L52">        System.out.println(&quot;continuamos&quot;);</span>
+<span class="nc" id="L53">        this.raiz = new DefaultTreeNode(new Area(), null);</span>
+<span class="nc" id="L54">        List&lt;Area&gt; lista = aBean.findRaices(0, 10);</span>
+<span class="nc" id="L55">        System.out.println(&quot;el tamaño es : &quot;+lista.size());</span>
+//        if (lista != null &amp;&amp; !lista.isEmpty()) {
+//
+//            for (Area next : lista) {
+//                if (next.getIdAreaPadre() == null) {
+//                    this.generarArbol(raiz, next);
+//                }
+//            }
+//        }
+<span class="nc" id="L64">    }</span>
+    public void generarArbol(TreeNode padre, Area actual) {
+    
+<span class="nc" id="L67">    DefaultTreeNode nuevoPadre = new DefaultTreeNode(actual, padre);</span>
+
+<span class="nc" id="L69">    List&lt;Area&gt; hijos = this.aBean.findByIdPadre(actual.getIdArea(), 0, 25);</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">    for (Area hijo : hijos) {</span>
+<span class="nc" id="L71">        generarArbol(nuevoPadre, hijo);</span>
+<span class="nc" id="L72">    }</span>
+<span class="nc" id="L73">}</span>
+
+
+    // Otros métodos y acciones según tus requisitos
+    public TreeNode getRaiz() {
+<span class="nc" id="L78">        return raiz;</span>
+    }
+
+    public void setRaiz(TreeNode raiz) {
+<span class="nc" id="L82">        this.raiz = raiz;</span>
+<span class="nc" id="L83">    }</span>
+
+    public TreeNode getNodoSeleccionado() {
+<span class="nc" id="L86">        return nodoSeleccionado;</span>
+    }
+
+    public void setNodoSeleccionado(TreeNode nodoSeleccionado) {
+<span class="nc" id="L90">        this.nodoSeleccionado = nodoSeleccionado;</span>
+<span class="nc" id="L91">    }</span>
+
+    public void seleccionarNodoListener(NodeSelectEvent nse) {
+<span class="nc" id="L94">        this.registroSelecionado = (Area) nse.getTreeNode().getData();</span>
+<span class="nc" id="L95">        this.selecionarRegistro();</span>
+<span class="nc bnc" id="L96" title="All 6 branches missed.">        if (this.registroSelecionado != null &amp;&amp; this.registroSelecionado.getIdArea() != null &amp;&amp; this.frmEspacio != null) {</span>
+<span class="nc" id="L97">            this.frmEspacio.setIdArea(this.registroSelecionado.getIdArea());</span>
+        }
+<span class="nc" id="L99">    }</span>
+
+    public FrmEspacio getFrmEspacio() {
+<span class="nc" id="L102">        return frmEspacio;</span>
+    }
+
+    @Override
+    public abstractDataAccess&lt;Area&gt; getDataAccess() {
+<span class="nc" id="L107">        return aBean;</span>
+    }
+
+    @Override
+    public String getIdObject(Area object) {
+
+<span class="nc bnc" id="L113" title="All 4 branches missed.">        if (object != null &amp;&amp; object.getIdArea() != null) {</span>
+<span class="nc" id="L114">            return object.getIdArea().toString();</span>
+        }
+<span class="nc" id="L116">        return null;</span>
+    }
+
+    @Override
+    public Area getObjectId(String id) {
+<span class="nc bnc" id="L121" title="All 6 branches missed.">        if (id != null &amp;&amp; this.modelo != null &amp;&amp; this.modelo.getWrappedData() != null) {</span>
+<span class="nc" id="L122">            return modelo.getWrappedData().stream().filter(r -&gt; r.getIdArea().toString().equals(id)).collect(Collectors.toList()).get(0);</span>
+
+        }
+<span class="nc" id="L125">        return null;</span>
+    }
+
+    @Override
+    public void instanciarRegistro() {
+<span class="nc" id="L130">        Area padre = this.registroSelecionado;</span>
+<span class="nc" id="L131">        this.registroSelecionado = new Area();</span>
+<span class="nc" id="L132">        this.registroSelecionado.setIdAreaPadre(padre);</span>
+<span class="nc" id="L133">    }</span>
+
+    @Override
+    public List&lt;Area&gt; cargarDatos(int primero, int tamanio) {
+<span class="nc" id="L137">        Integer idPadre = null;</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">        if (this.registroSelecionado != null) {</span>
+<span class="nc" id="L139">            idPadre = registroSelecionado.getIdArea();</span>
+        }
+<span class="nc" id="L141">        List&lt;Area&gt; lista = aBean.findByIdPadre(idPadre, 0, 10);</span>
+<span class="nc" id="L142">        return lista;</span>
+    }
+
+    @Override
+    public FacesContext getFC() {
+<span class="nc" id="L147">        return Fc;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
