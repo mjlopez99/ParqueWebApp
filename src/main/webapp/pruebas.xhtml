@@ -2,14 +2,66 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="jakarta.faces.html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="jakarta.faces.core">
     <h:head>
         <title>Pruebas</title>
     </h:head>
     <h:body>
-        <p:outputLabel value="La cantidad de registros es: #{frmParaPruebas.count()}"></p:outputLabel>
-        <p:outputLabel value="La RESULTADO siguiente: #{frmParaPruebas.count()}"></p:outputLabel>
+        <h:form>
+            <h1>Para una lista</h1>
+            <h:inputText value="${frmPruebas.sqlUsuarioLista}" size="120"/>
+
+            <!-- Botón con acción -->
+            <p:commandButton value="Enviar" action="#{frmPruebas.Lista}" update="tablaResultados">
+
+                <f:param name="sqlUsuario" value="#{frmPruebas.sqlUsuarioLista}" />
+            </p:commandButton>
+        </h:form>
+        <h:form>
+            <h1>Para una registro</h1>
+            <h:inputText value="${frmPruebas.sqlUsuarioRgistro}" size="120"/>
+
+            <p:commandButton value="Enviar" action="#{frmPruebas.unRegistro}" update="tablaResultado">
+
+                <f:param name="sqlUsuario" value="#{frmPruebas.sqlUsuarioRgistro}" />
+            </p:commandButton>
+        </h:form>
+        <h:form>
+            <h1>Para una cantidad</h1>
+            <h:inputText value="${frmPruebas.sqlUsuarionumero}" size="120"/>
+
+            <!-- Botón con acción -->
+            <p:commandButton value="Enviar" action="#{frmPruebas.cantidad}" update="tablaResultadoNum">
+
+                <f:param name="sqlUsuario" value="#{frmPruebas.sqlUsuarionumero}" />
+             </p:commandButton>
+        </h:form>
         
         
+        
+        
+        <h:panelGroup id="tablaResultados">
+            <!-- Tu sección de resultados aquí -->
+            <h:dataTable value="#{frmPruebas.registros}" var="item">
+                <!-- Definición de columnas -->
+                <h:column>
+                    #{item}
+                </h:column>
+            </h:dataTable>
+        </h:panelGroup>
+        
+        
+        
+        <h:panelGroup id="tablaResultado">
+                <p:outputLabel value="#{frmPruebas.registro.nombre}"/>
+        </h:panelGroup>
+        
+        
+        <h:panelGroup id="tablaResultadoNum">
+            <p:outputLabel value="#{frmPruebas.cantidadResultado}"/>
+        </h:panelGroup>
+        
+
     </h:body>
 </html>

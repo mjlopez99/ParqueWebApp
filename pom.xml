@@ -13,6 +13,13 @@
     </properties>
     
     <dependencies>
+        <!--para parcial-->
+        <dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+
         <!--pruebas de unidad-->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -51,6 +58,11 @@
             <artifactId>primefaces</artifactId>
             <version>13.0.0</version>
             <classifier>jakarta</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.6.0</version>
         </dependency>
 
     </dependencies>

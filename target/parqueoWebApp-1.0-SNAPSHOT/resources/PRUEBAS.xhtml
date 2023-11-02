@@ -7,14 +7,14 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        <p:dataTable value="#{frmArea.pruebas}" var="re" 
+        <p:dataTable value="#{frmPruebas.pruebas}" var="re" 
                      lazy="true" 
                      paginator="true"
                      rows="5" 
                      first="0"
                      selectionMode="single"
-                     selection="#{frmArea.frme.registroSelecionado}"
-                     rendered="#{empty frmArea.frme.registroSelecionado}"
+                     selection="#{frmPruebas.frme.registroSelecionado}"
+                     rendered="#{empty frmPruebas.frme.registroSelecionado}"
                      
             <p:outputLabel>'hola'</p:outputLabel>
             <p:column title="ID"><h:outputText value="#{re.idArea}"></h:outputText></p:column>

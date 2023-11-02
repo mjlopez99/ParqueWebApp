@@ -15,9 +15,12 @@ import jakarta.inject.Named;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import org.primefaces.event.SelectEvent;
+import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
+import org.primefaces.model.SortMeta;
 
 /**
  *
@@ -32,6 +35,15 @@ public class FrmEspacio extends AbstractFrm<Espacio> implements Serializable {
     @Inject
     FacesContext fc;
     Integer idArea;
+    Espacio espacioSelecionado;
+
+    public Espacio getEspacioSelecionado() {
+        return espacioSelecionado;
+    }
+
+    public void setEspacioSelecionado(Espacio espacioSelecionado) {
+        this.espacioSelecionado = espacioSelecionado;
+    }
 
     @Override
     public abstractDataAccess<Espacio> getDataAccess() {
@@ -109,34 +121,64 @@ public class FrmEspacio extends AbstractFrm<Espacio> implements Serializable {
         this.fc = fc;
     }
 
-    @Override
+    public void selecionarRegistro(int idAREA) {
+        setIdArea(idAREA);
+        InicializarRegistros();
+    }
+    //logica para nuevo lazyData
+     private void InicializarRegistros() {
+        this.modelo = new LazyDataModel<Espacio>() {
+            @Override
+            public int count(Map<String, FilterMeta> map) {
+                return eb.countByIdArea(idArea);
+            }
+
+            @Override
+            public List<Espacio> load(int inicio, int pagina, Map<String, SortMeta> map, Map<String, FilterMeta> map1) {
+                return obtenereEspacioPorAreas(idArea,inicio,pagina);
+            }
+
+            @Override
+            public String getRowKey(Espacio object) {
+                if (object != null) {
+                    return getIdObject(object);
+                }
+                return null;
+            }
+
+            @Override
+            public Espacio getRowData(String rowKey) {
+                if (rowKey != null) {
+                    return getObjectId(rowKey);
+
+                }
+                return null;
+            }
+
+        };
+
+    }
+    public void onEspacioSelect(SelectEvent event) {
+        System.out.println("Método onEspacioSelect llamado.");
+        Espacio espacioSeleccionado = (Espacio) event.getObject();
+        System.out.println("Espacio seleccionado: " + espacioSeleccionado);
+    }
+    public void LogParProbar() {
+        System.out.println("la selecion fue un exito");
+    }
+     @Override
     public int contar() {
         if (idArea != null) {
             return this.eb.countByIdArea(idArea);
         }
         return 0;
     }
-
-    public List<Espacio> obtenereEspacioPorAreas(Object IdArea) {
+    public List<Espacio> obtenereEspacioPorAreas(Object IdArea,int inicio,int pagina) {
         if (IdArea != null) {
-            return eb.findByIdArea(idArea, 0, 10);
+            return eb.findByIdArea(idArea, inicio, pagina);
         }
 
         return Collections.EMPTY_LIST;
-    }
-
-    @Override
-    public void selecionarRegistro() {
-        System.out.println("selecionado amigo");
-    }
-    // En FrmEspacio
-
-    // En FrmEspacio
-    public void onEspacioSelect(SelectEvent event) {
-        System.out.println("Método onEspacioSelect llamado.");
-        Espacio espacioSeleccionado = (Espacio) event.getObject();
-        System.out.println("Espacio seleccionado: " + espacioSeleccionado);
-
     }
 
 }

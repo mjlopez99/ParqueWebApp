@@ -15,9 +15,12 @@ import jakarta.inject.Named;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import org.primefaces.event.SelectEvent;
+import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
+import org.primefaces.model.SortMeta;
 
 /**
  *
@@ -25,123 +28,158 @@ import org.primefaces.model.LazyDataModel;
  */
 @Named
 @Dependent
-<span class="nc" id="L28">public class FrmEspacio extends AbstractFrm&lt;Espacio&gt; implements Serializable {</span>
+<span class="nc" id="L31">public class FrmEspacio extends AbstractFrm&lt;Espacio&gt; implements Serializable {</span>
 
     @Inject
     EspacioBean eb;
     @Inject
     FacesContext fc;
     Integer idArea;
+    Espacio espacioSelecionado;
+
+    public Espacio getEspacioSelecionado() {
+<span class="nc" id="L41">        return espacioSelecionado;</span>
+    }
+
+    public void setEspacioSelecionado(Espacio espacioSelecionado) {
+<span class="nc" id="L45">        this.espacioSelecionado = espacioSelecionado;</span>
+<span class="nc" id="L46">    }</span>
 
     @Override
     public abstractDataAccess&lt;Espacio&gt; getDataAccess() {
-<span class="nc" id="L38">        return eb;</span>
+<span class="nc" id="L50">        return eb;</span>
     }
 
     @Override
     public String getIdObject(Espacio object) {
-<span class="nc bnc" id="L43" title="All 4 branches missed.">        if (object != null &amp;&amp; object.getIdEspacio() != null) {</span>
-<span class="nc" id="L44">            return object.getIdEspacio().toString();</span>
+<span class="nc bnc" id="L55" title="All 4 branches missed.">        if (object != null &amp;&amp; object.getIdEspacio() != null) {</span>
+<span class="nc" id="L56">            return object.getIdEspacio().toString();</span>
         }
-<span class="nc" id="L46">        return null;</span>
+<span class="nc" id="L58">        return null;</span>
     }
 
     @Override
     public Espacio getObjectId(String id) {
-<span class="nc bnc" id="L51" title="All 6 branches missed.">        if (id != null &amp;&amp; this.modelo != null &amp;&amp; this.modelo.getWrappedData() != null) {</span>
-<span class="nc" id="L52">            return this.modelo.getWrappedData().stream().filter(r -&gt; r.getIdEspacio().toString().equals(id)).collect(Collectors.toList()).get(0);</span>
+<span class="nc bnc" id="L63" title="All 6 branches missed.">        if (id != null &amp;&amp; this.modelo != null &amp;&amp; this.modelo.getWrappedData() != null) {</span>
+<span class="nc" id="L64">            return this.modelo.getWrappedData().stream().filter(r -&gt; r.getIdEspacio().toString().equals(id)).collect(Collectors.toList()).get(0);</span>
         }
-<span class="nc" id="L54">        return null;</span>
+<span class="nc" id="L66">        return null;</span>
     }
 
     @Override
     public void instanciarRegistro() {
-<span class="nc" id="L59">        System.out.println(&quot;yamen&quot;);</span>
-<span class="nc" id="L60">        this.registroSelecionado = new Espacio();</span>
-<span class="nc bnc" id="L61" title="All 2 branches missed.">        if (this.getIdArea() != null) {</span>
-<span class="nc" id="L62">            this.registroSelecionado.setIdArea(new Area(idArea));</span>
+<span class="nc" id="L71">        System.out.println(&quot;yamen&quot;);</span>
+<span class="nc" id="L72">        this.registroSelecionado = new Espacio();</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">        if (this.getIdArea() != null) {</span>
+<span class="nc" id="L74">            this.registroSelecionado.setIdArea(new Area(idArea));</span>
         }
-<span class="nc" id="L64">        this.registroSelecionado.setActivo(Boolean.TRUE);</span>
+<span class="nc" id="L76">        this.registroSelecionado.setActivo(Boolean.TRUE);</span>
 
-<span class="nc" id="L66">    }</span>
+<span class="nc" id="L78">    }</span>
 
     @Override
     public FacesContext getFC() {
 
-<span class="nc" id="L71">        return fc;</span>
+<span class="nc" id="L83">        return fc;</span>
     }
 
     public Integer getIdArea() {
-<span class="nc" id="L75">        return idArea;</span>
+<span class="nc" id="L87">        return idArea;</span>
     }
 
     public void setIdArea(Integer idArea) {
-<span class="nc" id="L79">        this.idArea = idArea;</span>
-<span class="nc" id="L80">    }</span>
+<span class="nc" id="L91">        this.idArea = idArea;</span>
+<span class="nc" id="L92">    }</span>
 
     @Override
     public LazyDataModel&lt;Espacio&gt; getModelo() {
-<span class="nc" id="L84">        return super.getModelo();</span>
+<span class="nc" id="L96">        return super.getModelo();</span>
     }
 
     @Override
     public List&lt;Espacio&gt; cargarDatos(int first, int page) {
-<span class="nc bnc" id="L89" title="All 2 branches missed.">        if (this.idArea != null) {</span>
-<span class="nc" id="L90">            return this.eb.findByIdArea(idArea, first, page);</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">        if (this.idArea != null) {</span>
+<span class="nc" id="L102">            return this.eb.findByIdArea(idArea, first, page);</span>
         }
 
-<span class="nc" id="L93">        return Collections.EMPTY_LIST;</span>
+<span class="nc" id="L105">        return Collections.EMPTY_LIST;</span>
     }
 
     public EspacioBean getEb() {
-<span class="nc" id="L97">        return eb;</span>
+<span class="nc" id="L109">        return eb;</span>
     }
 
     public void setEb(EspacioBean eb) {
-<span class="nc" id="L101">        this.eb = eb;</span>
-<span class="nc" id="L102">    }</span>
+<span class="nc" id="L113">        this.eb = eb;</span>
+<span class="nc" id="L114">    }</span>
 
     public FacesContext getFc() {
-<span class="nc" id="L105">        return fc;</span>
+<span class="nc" id="L117">        return fc;</span>
     }
 
     public void setFc(FacesContext fc) {
-<span class="nc" id="L109">        this.fc = fc;</span>
-<span class="nc" id="L110">    }</span>
+<span class="nc" id="L121">        this.fc = fc;</span>
+<span class="nc" id="L122">    }</span>
 
-    @Override
-    public int contar() {
-<span class="nc bnc" id="L114" title="All 2 branches missed.">        if (idArea != null) {</span>
-<span class="nc" id="L115">            return this.eb.countByIdArea(idArea);</span>
-        }
-<span class="nc" id="L117">        return 0;</span>
-    }
+    public void selecionarRegistro(int idAREA) {
+<span class="nc" id="L125">        setIdArea(idAREA);</span>
+<span class="nc" id="L126">        InicializarRegistros();</span>
+<span class="nc" id="L127">    }</span>
+    //logica para nuevo lazyData
+     private void InicializarRegistros() {
+<span class="nc" id="L130">        this.modelo = new LazyDataModel&lt;Espacio&gt;() {</span>
+            @Override
+            public int count(Map&lt;String, FilterMeta&gt; map) {
+<span class="nc" id="L133">                return eb.countByIdArea(idArea);</span>
+            }
 
-    public List&lt;Espacio&gt; obtenereEspacioPorAreas(Object IdArea) {
-<span class="nc bnc" id="L121" title="All 2 branches missed.">        if (IdArea != null) {</span>
-<span class="nc" id="L122">            return eb.findByIdArea(idArea, 0, 10);</span>
-        }
+            @Override
+            public List&lt;Espacio&gt; load(int inicio, int pagina, Map&lt;String, SortMeta&gt; map, Map&lt;String, FilterMeta&gt; map1) {
+<span class="nc" id="L138">                return obtenereEspacioPorAreas(idArea,inicio,pagina);</span>
+            }
 
-<span class="nc" id="L125">        return Collections.EMPTY_LIST;</span>
-    }
+            @Override
+            public String getRowKey(Espacio object) {
+<span class="nc bnc" id="L143" title="All 2 branches missed.">                if (object != null) {</span>
+<span class="nc" id="L144">                    return getIdObject(object);</span>
+                }
+<span class="nc" id="L146">                return null;</span>
+            }
 
-    @Override
-    public void selecionarRegistro() {
-<span class="nc" id="L130">        System.out.println(&quot;selecionado amigo&quot;);</span>
-<span class="nc" id="L131">    }</span>
-    // En FrmEspacio
+            @Override
+            public Espacio getRowData(String rowKey) {
+<span class="nc bnc" id="L151" title="All 2 branches missed.">                if (rowKey != null) {</span>
+<span class="nc" id="L152">                    return getObjectId(rowKey);</span>
 
-    // En FrmEspacio
+                }
+<span class="nc" id="L155">                return null;</span>
+            }
+
+        };
+
+<span class="nc" id="L160">    }</span>
     public void onEspacioSelect(SelectEvent event) {
-<span class="nc" id="L136">        System.out.println(&quot;Método onEspacioSelect llamado.&quot;);</span>
-<span class="nc" id="L137">        Espacio espacioSeleccionado = (Espacio) event.getObject();</span>
-<span class="nc" id="L138">        System.out.println(&quot;Espacio seleccionado: &quot; + espacioSeleccionado);</span>
+<span class="nc" id="L162">        System.out.println(&quot;Método onEspacioSelect llamado.&quot;);</span>
+<span class="nc" id="L163">        Espacio espacioSeleccionado = (Espacio) event.getObject();</span>
+<span class="nc" id="L164">        System.out.println(&quot;Espacio seleccionado: &quot; + espacioSeleccionado);</span>
+<span class="nc" id="L165">    }</span>
+    public void LogParProbar() {
+<span class="nc" id="L167">        System.out.println(&quot;la selecion fue un exito&quot;);</span>
+<span class="nc" id="L168">    }</span>
+     @Override
+    public int contar() {
+<span class="nc bnc" id="L171" title="All 2 branches missed.">        if (idArea != null) {</span>
+<span class="nc" id="L172">            return this.eb.countByIdArea(idArea);</span>
+        }
+<span class="nc" id="L174">        return 0;</span>
+    }
+    public List&lt;Espacio&gt; obtenereEspacioPorAreas(Object IdArea,int inicio,int pagina) {
+<span class="nc bnc" id="L177" title="All 2 branches missed.">        if (IdArea != null) {</span>
+<span class="nc" id="L178">            return eb.findByIdArea(idArea, inicio, pagina);</span>
+        }
 
-        // Agregar más logs para verificar el flujo del método
-<span class="nc" id="L141">        System.out.println(&quot;Después de obtener el espacio seleccionado.&quot;);</span>
-
-        // Realizar la lógica deseada con el espacio seleccionado
-<span class="nc" id="L144">    }</span>
+<span class="nc" id="L181">        return Collections.EMPTY_LIST;</span>
+    }
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>frmPruebas.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">parqueoWebApp-1.0-SNAPSHOT</a> &gt; <a href="index.source.html" class="el_package">com.mycompany.parqueowebapp.Boundary.jsf</a> &gt; <span class="el_source">frmPruebas.java</span></div><h1>frmPruebas.java</h1><pre class="source lang-java linenums">/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.mycompany.parqueowebapp.Boundary.jsf;
+
+import com.mycompany.parqueowebapp.control.beanParaPruebas;
+import jakarta.faces.view.ViewScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
+import java.io.Serializable;
+import java.util.List;
+
+/**
+ *
+ * @author mjlopez
+ */
+@Named
+@ViewScoped
+<span class="nc" id="L20">public class frmPruebas implements Serializable {</span>
+String sqlUsuarioRgistro;
+String sqlUsuarioLista;
+String sqlUsuarionumero;
+
+Object registro;
+List&lt;Object&gt; registros;
+int cantidadResultado;
+    
+
+     @Inject
+    beanParaPruebas bp;
+
+    public void unRegistro() {
+<span class="nc" id="L34">        setRegistro(bp.unRegistro(sqlUsuarioRgistro));</span>
+<span class="nc" id="L35">    }</span>
+    public void Lista() {
+<span class="nc" id="L37">        setRegistros(bp.Lista(sqlUsuarioLista));</span>
+<span class="nc" id="L38">    }</span>
+    public void cantidad() {
+<span class="nc" id="L40">        setCantidadResultado( bp.cantidad(sqlUsuarionumero));</span>
+<span class="nc" id="L41">    }</span>
+
+    public int getCantidadResultado() {
+<span class="nc" id="L44">        return cantidadResultado;</span>
+    }
+
+    public void setCantidadResultado(int cantidadResultado) {
+<span class="nc" id="L48">        this.cantidadResultado = cantidadResultado;</span>
+<span class="nc" id="L49">    }</span>
+    
+    public Object getRegistro() {
+<span class="nc" id="L52">        return registro;</span>
+    }
+
+    public void setRegistro(Object registro) {
+<span class="nc" id="L56">        this.registro = registro;</span>
+<span class="nc" id="L57">    }</span>
+
+    public List&lt;Object&gt; getRegistros() {
+<span class="nc" id="L60">        return registros;</span>
+    }
+
+    public void setRegistros(List&lt;Object&gt; registros) {
+<span class="nc" id="L64">        this.registros = registros;</span>
+<span class="nc" id="L65">    }</span>
+
+
+
+   
+
+    public String getSqlUsuarioRgistro() {
+<span class="nc" id="L72">        return sqlUsuarioRgistro;</span>
+    }
+
+    public void setSqlUsuarioRgistro(String sqlUsuarioRgistro) {
+<span class="nc" id="L76">        this.sqlUsuarioRgistro = sqlUsuarioRgistro;</span>
+<span class="nc" id="L77">    }</span>
+
+    public String getSqlUsuarioLista() {
+<span class="nc" id="L80">        return sqlUsuarioLista;</span>
+    }
+
+    public void setSqlUsuarioLista(String sqlUsuarioLista) {
+<span class="nc" id="L84">        this.sqlUsuarioLista = sqlUsuarioLista;</span>
+<span class="nc" id="L85">    }</span>
+
+    public String getSqlUsuarionumero() {
+<span class="nc" id="L88">        return sqlUsuarionumero;</span>
+    }
+
+    public void setSqlUsuarionumero(String sqlUsuarionumero) {
+<span class="nc" id="L92">        this.sqlUsuarionumero = sqlUsuarionumero;</span>
+<span class="nc" id="L93">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

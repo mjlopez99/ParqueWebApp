@@ -14,6 +14,7 @@ import jakarta.inject.Named;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import java.io.Serializable;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -31,7 +32,7 @@ public class FrmParaPruebas extends AbstractFrm<TipoEspacio> implements Serializ
     @Inject
     FacesContext Fc;
 
-    String SQLFindById = "SELECT a FROM TipoEspacio a WHERE a.idTipoEspacio=1";
+    String SQLFindById = "SELECT a FROM Area a";
     String SQLCount = "SELECT COUNT(a) FROM TipoEspacio a";
 
     @Override
@@ -92,6 +93,11 @@ public class FrmParaPruebas extends AbstractFrm<TipoEspacio> implements Serializ
             return (TipoEspacio) em.createQuery(SQLFindById).getSingleResult();
         }
         return null;
+    }
+    
+    public String selectOne(){
+        
+    return "no hay nada";
     }
 
 }

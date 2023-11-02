@@ -11,6 +11,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -20,44 +21,78 @@ import java.util.List;
  */
 @LocalBean
 @Stateless
-<span class="nc" id="L23">public class beanParaPruebas implements Serializable {</span>
+<span class="nc" id="L24">public class beanParaPruebas implements Serializable {</span>
 
     @PersistenceContext(unitName = &quot;com.mycompany_parqueoWebApp_war_1.0-SNAPSHOTPU&quot;)
     EntityManager em;
 
     public void create(TipoReserva registtro) {
-<span class="nc bnc" id="L29" title="All 2 branches missed.">        if (registtro != null) {</span>
+<span class="nc bnc" id="L30" title="All 2 branches missed.">        if (registtro != null) {</span>
             try {
-<span class="nc bnc" id="L31" title="All 2 branches missed.">                if (em != null) {</span>
-<span class="nc" id="L32">                    em.persist(registtro);</span>
-<span class="nc" id="L33">                    return;</span>
+<span class="nc bnc" id="L32" title="All 2 branches missed.">                if (em != null) {</span>
+<span class="nc" id="L33">                    em.persist(registtro);</span>
+<span class="nc" id="L34">                    return;</span>
                 }
-<span class="nc" id="L35">            } catch (Exception e) {</span>
-<span class="nc" id="L36">                System.out.println(e);</span>
-<span class="nc" id="L37">            }</span>
-<span class="nc" id="L38">            throw new IllegalStateException();</span>
+<span class="nc" id="L36">            } catch (Exception e) {</span>
+<span class="nc" id="L37">                System.out.println(e);</span>
+<span class="nc" id="L38">            }</span>
+<span class="nc" id="L39">            throw new IllegalStateException();</span>
         }
-<span class="nc" id="L40">        throw new IllegalArgumentException();</span>
+<span class="nc" id="L41">        throw new IllegalArgumentException();</span>
     }
 
     public List&lt;TipoReserva&gt; findRange(int first, int page) {
 
-<span class="nc bnc" id="L45" title="All 4 branches missed.">        if (first &gt;= 0 &amp;&amp; page &gt; 0) {</span>
+<span class="nc bnc" id="L46" title="All 4 branches missed.">        if (first &gt;= 0 &amp;&amp; page &gt; 0) {</span>
             try {
-<span class="nc bnc" id="L47" title="All 2 branches missed.">                if (em != null) {</span>
-<span class="nc" id="L48">                    Query q = em.createNamedQuery(&quot;TipoReserva.findAll&quot;);</span>
-<span class="nc" id="L49">                    q.setFirstResult(first);</span>
-<span class="nc" id="L50">                    q.setMaxResults(page);</span>
-<span class="nc" id="L51">                    return (q.getResultList());</span>
+<span class="nc bnc" id="L48" title="All 2 branches missed.">                if (em != null) {</span>
+<span class="nc" id="L49">                    Query q = em.createNamedQuery(&quot;TipoReserva.findAll&quot;);</span>
+<span class="nc" id="L50">                    q.setFirstResult(first);</span>
+<span class="nc" id="L51">                    q.setMaxResults(page);</span>
+<span class="nc" id="L52">                    return (q.getResultList());</span>
                 }
-<span class="nc" id="L53">            } catch (Exception e) {</span>
-<span class="nc" id="L54">                System.out.println(&quot;error: &quot; + e.getMessage());</span>
-<span class="nc" id="L55">            }</span>
-<span class="nc" id="L56">            throw new IllegalStateException();</span>
+<span class="nc" id="L54">            } catch (Exception e) {</span>
+<span class="nc" id="L55">                System.out.println(&quot;error: &quot; + e.getMessage());</span>
+<span class="nc" id="L56">            }</span>
+<span class="nc" id="L57">            throw new IllegalStateException();</span>
 
         }
 
-<span class="nc" id="L60">        return Collections.EMPTY_LIST;</span>
+<span class="nc" id="L61">        return Collections.EMPTY_LIST;</span>
+    }
+    public List&lt;Object&gt; Lista(String jpql) {
+<span class="nc" id="L64">        String jpqlQuery = jpql;</span>
+<span class="nc" id="L65">        Query query = em.createQuery(jpqlQuery);</span>
+
+        // Ejecuta la consulta y obtén los resultados como una lista de objetos
+<span class="nc" id="L68">        List&lt;Object&gt; resultados = query.getResultList();</span>
+
+        // Itera sobre los resultados (pueden ser Strings u otros tipos según la consulta)
+<span class="nc bnc" id="L71" title="All 2 branches missed.">        for (Object resultado : resultados) {</span>
+<span class="nc" id="L72">            jpql=jpql+&quot;\n&quot;+resultado;</span>
+<span class="nc" id="L73">        }</span>
+<span class="nc" id="L74">        return resultados;</span>
+    }
+    public Object unRegistro(String jpql) {
+<span class="nc" id="L77">        String jpqlQuery = jpql;</span>
+<span class="nc" id="L78">        Query query = em.createQuery(jpqlQuery);</span>
+
+        // Ejecuta la consulta y obtén los resultados como una lista de objetos
+<span class="nc" id="L81">        List&lt;Object&gt; resultado=new ArrayList&lt;&gt;();</span>
+        
+<span class="nc" id="L83">        resultado.add(query.getResultList().get(0));</span>
+        
+<span class="nc" id="L85">        return resultado.get(0);</span>
+    }
+    public int cantidad(String jpql) {
+<span class="nc" id="L88">        String jpqlQuery = jpql;</span>
+<span class="nc" id="L89">        Query query = em.createQuery(jpqlQuery);</span>
+
+        // Ejecuta la consulta y obtén los resultados como una lista de objetos
+<span class="nc" id="L92">        int resultado=((Long)query.getSingleResult()).intValue();</span>
+        
+<span class="nc" id="L94">        System.out.println(&quot;la cantidad de registros es: &quot;+resultado);</span>
+<span class="nc" id="L95">          return resultado;</span>
     }
 
 }
