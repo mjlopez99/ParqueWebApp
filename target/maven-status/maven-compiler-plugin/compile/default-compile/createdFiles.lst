@@ -1,8 +1,10 @@
+com\mycompany\parqueowebapp\Boundary\Rest\AbtractRest.class
 com\mycompany\parqueowebapp\entitys\Area.class
 com\mycompany\parqueowebapp\entitys\EspacioCaracteristica.class
 otros\JPQLQueryBean.class
 com\mycompany\parqueowebapp\JakartaRestConfiguration.class
 com\mycompany\parqueowebapp\entitys\TipoReservaSecuencia.class
+com\mycompany\parqueowebapp\Boundary\Rest\tipoWEspacioAsincRest1.class
 com\mycompany\parqueowebapp\control\AreaBean.class
 com\mycompany\parqueowebapp\Boundary\jsf\SessionUsuario.class
 com\mycompany\parqueowebapp\resources\JakartaEE10Resource.class
@@ -12,6 +14,7 @@ com\mycompany\parqueowebapp\Boundary\jsf\FrmTipoReserva.class
 com\mycompany\parqueowebapp\control\AreaBean2.class
 com\mycompany\parqueowebapp\entitys\TipoReserva.class
 com\mycompany\parqueowebapp\Boundary\jsf\FrmParaPruebas.class
+com\mycompany\parqueowebapp\Boundary\Rest\ReportsResource.class
 com\mycompany\parqueowebapp\control\TipoEspacioBean.class
 com\mycompany\parqueowebapp\Boundary\jsf\FrmEspacio$1.class
 com\mycompany\parqueowebapp\Boundary\jsf\FrmEspacio.class
@@ -27,6 +30,7 @@ com\mycompany\parqueowebapp\Boundary\Rest\tipoWEspacioAsincRest.class
 com\mycompany\parqueowebapp\control\abstractDataAccess.class
 com\mycompany\parqueowebapp\Boundary\Rest\TipoEspacioResource.class
 com\mycompany\parqueowebapp\Boundary\jsf\AbstractFrm.class
+com\mycompany\parqueowebapp\Boundary\Rest\ReportsResource$1.class
 com\mycompany\parqueowebapp\control\TipoReservaBean.class
 com\mycompany\parqueowebapp\entitys\Espacio.class
 otros\MainApp.class

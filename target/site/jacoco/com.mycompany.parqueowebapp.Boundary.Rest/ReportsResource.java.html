@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ReportsResource.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">parqueoWebApp-1.0-SNAPSHOT</a> &gt; <a href="index.source.html" class="el_package">com.mycompany.parqueowebapp.Boundary.Rest</a> &gt; <span class="el_source">ReportsResource.java</span></div><h1>ReportsResource.java</h1><pre class="source lang-java linenums">
+package com.mycompany.parqueowebapp.Boundary.Rest;
+
+import javax.sql.DataSource;
+import jakarta.annotation.Resource;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.WebApplicationException;
+import jakarta.ws.rs.client.Entity;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.StreamingOutput;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.Serializable;
+import java.net.URL;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.export.SimpleExporterInput;
+import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
+import net.sf.jasperreports.export.SimplePdfExporterConfiguration;
+
+@Path(&quot;reporte&quot;)
+
+<span class="nc" id="L32">public class ReportsResource implements Serializable{</span>
+    @Resource(lookup = &quot;jdbc/pgdb&quot;)
+    DataSource poolConneciones;
+    @GET
+    @Path(&quot;{reporte}&quot;)
+    public Response generarReporte(@PathParam(&quot;reporte&quot;) final String nombreReporte){
+<span class="nc" id="L38">        String pathReporte=null;</span>
+<span class="nc" id="L39">        HashMap parametros=new HashMap();</span>
+<span class="nc bnc" id="L40" title="All 2 branches missed.">        switch (nombreReporte) {</span>
+            case &quot;tipo_espacio&quot; -&gt; {
+//                URL urlReporte=getClass().getResource(&quot;/reportes/prn32023/tipoEspacio.jasper&quot;);
+<span class="nc" id="L43">                pathReporte=&quot;/reportes/prn32023/tipoEspacio.jasper&quot;;</span>
+<span class="nc" id="L44">            }</span>
+            default -&gt; {
+<span class="nc" id="L46">                return Response.status(Response.Status.NOT_FOUND).header(&quot;report-not-found&quot;, nombreReporte).entity(Entity.text(&quot;no se encuentra el reporte&quot;)).build();</span>
+            }
+        }
+<span class="nc bnc" id="L49" title="All 2 branches missed.">        if (pathReporte!=null) {</span>
+            try {
+                //primer paso se debe llenar el reporte
+<span class="nc" id="L52">                InputStream fuenteReporte=ReportsResource.class.getResourceAsStream(pathReporte);</span>
+<span class="nc" id="L53">                JasperPrint impresor = JasperFillManager.fillReport(pathReporte, parametros, poolConneciones.getConnection());</span>
+<span class="nc" id="L54">                SimplePdfExporterConfiguration configuration=new SimplePdfExporterConfiguration();</span>
+<span class="nc" id="L55">                configuration.setMetadataAuthor(&quot;Universida de El Salvador&quot;);</span>
+<span class="nc" id="L56">                configuration.setMetadataTitle(&quot;Sistema de reporte de Universida de El Salvador&quot;);</span>
+                //exportamos a un stream
+<span class="nc" id="L58">                JRPdfExporter exportador= new JRPdfExporter();</span>
+<span class="nc" id="L59">                exportador.setConfiguration(configuration);</span>
+<span class="nc" id="L60">                exportador.setExporterInput(new SimpleExporterInput(impresor));</span>
+<span class="nc" id="L61">                StreamingOutput steam=new StreamingOutput() {</span>
+                    @Override
+                    public void write(OutputStream out) throws IOException, WebApplicationException {
+<span class="nc" id="L64">                        exportador.setExporterOutput(new SimpleOutputStreamExporterOutput(out));</span>
+                        try {
+<span class="nc" id="L66">                            exportador.exportReport();</span>
+<span class="nc" id="L67">                        } catch (Exception e) {</span>
+<span class="nc" id="L68">                            Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);</span>
+<span class="nc" id="L69">                        }</span>
+<span class="nc" id="L70">                    }</span>
+                };
+                
+<span class="nc" id="L73">                return Response.ok(steam,&quot;application/pdf&quot;).build();</span>
+<span class="nc" id="L74">            } catch (Exception ex) {</span>
+<span class="nc" id="L75">                Logger.getLogger(ReportsResource.class.getName()).log(Level.SEVERE, null, ex);</span>
+            }
+        }
+<span class="nc" id="L78">    return Response.serverError().build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

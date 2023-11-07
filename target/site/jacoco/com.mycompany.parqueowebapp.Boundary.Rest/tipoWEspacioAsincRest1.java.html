@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>tipoWEspacioAsincRest1.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">parqueoWebApp-1.0-SNAPSHOT</a> &gt; <a href="index.source.html" class="el_package">com.mycompany.parqueowebapp.Boundary.Rest</a> &gt; <span class="el_source">tipoWEspacioAsincRest1.java</span></div><h1>tipoWEspacioAsincRest1.java</h1><pre class="source lang-java linenums">/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.mycompany.parqueowebapp.Boundary.Rest;
+
+import com.mycompany.parqueowebapp.control.TipoEspacioBean;
+import com.mycompany.parqueowebapp.entitys.TipoEspacio;
+import jakarta.annotation.Resource;
+import jakarta.enterprise.concurrent.ManagedExecutorService;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.DefaultValue;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.MediaType;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+
+/**
+ *
+ * @author mjlopez
+ */
+@Path(&quot;tipo_espacio_async&quot;)
+<span class="nc" id="L26">public class tipoWEspacioAsincRest1 {</span>
+     @Inject
+    TipoEspacioBean teBean;
+     @Resource
+     ManagedExecutorService mes;
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public CompletableFuture&lt;List&lt;TipoEspacio&gt;&gt; FindRange(
+            @DefaultValue(&quot;0&quot;) @QueryParam(value = &quot;first&quot;) int first,
+            @DefaultValue(&quot;10&quot;) @QueryParam(value = &quot;page&quot;) int page
+    ) {
+
+<span class="nc" id="L38">        return CompletableFuture.supplyAsync(()-&gt;teBean.findeRangeSlow(first, page));</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
