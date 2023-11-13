@@ -28,19 +28,19 @@ public class AreaBean extends abstractDataAccess<Area> implements Serializable {
 
     @Override
     public String getOrdenAsc() {
-        return "idArea";
+        return "ORDER BY area.IdArea";
     }
 
-     public List<Area> findByIdPadre(final Integer idPadre, int primero, int tamanio) {
+    public List<Area> findByIdPadre(final Integer idPadre, int primero, int tamanio) {
         if (idPadre != null && primero >= 0 && tamanio > 0) {
             if (em != null) {
-                Query q = em.createNamedQuery("Area.findByIdArea");
-                q.setParameter("idArea", idPadre);
+                Query q = em.createNamedQuery("Area.findByIdPadre");
+                q.setParameter("idAreaPadre", idPadre);
                 q.setFirstResult(primero);
                 q.setMaxResults(tamanio);
-                return q.getResultList();
-
-            }  
+                List<Area> resultados = q.getResultList();
+                return resultados;
+            }
 
         }
         return Collections.EMPTY_LIST;
@@ -57,10 +57,16 @@ public class AreaBean extends abstractDataAccess<Area> implements Serializable {
 
     public List<Area> findRaices(int primero, int tamanio) {
         if (em != null) {
-            Query q = em.createNamedQuery("Area.findRaices");
-            q.setFirstResult(primero);
-            q.setMaxResults(tamanio);
-            return q.getResultList();
+            try {
+                Query q = em.createNamedQuery("Area.findPadre");
+                q.setFirstResult(primero);
+                q.setMaxResults(tamanio);
+                List<Area> resultados = q.getResultList();
+                return resultados;
+            } catch (Exception e) {
+                System.out.println("error");
+                return Collections.EMPTY_LIST;
+            }
         }
         return Collections.EMPTY_LIST;
     }

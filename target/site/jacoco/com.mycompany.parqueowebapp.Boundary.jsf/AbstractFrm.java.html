@@ -53,7 +53,7 @@ import org.primefaces.model.SortMeta;
 <span class="nc" id="L53">                int Resultado = 0;</span>
                 try {
 <span class="nc" id="L55">                    clBean = getDataAccess();</span>
-<span class="nc" id="L56">                    Resultado = clBean.count();</span>
+<span class="nc" id="L56">                    Resultado = contar();</span>
 <span class="nc" id="L57">                    return Resultado;</span>
 <span class="nc" id="L58">                } catch (Exception e) {</span>
 <span class="nc" id="L59">                    Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);</span>
@@ -67,7 +67,7 @@ import org.primefaces.model.SortMeta;
 <span class="nc" id="L67">                List&lt;T&gt; listaResultados = null;</span>
                 try {
 <span class="nc" id="L69">                    clBean = getDataAccess();</span>
-<span class="nc" id="L70">                    listaResultados = clBean.findRange(inicio, pagina);</span>
+<span class="nc" id="L70">                    listaResultados = cargarDatos(inicio, pagina);</span>
 <span class="nc" id="L71">                } catch (Exception e) {</span>
 <span class="nc" id="L72">                    Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);</span>
                 } finally {

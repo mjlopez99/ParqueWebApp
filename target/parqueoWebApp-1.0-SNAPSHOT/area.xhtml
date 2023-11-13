@@ -6,70 +6,100 @@
              xmlns:p="http://primefaces.org/ui"
              xmlns:btnPark="jakarta.faces.composite/btnPark"
              xmlns:btnParkDown="jakarta.faces.composite/btnParkDown">
-    <define name="tabla">
-        <h:form id="frmTabla" class="tabla-principal">
-            <h:outputText>Area de parqueo</h:outputText>
-            <p:treeTable value="#{frmArea.root}" var="node" selectionMode="single" selection="#{frmArea.nodoSelecionado}">
-                <p:column headerText="parqueo">
-                    <h:outputText value="#{node.nombre}"/>
-                </p:column>
-                <p:ajax event="select" listener="#{frmArea.onNodeSelect}" update="pnlDetalle frmTabla"/>
-            </p:treeTable>
 
-            <btnPark:botonesTop bean="#{frmArea}"/>
+    <define name="tabla">
+        <h:form style="width: 90%;">
+            <p:tree value="#{frmArea.raiz}" var="nodo" dynamic="true"
+                    selectionMode="single"
+                    selection="#{frmArea.nodoSeleccionado}"
+                    >
+
+                <p:treeNode>
+                    <h:outputText value="#{nodo.nombre}"/>
+                </p:treeNode>
+                <p:ajax event="select" update=":pnlDetalle @form" listener="#{frmArea.seleccionarNodoListener}"/>
+            </p:tree>
+            <btnPark:botonesTop id="btnTop" bean="#{frmArea}" refrescar="@form :pnlDetalle"/>
         </h:form>
     </define>
+
+
     <define name="detalle">
         <h:panelGroup id="pnlDetalle">
+            <p:tabView id="tabDetalle" cache="false" dynamic="true" rendered="#{not empty frmArea.registroSelecionado}">
+                <p:tab closable="false" title="Geralidades">
+                    <h:form id="frmDetalle">
+                        <h:panelGrid columns="2">
+                            <h:outputLabel id="lblid" for="txtId" value="ID"/>
+                            <h:inputText id="txtId" value="#{frmArea.registroSelecionado.idArea}" disabled="true" readonly="true"/>
+                            <p:outputLabel id="lblNombre" value="Nombre" for="txtNombre" />
+                            <p:inputText id="txtNombre" value="#{frmArea.registroSelecionado.nombre}" size="75"/>
+                            <p:outputLabel id="lblDescripcion"  value="Descripcion" for="txtDescripcion"/>
+                            <p:inputTextarea id="txtDescripcion" value="#{frmArea.registroSelecionado.descripcion}" cols="75" rows="3"/>
+                        </h:panelGrid>
+                    </h:form>
 
-            <h:form rendered="#{not empty frmArea.nodoSelecionado}" id="frmDetalle">
 
-                <p:tabView id="tabViewAreas">
-                    <p:tab title="generalidades">
+                </p:tab>
+                <p:tab closable="false" title="Espacios" disabled="#{frmArea.estado!='MODIFICAR'}">
 
-                        <p:panelGrid columns="2" id="informacio-area">
-                            <p:outputLabel value="id:" styleClass="letraNegra" />
-                            <p:inputText  value="#{frmArea.nodoSelecionado.data.idArea}" styleClass="letraNegra" readonly="True"/>
+                    <h:form id="frmTblEspacio">
+                        <p:dataTable 
+                            value="#{frmArea.frmEspacio.modelo}" var="re"
+                            lazy="true"
+                            paginator="true"
+                            rows="3"
+                            first="0"
+                            selectionMode="single"
+                            selection="#{frmArea.frmEspacio.registroSelecionado}"
+                            rendered="#{empty frmArea.frmEspacio.registroSelecionado}"
+                            >
 
-                            <p:outputLabel value="NOMBRE:" styleClass="letraNegra" />
-                            <p:inputText  value="#{frmArea.nodoSelecionado.data.nombre}" styleClass="letraNegra" />
+                            <p:ajax process="@this" update=":tabDetalle:pnlDetalleEspacio @form" 
+                                    listener="#{frmArea.frmEspacio.selecionarRegistro}"
+                                    event="rowSelect"/>
 
-                            <p:outputLabel value="Nombre:" styleClass="letraNegra" />
-                            <p:inputText  value="#{frmArea.nodoSelecionado.data.descripcion}" styleClass="letraNegra" />
-                        </p:panelGrid>
-                    </p:tab>
-                    <p:tab title="espacios" disabled="#{frmArea.estado!='MODIFICAR'}" closable="false">
-                        <h:form id="frmTblEspacio">
-                            <p:messages for="frmTblEspacio"/>
+                            <p:column headerText="ID">
+                                <h:outputText value="#{re.idEspacio}"/>
+                            </p:column>
+                            <p:column headerText="NOMBRE">
+                                <h:outputText value="#{re.nombre}"/>
 
-                            <p:dataTable value="#{frmArea.frme.modelo}" var="re" 
-                                         lazy="true" 
-                                         paginator="true"
-                                         rows="5" 
-                                         first="0"
-                                         selectionMode="single"
-                                         selection="#{frmArea.frme.espacioSelecionado}"
+                            </p:column>
+                            <p:column headerText="OBSERVACIONES">
+                                <h:outputText value="#{re.observaciones}"/>
 
-                                         rendered="#{empty frmArea.espacioRegistrado}"
-                                         >
+                            </p:column>
+                            <p:column headerText="ESTADO">
+                                <h:outputText value="#{re.activo?'ACTIVO':'INACTIVO'}"/>
 
-                                <p:ajax event="rowSelect" listener="#{frmArea.res(event)}" />
-                                <p:column headerText="ID" style=";"><h:outputText value="#{re.idEspacio}" ></h:outputText></p:column>
-                                <p:column headerText="NOMBRE" style="background-color:#3c92cb;"><h:outputText value="#{re.nombre}"></h:outputText></p:column>
-                                <p:column headerText="ESTADO" style="background-color:#3c92cb;"><h:outputText value="#{re.activo?'ACTIVO':'INACTIVO'}"></h:outputText></p:column>
-                                <p:column headerText="OBSERVACION" style="background-color:#3c92cb;"><h:outputText value="#{re.observaciones}"></h:outputText></p:column>
-                            </p:dataTable>
+                            </p:column>
+                            <btnPark:botonesTop bean="#{frmArea.frmEspacio}" refrescar=":tabDetalle:pnlDetalleEspacio @form"/>
+                        </p:dataTable>
+
+                    </h:form>
+
+                    <h:panelGrid id="pnlDetalleEspacio">
+                        <h:form id="frmDetalleEspacio" rendered="#{not empty frmArea.frmEspacio.registroSelecionado}">
+                            <h:panelGrid columns="2">
+                                <h:outputLabel for="txtIdEspacio" value="ID"/>
+                                <h:inputText id="txtIdEspacio" value="#{frmArea.frmEspacio.registroSelecionado.idEspacio}"
+                                             disabled="true" readonly="true"/>
+                                <p:outputLabel for="txtNombreEspacio" value="Nombre"/>
+                                <p:inputText id="txtNombreEspacio" value="#{frmArea.frmEspacio.registroSelecionado.nombre}" size="70"/>
+                            </h:panelGrid>
+                            <btnPark:botonesTop bean="#{frmArea.frmEspacio}" refrescar=":tabDetalle:pnlDetalleEspacio :tabDetalle:frmTblEspacio @form"     ></btnPark:botonesTop>
+
                         </h:form>
+                    </h:panelGrid>
 
-                    </p:tab>
 
-                </p:tabView>
-                <btnParkDown:botonDown bean="#{frmArea}"/>
+                </p:tab>
 
-                <p:messages for="frmDetalle" />
-            </h:form>
-
+            </p:tabView>
 
         </h:panelGroup>
+
     </define>
+
 </composition>

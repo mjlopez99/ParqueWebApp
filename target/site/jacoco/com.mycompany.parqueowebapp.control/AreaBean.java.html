@@ -28,19 +28,19 @@ public class AreaBean extends abstractDataAccess&lt;Area&gt; implements Serializ
 
     @Override
     public String getOrdenAsc() {
-<span class="nc" id="L31">        return &quot;idArea&quot;;</span>
+<span class="nc" id="L31">        return &quot;ORDER BY area.IdArea&quot;;</span>
     }
 
-     public List&lt;Area&gt; findByIdPadre(final Integer idPadre, int primero, int tamanio) {
+    public List&lt;Area&gt; findByIdPadre(final Integer idPadre, int primero, int tamanio) {
 <span class="nc bnc" id="L35" title="All 6 branches missed.">        if (idPadre != null &amp;&amp; primero &gt;= 0 &amp;&amp; tamanio &gt; 0) {</span>
 <span class="nc bnc" id="L36" title="All 2 branches missed.">            if (em != null) {</span>
-<span class="nc" id="L37">                Query q = em.createNamedQuery(&quot;Area.findByIdArea&quot;);</span>
-<span class="nc" id="L38">                q.setParameter(&quot;idArea&quot;, idPadre);</span>
+<span class="nc" id="L37">                Query q = em.createNamedQuery(&quot;Area.findByIdPadre&quot;);</span>
+<span class="nc" id="L38">                q.setParameter(&quot;idAreaPadre&quot;, idPadre);</span>
 <span class="nc" id="L39">                q.setFirstResult(primero);</span>
 <span class="nc" id="L40">                q.setMaxResults(tamanio);</span>
-<span class="nc" id="L41">                return q.getResultList();</span>
-
-            }  
+<span class="nc" id="L41">                List&lt;Area&gt; resultados = q.getResultList();</span>
+<span class="nc" id="L42">                return resultados;</span>
+            }
 
         }
 <span class="nc" id="L46">        return Collections.EMPTY_LIST;</span>
@@ -57,12 +57,18 @@ public class AreaBean extends abstractDataAccess&lt;Area&gt; implements Serializ
 
     public List&lt;Area&gt; findRaices(int primero, int tamanio) {
 <span class="nc bnc" id="L59" title="All 2 branches missed.">        if (em != null) {</span>
-<span class="nc" id="L60">            Query q = em.createNamedQuery(&quot;Area.findRaices&quot;);</span>
-<span class="nc" id="L61">            q.setFirstResult(primero);</span>
-<span class="nc" id="L62">            q.setMaxResults(tamanio);</span>
-<span class="nc" id="L63">            return q.getResultList();</span>
+            try {
+<span class="nc" id="L61">                Query q = em.createNamedQuery(&quot;Area.findPadre&quot;);</span>
+<span class="nc" id="L62">                q.setFirstResult(primero);</span>
+<span class="nc" id="L63">                q.setMaxResults(tamanio);</span>
+<span class="nc" id="L64">                List&lt;Area&gt; resultados = q.getResultList();</span>
+<span class="nc" id="L65">                return resultados;</span>
+<span class="nc" id="L66">            } catch (Exception e) {</span>
+<span class="nc" id="L67">                System.out.println(&quot;error&quot;);</span>
+<span class="nc" id="L68">                return Collections.EMPTY_LIST;</span>
+            }
         }
-<span class="nc" id="L65">        return Collections.EMPTY_LIST;</span>
+<span class="nc" id="L71">        return Collections.EMPTY_LIST;</span>
     }
 
 }

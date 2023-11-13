@@ -15,11 +15,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
@@ -41,6 +39,16 @@ public class ReportsResource implements Serializable{
             case "tipo_espacio" -> {
 //                URL urlReporte=getClass().getResource("/reportes/prn32023/tipoEspacio.jasper");
                 pathReporte="/reportes/prn32023/tipoEspacio.jasper";
+                parametros.put("firma", "nayik bukele");
+            }
+            case "area" -> {
+//                URL urlReporte=getClass().getResource("/reportes/prn32023/tipoEspacio.jasper");
+                pathReporte="/reportes/prn32023/area.jasper";
+                URL PATH_SUBREPORT=ReportsResource.class.getResource(pathReporte);
+                String PATH_SUBREPORT_STRING=PATH_SUBREPORT.getPath();
+                System.out.println(PATH_SUBREPORT_STRING);
+                parametros.put("PATH_SUBPARAMETER", PATH_SUBREPORT_STRING.substring(0, PATH_SUBREPORT_STRING.lastIndexOf("/"))+"/");
+                System.out.println(PATH_SUBREPORT_STRING.substring(0, PATH_SUBREPORT_STRING.lastIndexOf("/"))+"/");
             }
             default -> {
                 return Response.status(Response.Status.NOT_FOUND).header("report-not-found", nombreReporte).entity(Entity.text("no se encuentra el reporte")).build();
@@ -50,7 +58,7 @@ public class ReportsResource implements Serializable{
             try {
                 //primer paso se debe llenar el reporte
                 InputStream fuenteReporte=ReportsResource.class.getResourceAsStream(pathReporte);
-                JasperPrint impresor = JasperFillManager.fillReport(pathReporte, parametros, poolConneciones.getConnection());
+                JasperPrint impresor = JasperFillManager.fillReport(fuenteReporte, parametros, poolConneciones.getConnection());
                 SimplePdfExporterConfiguration configuration=new SimplePdfExporterConfiguration();
                 configuration.setMetadataAuthor("Universida de El Salvador");
                 configuration.setMetadataTitle("Sistema de reporte de Universida de El Salvador");
@@ -69,7 +77,7 @@ public class ReportsResource implements Serializable{
                         }
                     }
                 };
-                
+                System.out.println("pasa");
                 return Response.ok(steam,"application/pdf").build();
             } catch (Exception ex) {
                 Logger.getLogger(ReportsResource.class.getName()).log(Level.SEVERE, null, ex);

@@ -1,5 +1,8 @@
+C:\Progra\ParqueWebApp\src\main\java\com\mycompany\parqueowebapp\Boundary\ws\NotificadorEspacioEndPoint.java
 C:\Progra\ParqueWebApp\src\main\java\com\mycompany\parqueowebapp\control\EspacioBean.java
+C:\Progra\ParqueWebApp\src\main\java\com\mycompany\parqueowebapp\Boundary\jsf\FrmCobrar.java
 C:\Progra\ParqueWebApp\src\main\java\com\mycompany\parqueowebapp\control\ClaseParaPruebas.java
+C:\Progra\ParqueWebApp\src\main\java\com\mycompany\parqueowebapp\Boundary\jsf\frmNotificarEspacio.java
 C:\Progra\ParqueWebApp\src\main\java\com\mycompany\parqueowebapp\control\abstractDataAccess.java
 C:\Progra\ParqueWebApp\src\main\java\com\mycompany\parqueowebapp\JakartaRestConfiguration.java
 C:\Progra\ParqueWebApp\src\main\java\com\mycompany\parqueowebapp\entitys\TipoEspacio.java
@@ -22,11 +25,14 @@ C:\Progra\ParqueWebApp\src\main\java\com\mycompany\parqueowebapp\entitys\TipoRes
 C:\Progra\ParqueWebApp\src\main\java\otros\MainApp.java
 C:\Progra\ParqueWebApp\src\main\java\com\mycompany\parqueowebapp\Boundary\jsf\FrmParaPruebas.java
 C:\Progra\ParqueWebApp\src\main\java\com\mycompany\parqueowebapp\Boundary\jsf\SessionUsuario.java
+C:\Progra\ParqueWebApp\src\main\java\com\mycompany\parqueowebapp\Boundary\Rest\AbtractRest.java
+C:\Progra\ParqueWebApp\src\main\java\com\mycompany\parqueowebapp\Boundary\Rest\ReportsResource.java
 C:\Progra\ParqueWebApp\src\main\java\com\mycompany\parqueowebapp\entitys\TipoReservaSecuencia.java
 C:\Progra\ParqueWebApp\src\main\java\com\mycompany\parqueowebapp\Boundary\Rest\TipoEspacioResource.java
 C:\Progra\ParqueWebApp\src\main\java\com\mycompany\parqueowebapp\Boundary\servlet\TipoReservaServlet.java
 C:\Progra\ParqueWebApp\src\main\java\com\mycompany\parqueowebapp\control\AreaBean.java
 C:\Progra\ParqueWebApp\src\main\java\com\mycompany\parqueowebapp\control\beanParaPruebas.java
 C:\Progra\ParqueWebApp\src\main\java\com\mycompany\parqueowebapp\control\TipoReservaBean.java
+C:\Progra\ParqueWebApp\src\main\java\com\mycompany\parqueowebapp\control\ManagerSessionWS.java
 C:\Progra\ParqueWebApp\src\main\java\com\mycompany\parqueowebapp\Boundary\jsf\FrmEspacio.java
 C:\Progra\ParqueWebApp\src\main\java\com\mycompany\parqueowebapp\entitys\ReservaHistorial.java

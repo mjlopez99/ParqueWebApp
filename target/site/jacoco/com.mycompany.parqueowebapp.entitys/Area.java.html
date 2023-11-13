@@ -27,8 +27,8 @@ import java.util.List;
 @Table(name = &quot;area&quot;, schema = &quot;public&quot;)
 @NamedQueries({
     @NamedQuery(name = &quot;Area.findAll&quot;, query = &quot;SELECT a FROM Area a&quot;),
-    @NamedQuery(name = &quot;Area.findByIdArea&quot;, query = &quot;SELECT a FROM Area a WHERE a.idArea = :idArea&quot;),
-    @NamedQuery(name = &quot;Area.findRaices&quot;, query = &quot;SELECT a FROM Area a WHERE a.idAreaPadre IS NULL&quot;),
+    @NamedQuery(name = &quot;Area.findByIdPadre&quot;, query = &quot;SELECT a FROM Area a WHERE a.idAreaPadre.idArea = :idAreaPadre&quot;),
+    @NamedQuery(name = &quot;Area.findPadre&quot;, query = &quot;SELECT a FROM Area a WHERE a.idAreaPadre IS NULL&quot;),
     @NamedQuery(name = &quot;Area.findByNombre&quot;, query = &quot;SELECT a FROM Area a WHERE a.nombre = :nombre&quot;),
     @NamedQuery(name = &quot;Area.coundByIdPadre&quot;, query = &quot;SELECT COUNT(a) FROM Area a WHERE a.idAreaPadre = :idAreaPadre&quot;)})
 public class Area implements Serializable {

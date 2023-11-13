@@ -4,15 +4,11 @@
  */
 package com.mycompany.parqueowebapp.Boundary.jsf;
 
-import com.mycompany.parqueowebapp.control.AreaBean2;
-import com.mycompany.parqueowebapp.control.EspacioBean;
+import com.mycompany.parqueowebapp.control.AreaBean;
 import com.mycompany.parqueowebapp.control.abstractDataAccess;
-import com.mycompany.parqueowebapp.control.beanParaPruebas;
 import com.mycompany.parqueowebapp.entitys.Area;
-import com.mycompany.parqueowebapp.entitys.Espacio;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.context.FacesContext;
-import jakarta.faces.event.ActionEvent;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -20,9 +16,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.primefaces.event.NodeSelectEvent;
-import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultTreeNode;
-import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.TreeNode;
 
 /**
@@ -31,124 +25,58 @@ import org.primefaces.model.TreeNode;
  */
 @Named
 @ViewScoped
-
 public class FrmArea extends AbstractFrm<Area> implements Serializable {
 
-    private TreeNode<Area> root;
-    private TreeNode<Area> nodoSelecionado;
-
     @Inject
-    FrmEspacio frme;
+    FrmEspacio frmEspacio;
     @Inject
-    AreaBean2 ab;
+    FacesContext fc;
     @Inject
-    beanParaPruebas bp;
-    @Inject
-    EspacioBean Eb;
-    @Inject
-    FacesContext Fc;
-    List<Espacio> ListaEspacios;
-    Espacio espacioRegistrado;
-    
-
-    public Espacio getEspacioRegistrado() {
-        return espacioRegistrado;
-    }
-
-    public void setEspacioRegistrado(Espacio espacioRegistrado) {
-        this.espacioRegistrado = espacioRegistrado;
-    }
-    public List<Espacio> getListaEspacios() {
-        return ListaEspacios;
-    }
-    LazyDataModel<Espacio> modelo2;
-
-    public TreeNode<Area> getNodoSelecionado() {
-        return nodoSelecionado;
-    }
-
-    public void setNodoSelecionado(TreeNode<Area> nodoSelecionado) {
-        this.nodoSelecionado = nodoSelecionado;
-    }
+    AreaBean aBean;
+    TreeNode raiz;
+    TreeNode nodoSeleccionado;
 
     @PostConstruct
     @Override
     public void inicializar() {
-        if (root == null) {
-            super.inicializar();
-            // Crear el nodo raíz y construir el árbol recursivamente
+        super.inicializar();
+        this.raiz = new DefaultTreeNode("Areas", null);
+        List<Area> lista = aBean.findRaices(0, 100000000);
 
-        }
-        root = new DefaultTreeNode<>(new Area(), null);
-        // Obtener áreas principales (aquellas sin un área padre o igual a null)
-        List<Area> areasRaiz = ab.obtenerAreasPrincipales();
+        if (lista != null && !lista.isEmpty()) {
 
-        for (Area area : areasRaiz) {
-            TreeNode areaNode = new DefaultTreeNode(area, root);
+            for (Area next : lista) {
+                if (next.getIdAreaPadre() == null) {
+                    this.generarArbol(raiz, next);
+                }
 
-            // Luego, para cada área, agregar sus subáreas
-            agregarSubareas(area, areaNode);
+            }
         }
     }
 
-    public void onNodeSelect(NodeSelectEvent event) {
-    TreeNode<Area> ns = event.getTreeNode();
-    setNodoSelecionado(ns);
-    setRegistroSelecionado(ns.getData());
-    this.selecionarRegistro();
-    this.frme.selecionarRegistro(this.registroSelecionado.getIdArea());
-//    if (frme != null && this.registroSelecionado != null && this.registroSelecionado.getIdArea() != null) {
-//        this.frme.setIdArea(this.registroSelecionado.getIdArea());
-//        this.frme.inicializar();
-//
-//        ListaEspacios = this.frme.obtenereEspacioPorAreas(registroSelecionado.getIdArea());
-//    }
-}
+    public void generarArbol(TreeNode padre, Area actual) {
+        DefaultTreeNode nuevoPadre = new DefaultTreeNode(actual, padre);
 
-
-    public LazyDataModel<Espacio> getModelo2() {
-        return modelo2;
-    }
-
-    private void agregarSubareas(Area areaPadre, TreeNode padreNode) {
-        List<Area> subareas = ab.obtenerSubAreas(areaPadre);
-
-        for (Area subarea : subareas) {
-            TreeNode subareaNode = new DefaultTreeNode(subarea, padreNode);
-            agregarSubareas(subarea, subareaNode);  // Llamada recursiva para manejar subáreas anidadas
+        List<Area> hijos = this.aBean.findByIdPadre(actual.getIdArea(), 0, 1000000000);
+        for (Area hijo : hijos) {
+            generarArbol(nuevoPadre, hijo);
         }
-    }
-
-    // Otros métodos y acciones según tus requisitos
-    public TreeNode<Area> getRoot() {
-        return root;
-    }
-
-    public void colapsarTodosLosNodos() {
-        colapsarRecursivamente(root);
-    }
-
-    private void colapsarRecursivamente(TreeNode<Area> nodo) {
-        for (TreeNode<Area> hijo : nodo.getChildren()) {
-            colapsarRecursivamente(hijo);
-        }
-        nodo.setExpanded(false);
-    }
-
-    @Override
-    public void btnCancelarHandler(ActionEvent ex) {
-        super.btnCancelarHandler(ex);
-        setNodoSelecionado(null);
-        colapsarTodosLosNodos();
+        
     }
 
     @Override
     public abstractDataAccess<Area> getDataAccess() {
-        return this.ab;
+        return aBean;
+    }
+
+    @Override
+    public FacesContext getFC() {
+        return fc;
     }
 
     @Override
     public String getIdObject(Area object) {
+
         if (object != null && object.getIdArea() != null) {
             return object.getIdArea().toString();
         }
@@ -158,37 +86,57 @@ public class FrmArea extends AbstractFrm<Area> implements Serializable {
     @Override
     public Area getObjectId(String id) {
         if (id != null && this.modelo != null && this.modelo.getWrappedData() != null) {
-            return this.modelo.getWrappedData().stream().filter(r -> r.getIdArea().toString().equals(id)).collect(Collectors.toList()).get(0);
+            return modelo.getWrappedData().stream().filter(r -> r.getIdArea().toString().equals(id)).collect(Collectors.toList()).get(0);
+
         }
         return null;
     }
 
     @Override
     public void instanciarRegistro() {
+        Area padre = this.registroSelecionado;
         this.registroSelecionado = new Area();
+        this.registroSelecionado.setIdAreaPadre(padre);
     }
 
     @Override
-    public FacesContext getFC() {
-        return this.Fc;
+    public List<Area> cargarDatos(int primero, int tamanio) {
+        Integer idPadre = null;
+        if (this.registroSelecionado != null) {
+            idPadre = registroSelecionado.getIdArea();
+        }
+        List<Area> lista = aBean.findByIdPadre(idPadre, 0, 10000000);
+        return lista;
     }
 
-    public FrmEspacio getFrme() {
-        return frme;
+    public TreeNode getRaiz() {
+        return raiz;
     }
 
-    @Override
-    public LazyDataModel<Area> getModelo() {
-        return super.getModelo(); //
+    public void setRaiz(TreeNode raiz) {
+        this.raiz = raiz;
     }
 
-    public EspacioBean getEb() {
-        return Eb;
+    public TreeNode getNodoSeleccionado() {
+        return nodoSeleccionado;
     }
-    public void res(SelectEvent event) {
-    System.out.println("Método res invocado.");
-    // Resto de la lógica
-}
 
+    public void setNodoSeleccionado(TreeNode nodoSeleccionado) {
+        this.nodoSeleccionado = nodoSeleccionado;
+    }
+
+    public void seleccionarNodoListener(NodeSelectEvent nse) {
+        this.registroSelecionado = (Area) nse.getTreeNode().getData();
+        this.selecionarRegistro();
+        if (this.registroSelecionado != null && this.registroSelecionado.getIdArea() != null && this.frmEspacio != null) {
+            this.frmEspacio.setIdArea(this.registroSelecionado.getIdArea());
+        }
+        System.out.println("selecionaste algo");
+    }
+
+    public FrmEspacio getFrmEspacio() {
+        return frmEspacio;
+    }
     
+
 }

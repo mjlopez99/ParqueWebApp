@@ -12,17 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 <span class="nc" id="L14">public abstract class AbtractRest&lt;T&gt; {</span>
-    abstractDataAccess&lt;T&gt; clBean;
-
-    public abstractDataAccess&lt;T&gt; getClBean() {
-<span class="nc" id="L18">        return clBean;</span>
-    }
-
-    public void setClBean(abstractDataAccess&lt;T&gt; clBean) {
-<span class="nc" id="L22">        this.clBean = clBean;</span>
-<span class="nc" id="L23">    }</span>
-    
-    
+   
     public abstract abstractDataAccess&lt;T&gt; getDataAccess();
     
   
@@ -34,78 +24,78 @@ import java.util.logging.Logger;
     @Produces(MediaType.APPLICATION_JSON)
     public List&lt;T&gt; findAll(@DefaultValue(&quot;0&quot;) @QueryParam(value = &quot;first&quot;) int first,
             @DefaultValue(&quot;10&quot;) @QueryParam(value = &quot;page&quot;) int page) {
-<span class="nc" id="L37">        abstractDataAccess&lt;T&gt; clBean = getDataAccess();</span>
-<span class="nc" id="L38">        return clBean.findRange(first, page);</span>
+<span class="nc" id="L27">        abstractDataAccess&lt;T&gt; clBean = getDataAccess();</span>
+<span class="nc" id="L28">        return clBean.findRange(first, page);</span>
     }
 
     @GET
     @Path(&quot;/{id}&quot;)
     public Response findById(@PathParam(&quot;id&quot;) final Integer id) {
-<span class="nc" id="L44">         abstractDataAccess&lt;T&gt; clBean = getDataAccess();</span>
-<span class="nc bnc" id="L45" title="All 2 branches missed.">        if (id != null) {</span>
+<span class="nc" id="L34">         abstractDataAccess&lt;T&gt; clBean = getDataAccess();</span>
+<span class="nc bnc" id="L35" title="All 2 branches missed.">        if (id != null) {</span>
             try {
-<span class="nc" id="L47">                T entity =clBean.findById(id);</span>
-<span class="nc" id="L48">                return Response.status(Response.Status.OK).entity(entity).build();</span>
-<span class="nc" id="L49">            } catch (Exception e) {</span>
-<span class="nc" id="L50">                Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);</span>
+<span class="nc" id="L37">                T entity =clBean.findById(id);</span>
+<span class="nc" id="L38">                return Response.status(Response.Status.OK).entity(entity).build();</span>
+<span class="nc" id="L39">            } catch (Exception e) {</span>
+<span class="nc" id="L40">                Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);</span>
             }
-<span class="nc" id="L52">            return Response.status(Response.Status.NOT_FOUND).build();</span>
+<span class="nc" id="L42">            return Response.status(Response.Status.NOT_FOUND).build();</span>
         }
-<span class="nc" id="L54">        return Response.status(Response.Status.BAD_REQUEST).entity(&quot;Falta el parámetro 'id'&quot;).build();</span>
+<span class="nc" id="L44">        return Response.status(Response.Status.BAD_REQUEST).entity(&quot;Falta el parámetro 'id'&quot;).build();</span>
     }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response create(T entity) {
-<span class="nc" id="L61">        abstractDataAccess&lt;T&gt; clBean = getDataAccess();</span>
-<span class="nc bnc" id="L62" title="All 2 branches missed.">        if (entity != null) {</span>
+<span class="nc" id="L51">        abstractDataAccess&lt;T&gt; clBean = getDataAccess();</span>
+<span class="nc bnc" id="L52" title="All 2 branches missed.">        if (entity != null) {</span>
             try {
-<span class="nc" id="L64">                clBean.create(entity);</span>
-<span class="nc" id="L65">                return Response.status(Response.Status.CREATED)</span>
-<span class="nc" id="L66">                        .header(&quot;location&quot;, uriInfo.getRequestUri().toString() + &quot;/&quot; + getIdFromEntity(entity))</span>
-<span class="nc" id="L67">                        .build();</span>
-<span class="nc" id="L68">            } catch (Exception e) {</span>
-<span class="nc" id="L69">                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(&quot;Error al crear el recurso: &quot; + e.getMessage()).build();</span>
+<span class="nc" id="L54">                clBean.create(entity);</span>
+<span class="nc" id="L55">                return Response.status(Response.Status.CREATED)</span>
+<span class="nc" id="L56">                        .header(&quot;location&quot;, uriInfo.getRequestUri().toString() + &quot;/&quot; + getIdFromEntity(entity))</span>
+<span class="nc" id="L57">                        .build();</span>
+<span class="nc" id="L58">            } catch (Exception e) {</span>
+<span class="nc" id="L59">                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(&quot;Error al crear el recurso: &quot; + e.getMessage()).build();</span>
             }
         }
-<span class="nc" id="L72">        return Response.status(Response.Status.BAD_REQUEST).entity(&quot;Falta el cuerpo de la solicitud&quot;).build();</span>
+<span class="nc" id="L62">        return Response.status(Response.Status.BAD_REQUEST).entity(&quot;Falta el cuerpo de la solicitud&quot;).build();</span>
     }
 
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response update(T entity) {
-<span class="nc" id="L79">        abstractDataAccess&lt;T&gt; clBean = getDataAccess();</span>
-<span class="nc bnc" id="L80" title="All 4 branches missed.">        if (entity != null &amp;&amp; getIdFromEntity(entity) != null) {</span>
+<span class="nc" id="L69">        abstractDataAccess&lt;T&gt; clBean = getDataAccess();</span>
+<span class="nc bnc" id="L70" title="All 4 branches missed.">        if (entity != null &amp;&amp; getIdFromEntity(entity) != null) {</span>
             try {
-<span class="nc" id="L82">                clBean.modify(entity);</span>
-<span class="nc" id="L83">                return Response.status(Response.Status.NO_CONTENT).build();</span>
-<span class="nc" id="L84">            } catch (Exception e) {</span>
-<span class="nc" id="L85">                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(&quot;Error al modificar el recurso: &quot; + e.getMessage()).build();</span>
+<span class="nc" id="L72">                clBean.modify(entity);</span>
+<span class="nc" id="L73">                return Response.status(Response.Status.NO_CONTENT).build();</span>
+<span class="nc" id="L74">            } catch (Exception e) {</span>
+<span class="nc" id="L75">                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(&quot;Error al modificar el recurso: &quot; + e.getMessage()).build();</span>
             }
         }
-<span class="nc" id="L88">        return Response.status(Response.Status.BAD_REQUEST).entity(&quot;Falta el parámetro 'id' en el cuerpo de la solicitud&quot;).build();</span>
+<span class="nc" id="L78">        return Response.status(Response.Status.BAD_REQUEST).entity(&quot;Falta el parámetro 'id' en el cuerpo de la solicitud&quot;).build();</span>
     }
 
     @DELETE
     @Path(&quot;/{id}&quot;)
     public Response delete(@PathParam(&quot;id&quot;) final Integer id) {
-<span class="nc" id="L94">         abstractDataAccess&lt;T&gt; clBean = getDataAccess();</span>
-<span class="nc bnc" id="L95" title="All 2 branches missed.">        if (id != null) {</span>
-<span class="nc" id="L96">            T entity = clBean.findById(id);</span>
-<span class="nc bnc" id="L97" title="All 2 branches missed.">            if (entity != null) {</span>
+<span class="nc" id="L84">         abstractDataAccess&lt;T&gt; clBean = getDataAccess();</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">        if (id != null) {</span>
+<span class="nc" id="L86">            T entity = clBean.findById(id);</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">            if (entity != null) {</span>
                 try {
-<span class="nc" id="L99">                    clBean.delete(entity);</span>
-<span class="nc" id="L100">                    return Response.status(Response.Status.NO_CONTENT).build();</span>
-<span class="nc" id="L101">                } catch (Exception e) {</span>
-<span class="nc" id="L102">                    return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(&quot;Error al eliminar el recurso: &quot; + e.getMessage()).build();</span>
+<span class="nc" id="L89">                    clBean.delete(entity);</span>
+<span class="nc" id="L90">                    return Response.status(Response.Status.NO_CONTENT).build();</span>
+<span class="nc" id="L91">                } catch (Exception e) {</span>
+<span class="nc" id="L92">                    return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(&quot;Error al eliminar el recurso: &quot; + e.getMessage()).build();</span>
                 }
             } else {
-<span class="nc" id="L105">                return Response.status(Response.Status.NOT_FOUND).build();</span>
+<span class="nc" id="L95">                return Response.status(Response.Status.NOT_FOUND).build();</span>
             }
         }
-<span class="nc" id="L108">        return Response.status(Response.Status.BAD_REQUEST).entity(&quot;Falta el parámetro 'id'&quot;).build();</span>
+<span class="nc" id="L98">        return Response.status(Response.Status.BAD_REQUEST).entity(&quot;Falta el parámetro 'id'&quot;).build();</span>
     }
 
     // Método abstracto para obtener el ID de una entidad específica

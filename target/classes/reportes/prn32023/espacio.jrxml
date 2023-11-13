@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.6.final using JasperReports Library version 6.20.6-5c96b6aa8a39ac1dc6b6bea4b81168e16dd39231  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="espacio" pageWidth="612" pageHeight="792" columnWidth="612" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="057201fc-53f7-494e-871a-c83555cdfa80">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="tipo_espacio_reporte.jrdax"/>
+	<parameter name="id_area" class="java.lang.Integer" evaluationTime="Early">
+		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[SELECT e.nombre,e.observaciones,e.activo
+FROM espacio e
+WHERE e.id_area=$P{id_area}]]>
+	</queryString>
+	<field name="nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="espacio"/>
+	</field>
+	<field name="observaciones" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="observaciones"/>
+		<property name="com.jaspersoft.studio.field.label" value="observaciones"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="espacio"/>
+	</field>
+	<field name="activo" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="activo"/>
+		<property name="com.jaspersoft.studio.field.label" value="activo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="espacio"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="48" splitType="Stretch">
+			<textField>
+				<reportElement x="20" y="16" width="100" height="16" uuid="9ec375ac-c4d0-4365-9b34-b8db33468c9e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a219eca3-a2cb-49ae-b6a7-1db2984f6fc7"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="270" y="16" width="100" height="16" uuid="d6e7cfff-1c5a-4fd4-83cd-f780dbd97098">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b602fd69-b10e-4f6d-b0d5-d1ee0dc59ff4"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{observaciones}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="140" y="16" width="100" height="16" uuid="6f3e51a0-ada3-467b-90dd-6bc38bcc6a63">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e4f170c3-79f4-4313-bd24-b12c94eaaf39"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{activo}?"ACTIVO":"INACTICO"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="6" width="612" height="1" uuid="798ffaed-987f-444b-b54f-238a377badbf">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement x="470" y="16" width="100" height="30" uuid="0507f721-daad-4370-9f4b-87107a243fbc"/>
+				<text><![CDATA["HOLA"]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

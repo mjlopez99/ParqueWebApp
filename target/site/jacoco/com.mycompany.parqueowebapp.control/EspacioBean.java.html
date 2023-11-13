@@ -20,64 +20,48 @@ import java.util.List;
  */
 @Stateless
 @LocalBean
-public class EspacioBean extends abstractDataAccess&lt;Espacio&gt; implements Serializable{
+public class EspacioBean extends abstractDataAccess&lt;Espacio&gt; implements Serializable {
+
     @PersistenceContext(unitName = &quot;com.mycompany_parqueoWebApp_war_1.0-SNAPSHOTPU&quot;)
     EntityManager em;
+
     public EspacioBean() {
-<span class="nc" id="L27">        super(Espacio.class);</span>
-<span class="nc" id="L28">    }</span>
+<span class="nc" id="L29">        super(Espacio.class);</span>
+<span class="nc" id="L30">    }</span>
 
     @Override
     public EntityManager getEntityManger() {
-<span class="nc" id="L32">         return em;</span>
+<span class="nc" id="L34">        return em;</span>
+    }
+    
+    public List&lt;Espacio&gt; findByIdArea(final Integer idArea, int primero, int tamanio) {
+<span class="nc bnc" id="L38" title="All 6 branches missed.">        if (idArea != null &amp;&amp; primero &gt;= 0 &amp;&amp; tamanio &gt; 0) {</span>
+<span class="nc bnc" id="L39" title="All 2 branches missed.">            if (em != null) {</span>
+<span class="nc" id="L40">                Query q = em.createNamedQuery(&quot;Espacio.findByIdArea&quot;);</span>
+<span class="nc" id="L41">                q.setParameter(&quot;idArea&quot;, idArea);</span>
+<span class="nc" id="L42">                q.setFirstResult(primero);</span>
+<span class="nc" id="L43">                q.setMaxResults(tamanio);</span>
+<span class="nc" id="L44">                return q.getResultList();</span>
+
+            }  
+
+        }
+<span class="nc" id="L49">        return Collections.EMPTY_LIST;</span>
+    }
+
+    public int contarByIdArea(final Integer idArea) {
+<span class="nc bnc" id="L53" title="All 4 branches missed.">        if (idArea != null &amp;&amp; em != null) {</span>
+<span class="nc" id="L54">            Query q = em.createNamedQuery(&quot;Espacio.countByIdArea&quot;);</span>
+<span class="nc" id="L55">            q.setParameter(&quot;idArea&quot;, idArea);</span>
+<span class="nc" id="L56">            return ((Long) q.getSingleResult()).intValue();</span>
+        }
+<span class="nc" id="L58">        return 0;</span>
     }
 
     @Override
     public String getOrdenAsc() {
-<span class="nc" id="L37">         return &quot;idEspacio&quot;;</span>
+<span class="nc" id="L63">        return &quot;idEspacio&quot;;</span>
     }
 
-    public List&lt;Espacio&gt; findByIdArea(final Integer idArea,int first,int page) {
-        
-<span class="nc bnc" id="L42" title="All 4 branches missed.">        if (first &gt;= 0 &amp;&amp; page &gt; 0) {</span>
-            try {
-<span class="nc" id="L44">                em = getEntityManger();</span>
-<span class="nc bnc" id="L45" title="All 2 branches missed.">                if (em != null) {</span>
-<span class="nc" id="L46">                    Query q = em.createNamedQuery(&quot;Espacio.findByIdArea&quot;);</span>
-<span class="nc" id="L47">                   q.setParameter(&quot;idArea&quot;, idArea);</span>
-                   
-<span class="nc" id="L49">                    q.setFirstResult(first);</span>
-<span class="nc" id="L50">                    q.setMaxResults(page);</span>
-<span class="nc" id="L51">                    List&lt;Espacio&gt; e=q.getResultList();</span>
-<span class="nc" id="L52">                    leerdatos(e);</span>
-<span class="nc" id="L53">                    return e;</span>
-
-                }
-<span class="nc" id="L56">            } catch (Exception e) {</span>
-<span class="nc" id="L57">                System.out.println(&quot;error: &quot; + e.getMessage());</span>
-<span class="nc" id="L58">            }</span>
-<span class="nc" id="L59">            throw new IllegalStateException();</span>
-
-        }
-
-<span class="nc" id="L63">        return Collections.EMPTY_LIST;</span>
-    }
-    public int countByIdArea(final Integer idArea){
-<span class="nc bnc" id="L66" title="All 2 branches missed.">        if (idArea!=null) {</span>
-<span class="nc bnc" id="L67" title="All 2 branches missed.">            if (em!=null) {</span>
-<span class="nc" id="L68">                Query q = em.createNamedQuery(&quot;Espacio.countByIdArea&quot;);</span>
-<span class="nc" id="L69">                q.setParameter(&quot;idArea&quot;, idArea);</span>
-<span class="nc" id="L70">                return ((Long) q.getSingleResult()).intValue();</span>
-            }else{
-<span class="nc" id="L72">                System.out.println(&quot;no hay nada&quot;);</span>
-            }
-        }
-<span class="nc" id="L75">        return 0;</span>
-    }
-    public  void leerdatos(List&lt;Espacio&gt; e){
-       
-<span class="nc" id="L79">    }</span>
-    
-    
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

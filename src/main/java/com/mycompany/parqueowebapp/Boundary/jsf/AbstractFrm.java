@@ -53,7 +53,7 @@ public abstract class AbstractFrm<T> implements Serializable {
                 int Resultado = 0;
                 try {
                     clBean = getDataAccess();
-                    Resultado = clBean.count();
+                    Resultado = contar();
                     return Resultado;
                 } catch (Exception e) {
                     Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
@@ -67,7 +67,7 @@ public abstract class AbstractFrm<T> implements Serializable {
                 List<T> listaResultados = null;
                 try {
                     clBean = getDataAccess();
-                    listaResultados = clBean.findRange(inicio, pagina);
+                    listaResultados = cargarDatos(inicio, pagina);
                 } catch (Exception e) {
                     Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
                 } finally {

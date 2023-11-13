@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.6.final using JasperReports Library version 6.20.6-5c96b6aa8a39ac1dc6b6bea4b81168e16dd39231  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="area" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5341cf0d-46b0-4604-bf24-027bce1dd0ad">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="tipo_espacio_reporte.jrdax"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="PATH_SUBPARAMETER" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT a.id_area as id_area, a.nombre AS nombre_area ,a.descripcion AS descripcion_area
+FROM area a
+ORDER BY a.id_area ASC,a.id_area_padre ASC]]>
+	</queryString>
+	<field name="id_area" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id_area"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_area"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="area"/>
+	</field>
+	<field name="nombre_area" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombre_area"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombre_area"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="area"/>
+	</field>
+	<field name="descripcion_area" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="descripcion_area"/>
+		<property name="com.jaspersoft.studio.field.label" value="descripcion_area"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="area"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="236" y="24" width="100" height="30" uuid="c5424584-9840-4c7a-b8a7-5c75f34cceac"/>
+				<textElement textAlignment="Center">
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[Areas]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="9" y="10" width="100" height="16" uuid="1b24dcdf-2e4f-45be-bb73-3e19ef80d864">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="049f3f21-f39b-48a7-b72a-027490c0190d"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<text><![CDATA[nombre_area]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="120" y="10" width="100" height="16" uuid="5efac12d-72a6-4107-9722-9a4edb94cfe9">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0d4faa41-bb8e-4547-9631-6b5db1b7cf00"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<text><![CDATA[descripcion_area]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="361" splitType="Stretch">
+			<textField>
+				<reportElement x="9" y="32" width="100" height="16" uuid="fb445a9d-77f7-4f64-82be-a5e6a2cf2d3a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="049f3f21-f39b-48a7-b72a-027490c0190d"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{nombre_area}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="120" y="31" width="100" height="16" uuid="e6822c5d-3cb2-44ac-b487-c28c01266d55">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0d4faa41-bb8e-4547-9631-6b5db1b7cf00"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{descripcion_area}]]></textFieldExpression>
+			</textField>
+			<subreport isUsingCache="false">
+				<reportElement isPrintRepeatedValues="false" x="10" y="60" width="560" height="70" uuid="4441149a-4d1f-4feb-86a4-1053bcb595f5"/>
+				<subreportParameter name="id_area">
+					<subreportParameterExpression><![CDATA[$F{id_area}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{PATH_SUBPARAMETER}+"espacio.jrxml"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

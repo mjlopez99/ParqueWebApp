@@ -15,12 +15,7 @@ import jakarta.inject.Named;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
-import org.primefaces.event.SelectEvent;
-import org.primefaces.model.FilterMeta;
-import org.primefaces.model.LazyDataModel;
-import org.primefaces.model.SortMeta;
 
 /**
  *
@@ -31,23 +26,19 @@ import org.primefaces.model.SortMeta;
 public class FrmEspacio extends AbstractFrm<Espacio> implements Serializable {
 
     @Inject
-    EspacioBean eb;
-    @Inject
     FacesContext fc;
+    @Inject
+    EspacioBean eBean;
     Integer idArea;
-    Espacio espacioSelecionado;
-
-    public Espacio getEspacioSelecionado() {
-        return espacioSelecionado;
-    }
-
-    public void setEspacioSelecionado(Espacio espacioSelecionado) {
-        this.espacioSelecionado = espacioSelecionado;
-    }
 
     @Override
     public abstractDataAccess<Espacio> getDataAccess() {
-        return eb;
+        return eBean;
+    }
+
+    @Override
+    public FacesContext getFC() {
+        return fc;
     }
 
     @Override
@@ -62,25 +53,21 @@ public class FrmEspacio extends AbstractFrm<Espacio> implements Serializable {
     public Espacio getObjectId(String id) {
         if (id != null && this.modelo != null && this.modelo.getWrappedData() != null) {
             return this.modelo.getWrappedData().stream().filter(r -> r.getIdEspacio().toString().equals(id)).collect(Collectors.toList()).get(0);
+
         }
         return null;
+
     }
 
     @Override
     public void instanciarRegistro() {
-        System.out.println("yamen");
         this.registroSelecionado = new Espacio();
-        if (this.getIdArea() != null) {
+        if (this.idArea != null) {
             this.registroSelecionado.setIdArea(new Area(idArea));
+
         }
-        this.registroSelecionado.setActivo(Boolean.TRUE);
+        this.registroSelecionado.setActivo(true);
 
-    }
-
-    @Override
-    public FacesContext getFC() {
-
-        return fc;
     }
 
     public Integer getIdArea() {
@@ -92,93 +79,22 @@ public class FrmEspacio extends AbstractFrm<Espacio> implements Serializable {
     }
 
     @Override
-    public LazyDataModel<Espacio> getModelo() {
-        return super.getModelo();
+    public List<Espacio> cargarDatos(int primero, int tamanio) {
+        if (this.idArea != null) {
+            List<Espacio> resultado = this.eBean.findByIdArea(idArea, primero , tamanio);
+            System.out.println(this.idArea);
+            resultado.forEach(e->System.out.println(e));
+             return resultado;
+        }
+        return Collections.EMPTY_LIST;
     }
 
     @Override
-    public List<Espacio> cargarDatos(int first, int page) {
-        if (this.idArea != null) {
-            return this.eb.findByIdArea(idArea, first, page);
-        }
-
-        return Collections.EMPTY_LIST;
-    }
-
-    public EspacioBean getEb() {
-        return eb;
-    }
-
-    public void setEb(EspacioBean eb) {
-        this.eb = eb;
-    }
-
-    public FacesContext getFc() {
-        return fc;
-    }
-
-    public void setFc(FacesContext fc) {
-        this.fc = fc;
-    }
-
-    public void selecionarRegistro(int idAREA) {
-        setIdArea(idAREA);
-        InicializarRegistros();
-    }
-    //logica para nuevo lazyData
-     private void InicializarRegistros() {
-        this.modelo = new LazyDataModel<Espacio>() {
-            @Override
-            public int count(Map<String, FilterMeta> map) {
-                return eb.countByIdArea(idArea);
-            }
-
-            @Override
-            public List<Espacio> load(int inicio, int pagina, Map<String, SortMeta> map, Map<String, FilterMeta> map1) {
-                return obtenereEspacioPorAreas(idArea,inicio,pagina);
-            }
-
-            @Override
-            public String getRowKey(Espacio object) {
-                if (object != null) {
-                    return getIdObject(object);
-                }
-                return null;
-            }
-
-            @Override
-            public Espacio getRowData(String rowKey) {
-                if (rowKey != null) {
-                    return getObjectId(rowKey);
-
-                }
-                return null;
-            }
-
-        };
-
-    }
-    public void onEspacioSelect(SelectEvent event) {
-        System.out.println("Método onEspacioSelect llamado.");
-        Espacio espacioSeleccionado = (Espacio) event.getObject();
-        System.out.println("Espacio seleccionado: " + espacioSeleccionado);
-    }
-    public void LogParProbar() {
-        System.out.println("la selecion fue un exito");
-    }
-     @Override
     public int contar() {
-        if (idArea != null) {
-            return this.eb.countByIdArea(idArea);
+        if (this.idArea != null) {
+            return this.eBean.contarByIdArea(idArea);
         }
         return 0;
-    }
-    public List<Espacio> obtenereEspacioPorAreas(Object IdArea,int inicio,int pagina) {
-        if (IdArea != null) {
-            return eb.findByIdArea(idArea, inicio, pagina);
-        }
-
-        return Collections.EMPTY_LIST;
     }
 
 }

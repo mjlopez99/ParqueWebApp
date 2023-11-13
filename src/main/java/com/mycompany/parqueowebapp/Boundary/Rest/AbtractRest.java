@@ -12,17 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public abstract class AbtractRest<T> {
-    abstractDataAccess<T> clBean;
-
-    public abstractDataAccess<T> getClBean() {
-        return clBean;
-    }
-
-    public void setClBean(abstractDataAccess<T> clBean) {
-        this.clBean = clBean;
-    }
-    
-    
+   
     public abstract abstractDataAccess<T> getDataAccess();
     
   
